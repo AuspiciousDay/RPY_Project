@@ -1,0 +1,37 @@
+
+name: "버그 신고"
+description: "게임에서 발생한 버그를 신고합니다."
+title: "[BUG] "
+labels: ["bug"]
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "버그 설명"
+      description: "어떤 버그가 발생했나요?"
+      placeholder: "버그 내용을 입력하세요."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: "재현 방법"
+      description: "버그를 재현하는 순서를 작성하세요."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "기대 결과"
+      description: "정상적으로 작동한다면 어떤 결과가 나와야 하나요?"
+    validations:
+      required: true
+
+  - type: input
+    id: unity_version
+    attributes:
+      label: "Unity 버전"
+      placeholder: "예: Unity 6000.0"
