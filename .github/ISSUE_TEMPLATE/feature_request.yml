@@ -1,0 +1,43 @@
+
+name: "기능 요청"
+description: "게임에 추가할 새로운 기능을 제안합니다."
+title: "[FEATURE] "
+labels: ["enhancement"]
+
+body:
+  - type: textarea
+    id: feature
+    attributes:
+      label: "기능 설명"
+      description: "어떤 기능을 추가하고 싶나요?"
+      placeholder: "예: 플레이어 대시 기능 추가"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: "기능이 필요한 이유"
+      description: "이 기능이 필요한 이유를 설명하세요."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "우선순위"
+      description: "기능의 중요도를 선택하세요."
+      options:
+        - "높음"
+        - "보통"
+        - "낮음"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: "추가 참고사항"
+      description: "관련 이미지나 참고 자료가 있다면 첨부하세요."
+    validations:
+      required: false
