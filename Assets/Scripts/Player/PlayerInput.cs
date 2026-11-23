@@ -7,17 +7,27 @@ public class PlayerInput : MonoBehaviour
 
     public float Move { get; private set; }
     public float Side { get; private set; }
+    [SerializeField] 
+    private SpriteRenderer spriteRenderer;
 
-    private void Onable()
-    {
-        Move = 0f;
-        Side = 0f;       
-    }
-    public void Update()
+    private void Update()
     {
         Move = Input.GetAxis(MoveAxis);
         Side = Input.GetAxis(SideAxis);
-        
+
+        if (Side > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (Side < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+    }
+    private void OnEnable()
+    {
+        Move = 0f;
+        Side = 0f;
     }
 
 }
