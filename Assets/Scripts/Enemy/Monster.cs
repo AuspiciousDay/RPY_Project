@@ -16,6 +16,7 @@ public class Monster : MonoBehaviour
     private Transform playerTarget;
     private SpriteRenderer spriteRenderer;
 
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -90,11 +91,12 @@ public class Monster : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        PlayerHealth playerHealth =
-            collision.gameObject.GetComponent<PlayerHealth>();
-
+        if(!collision.gameObject.CompareTag("Player")) return;
+        
+        PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+        
         if (playerHealth != null)
         {
             playerHealth.Damage(Damage);

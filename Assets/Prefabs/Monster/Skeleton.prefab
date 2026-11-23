@@ -193,7 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4481c1628dbff5e4f840e25b84045008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monster
-  monsterData: {fileID: 11400000, guid: 1f62734f16819bc45a810df829a59259, type: 2}
+  monsterData: {fileID: 11400000, guid: ed40eb8e5fd28314191e631144ca6daf, type: 2}
+  expGem: {fileID: 5652489986113442423, guid: 5c4cd19dce364d444a5bee8d69d0f368, type: 3}
   Health: 100
   Damage: 10
   moveSpeed: 3

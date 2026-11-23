@@ -50,7 +50,7 @@ public class MonsterSpawner : MonoBehaviour
         Vector2 spawnPos = GetRandomOutOfScreenPosition();
 
         // int randomValue = Random.Range(0, 100); //몬스터 스폰 확률 용
-        int selectedIndex = 0;
+        int selectedIndex = Random.Range(0, 2);
 
         Monster monsterPrefabSpawn = monsterPrefabs[selectedIndex];
         MonsterData data = monsterDatas[selectedIndex];
@@ -59,19 +59,6 @@ public class MonsterSpawner : MonoBehaviour
 
         monster.Setup(data);
         monsters.Add(monster);
-    }
-
-    private void RemoveMonster(Monster deadMonster)
-    {
-        if (monsters.Contains(deadMonster))
-        {
-            monsters.Remove(deadMonster);
-        }
-
-        if(deadMonster != null)
-        {
-            Destroy(deadMonster.gameObject);
-        }
     }
 
     private Vector2 GetRandomOutOfScreenPosition()
