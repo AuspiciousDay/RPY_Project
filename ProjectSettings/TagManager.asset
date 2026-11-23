@@ -37,15 +37,15 @@ TagManager:
   - 
   - 
   - 
-m_SortingLayers:
-- name: Background
+  m_SortingLayers:
+  - name: Background
   uniqueID: 199898953
   locked: 0
-- name: Default
+  - name: Default
   uniqueID: 0
   locked: 0
-- name: Player
+  - name: Player
   uniqueID: 2860227591
   locked: 0
-m_RenderingLayers:
-- Default
+  m_RenderingLayers:
+  - Default
