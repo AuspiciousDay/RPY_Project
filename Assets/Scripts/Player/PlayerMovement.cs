@@ -1,34 +1,59 @@
-  using UnityEngine;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public static readonly int IsMoving = Animator.StringToHash("IsMoving");
+    public static readonly int IsMoving =
+        Animator.StringToHash("IsMoving");
+
     public float MoveSpeed = 5f;
 
     private Animator PlayerAnimator;
     private PlayerInput PlayerInput;
     private Rigidbody2D PlayerRigidbody;
+    private SpriteRenderer PlayerSprite;
 
     private void Awake()
     {
         PlayerAnimator = GetComponent<Animator>();
         PlayerInput = GetComponent<PlayerInput>();
         PlayerRigidbody = GetComponent<Rigidbody2D>();
+        PlayerSprite = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        Vector2 direction = new Vector2(
+            PlayerInput.Side,
+            PlayerInput.Move
+        );
+
+        PlayerAnimator.SetBool(
+            IsMoving,
+            direction.sqrMagnitude > 0.001f
+        );
+
+        if (PlayerInput.Side < 0)
+        {
+            PlayerSprite.flipX = true;
+        }
+        else if (PlayerInput.Side > 0)
+        {
+            PlayerSprite.flipX = false;
+        }
     }
 
     private void FixedUpdate()
     {
-        Vector2 deita = new Vector2(PlayerInput.Side,  PlayerInput.Move).normalized * MoveSpeed * Time.fixedDeltaTime; // 수정 필요. 대각선 이동시 속도가 좀더 빠름
+        Vector2 direction = new Vector2(
+            PlayerInput.Side,
+            PlayerInput.Move
+        ).normalized;
 
-        PlayerRigidbody.MovePosition(PlayerRigidbody.position + deita);
-        if(deita != Vector2.zero)
-        {
-            PlayerAnimator.SetBool(IsMoving, true);
-        }
-        else
-        {
-            PlayerAnimator.SetBool(IsMoving, false);
-        }
+        Vector2 movement =
+            direction * MoveSpeed * Time.fixedDeltaTime;
+
+        PlayerRigidbody.MovePosition(
+            PlayerRigidbody.position + movement
+        );
     }
-
 }
