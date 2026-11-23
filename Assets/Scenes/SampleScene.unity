@@ -445,7 +445,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4481c1628dbff5e4f840e25b84045008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monster
+  monsterData: {fileID: 0}
+  expGem: {fileID: 0}
   Health: 100
+  Damage: 10
+  moveSpeed: 3
+  attackTime: 0.5
 --- !u!61 &794666892
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -528,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef9ec9c008696948a5b34d30c13a653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  MoveSpeed: 10
+  MoveSpeed: 5
 --- !u!114 &2039365574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,6 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7af1c9edf27697409ccc2b7249ea995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
+  spriteRenderer: {fileID: 0}
 --- !u!50 &2039365575
 Rigidbody2D:
   serializedVersion: 5
@@ -723,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   Health: 100
-  HealthMax: 200
+  HealthMax: 100
   InvincibilityTime: 2
 --- !u!114 &2039365581
 MonoBehaviour:
