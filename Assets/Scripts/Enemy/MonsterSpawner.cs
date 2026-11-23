@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MonsterSpawner : MonoBehaviour
 {
     [Header("몬스터 스폰 위치")]
-    [SerializeField]private SpriteRenderer backgroundRenderer;
+    [SerializeField]private TilemapRenderer backgroundRenderer;
     [SerializeField]private float spawnPosition = 1.2f;
 
     public Monster[] monsterPrefabs;

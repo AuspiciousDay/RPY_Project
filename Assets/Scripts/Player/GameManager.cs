@@ -19,4 +19,9 @@ public class GameManager : MonoBehaviour
     {
         PlayerHealth.OnDeath -= GameOver;
     }
+    
+    public static void PauseGame(float timeScale = 0f)
+    {
+        Time.timeScale = timeScale;
+    }
 }
