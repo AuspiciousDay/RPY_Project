@@ -25,7 +25,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if ((timer >= spawnInterval || monsters.Count == 0) && monsters.Count <= 100)
+        if ((timer >= spawnInterval || monsters.Count == 0) && monsters.Count < 100)
         {
             SpawnWave();
             timer = 0f;
