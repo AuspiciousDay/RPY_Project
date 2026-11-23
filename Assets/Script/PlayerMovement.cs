@@ -9,18 +9,29 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput PlayerInput;
     private Rigidbody2D PlayerRigidbody;
     private Transform MainCamera;
+    private SpriteRenderer PlayerSprite;
 
     private void Awake()
     {
         PlayerAnimator = GetComponent<Animator>();
         PlayerInput = GetComponent<PlayerInput>();
         PlayerRigidbody = GetComponent<Rigidbody2D>();
+        PlayerSprite = GetComponent<SpriteRenderer>();
         MainCamera = Camera.main.transform;
     }
 
     private void Update()
     {
         PlayerAnimator.SetFloat(HasMove, PlayerInput.Move);
+
+        if(PlayerInput.Side < 0)
+        {
+            PlayerSprite.flipX = true;
+        }
+        else if (PlayerInput.Side > 0)
+        {
+            PlayerSprite.flipX = false;
+        }
     }
     private void FixedUpdate()
     {
