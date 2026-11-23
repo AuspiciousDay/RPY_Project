@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector2 deita = new Vector2(PlayerInput.Side,  PlayerInput.Move) * MoveSpeed * Time.fixedDeltaTime;
+        Vector2 deita = new Vector2(PlayerInput.Side,  PlayerInput.Move).normalized * MoveSpeed * Time.fixedDeltaTime; // 수정 필요. 대각선 이동시 속도가 좀더 빠름
 
         PlayerRigidbody.MovePosition(PlayerRigidbody.position + deita);
     }

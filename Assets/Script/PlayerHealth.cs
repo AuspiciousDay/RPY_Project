@@ -1,10 +1,15 @@
 
 using UnityEngine;
+using System.Collections;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int Health = 100;
+    public int HealthMax = 200;
 
+    public float InvincibilityTime = 2f;
+    private bool Invincibility = false;
     private bool IsDead = false;
 
     public void Damage(int Damage)
