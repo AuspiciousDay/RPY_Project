@@ -6,6 +6,8 @@ public class PlayerLevel : MonoBehaviour
     public float exp;
     public int level;
 
+    public WeaponUpgrade weaponUpgrade;
+
     private void Start()
     {
         exp = 0;
@@ -18,6 +20,7 @@ public class PlayerLevel : MonoBehaviour
         {
             GainExp(90);
         }
+
     }
     public void GainExp(float amount)
     {
@@ -30,9 +33,11 @@ public class PlayerLevel : MonoBehaviour
         uiManager.UpdateExp(exp, level * 100, level);
         if (exp >= level * 100)
         {
-            exp -= level * 100;            
+            exp -= level * 100;
             level++;
             uiManager.UpdateExp(exp, level * 100, level);
+            GameManager.PauseGame();
+            weaponUpgrade.gameObject.SetActive(true);
         }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerAbility : MonoBehaviour
 {
@@ -23,10 +24,15 @@ public class PlayerAbility : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Monster monster = collision.GetComponent<Monster>();
+        TilemapCollider2D tilemapCollider = collision.GetComponent<TilemapCollider2D>();
 
         if (monster != null)
         {
             monster.TakeDamage(Damage);
+            Destroy(gameObject);
+        }
+        if(tilemapCollider != null)
+        {
             Destroy(gameObject);
         }
     }

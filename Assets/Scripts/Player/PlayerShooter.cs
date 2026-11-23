@@ -6,7 +6,7 @@ public class PlayerShooter : MonoBehaviour
     public GameObject AbilityPrefab;
 
     public float AttackInterval = 1f;
-
+    public int AttackCount = 1;
     private float AttackTimer = 0f;
 
     private void Update()
@@ -51,11 +51,14 @@ public class PlayerShooter : MonoBehaviour
 
     private void Shoot(Monster Target)
     {
-        Vector2 Direction = (Target.transform.position - transform.position).normalized;    // 몬스터가 있는 방향 한번 계산
-
-        GameObject Ability = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);   // 투사체
-
-
-        Ability.GetComponent<PlayerAbility>().SetDirection(Direction);
+        GameObject[] bullets = new GameObject[AttackCount];
+        for (int i = 0; i < AttackCount; i++)
+        {
+            bullets[i] = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
+            PlayerAbility ability = bullets[i].GetComponent<PlayerAbility>();
+            Vector2 direction = (Target.transform.position - transform.position).normalized;
+            ability.SetDirection(direction);
+        }
     }
+
 }
