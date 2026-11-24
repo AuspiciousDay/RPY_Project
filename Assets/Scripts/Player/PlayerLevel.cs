@@ -16,11 +16,10 @@ public class PlayerLevel : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) // test code
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            GainExp(90);
+            GainExp(10);
         }
-
     }
     public void GainExp(float amount)
     {
@@ -30,12 +29,12 @@ public class PlayerLevel : MonoBehaviour
 
     private void CheckLevelUp()
     {
-        uiManager.UpdateExp(exp, level * 100, level);
-        if (exp >= level * 100)
+        uiManager.UpdateExp(exp, level * 50, level);
+        if (exp >= level * 50)
         {
-            exp -= level * 100;
+            exp -= level * 50;
             level++;
-            uiManager.UpdateExp(exp, level * 100, level);
+            uiManager.UpdateExp(exp, level * 50, level);
             GameManager.PauseGame(0f);
             weaponUpgrade.gameObject.SetActive(true);
         }

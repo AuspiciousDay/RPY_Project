@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerShooter : MonoBehaviour
 {
+    public int PenetrateCount = 1;
+    public int AttackDamage = 10;
     public GameObject AbilityPrefab;
 
     public float AttackInterval = 1f;
@@ -61,11 +63,30 @@ public class PlayerShooter : MonoBehaviour
     {
         for (int i = 0; i < AttackCount; i++)
         {
-            GameObject bullet = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
+            if (Target == null)
+            {
+                Target = FindNearestMonster();
+            }
+
+            if (Target == null)
+            {
+                yield break;
+            }
+
+            Vector2 direction =
+                (Target.transform.position - transform.position).normalized;
+
+            GameObject bullet = Instantiate(
+                AbilityPrefab, transform.position, Quaternion.identity);
+
             PlayerAbility ability = bullet.GetComponent<PlayerAbility>();
-            Vector2 direction = (Target.transform.position - transform.position).normalized;
+
+            ability.maxCount = PenetrateCount;
+            ability.damage = AttackDamage;
+
             ability.SetDirection(direction);
-            yield return new WaitForSeconds(0.1f); 
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

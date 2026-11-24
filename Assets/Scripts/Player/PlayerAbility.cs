@@ -3,24 +3,30 @@ using UnityEngine.Tilemaps;
 
 public class PlayerAbility : MonoBehaviour
 {
-    public float Speed = 5f;
-    public int Damage = 10;
+    public float speed = 5f;
+    public int damage = 10;
+    public int count = 0;
+    public int maxCount = 1;
 
     private Vector2 Direction;
     private Rigidbody2D AbilityRigidbody;
+
 
     private void Awake()
     {
         AbilityRigidbody = GetComponent<Rigidbody2D>();
     }
+
     public void SetDirection(Vector2 direction)
     {
         Direction = direction.normalized;
     }
+
     private void FixedUpdate()
     {
-        AbilityRigidbody.MovePosition(AbilityRigidbody.position + Direction * Speed * Time.fixedDeltaTime);
+        AbilityRigidbody.MovePosition(AbilityRigidbody.position + Direction * speed * Time.fixedDeltaTime);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Monster monster = collision.GetComponent<Monster>();
@@ -28,12 +34,18 @@ public class PlayerAbility : MonoBehaviour
 
         if (monster != null)
         {
-            monster.TakeDamage(Damage);
-            Destroy(gameObject);
+            monster.TakeDamage(damage);
+            count++;
         }
-        if(tilemapCollider != null)
+        if (tilemapCollider != null)
         {
             Destroy(gameObject);
         }
+        if (count >= maxCount)
+        {
+            Destroy(gameObject);
+            Debug.Log(count);
+        }
+
     }
 }

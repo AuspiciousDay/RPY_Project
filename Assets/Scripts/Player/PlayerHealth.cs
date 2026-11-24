@@ -9,16 +9,16 @@ public class PlayerHealth : MonoBehaviour
     public int HealthMax = 100;
 
     public float InvincibilityTime = 2f; // 무적시간
-    private bool Invincibility = false; 
+    private bool Invincibility = false;
     private bool IsDead = false;
     public event Action OnDeath;
-    
+
     public UiManager uiManager;
-    public GameManager gameManager;
+
     private void Start()
     {
         Health = HealthMax;
-        uiManager.GetComponent<UiManager>();
+        uiManager.UpdateHp(Health, HealthMax);
     }
     public void Damage(int Damage)
     {
@@ -52,6 +52,6 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("Die");
         OnDeath?.Invoke();
-        
+
     }
 }

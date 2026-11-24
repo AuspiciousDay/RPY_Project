@@ -42885,10 +42885,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponUpgrade
   countUpgradeButton: {fileID: 58941742}
-  intervalUpgradeButton: {fileID: 1949655008}
+  penetrateUpgradeButton: {fileID: 1949655008}
   damageUpgradeButton: {fileID: 806077141}
   countUpgradeDescription: {fileID: 671479982}
-  intervalUpgradeDescription: {fileID: 1556959083}
+  penetrateUpgradeDescription: {fileID: 1556959083}
   damageUpgradeDescription: {fileID: 1803526743}
   weaponAbility: {fileID: 6075019008247351014, guid: 9a51c52c52615ea42b1db58e44be40f2, type: 3}
   playerShooter: {fileID: 1852598749}
@@ -43988,7 +43988,6 @@ MonoBehaviour:
   HealthMax: 100
   InvincibilityTime: 2
   uiManager: {fileID: 15619976}
-  gameManager: {fileID: 0}
 --- !u!1 &1856957004
 GameObject:
   m_ObjectHideFlags: 0
@@ -44125,7 +44124,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ATTACK SPEED
+  m_text: ATTACK PENETRATE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc4cc2181eccc7344aa6d23e953d2430, type: 2}
   m_sharedMaterial: {fileID: -8114126664049660665, guid: dc4cc2181eccc7344aa6d23e953d2430, type: 2}
@@ -44219,7 +44218,7 @@ GameObject:
   - component: {fileID: 1949655008}
   - component: {fileID: 1949655007}
   m_Layer: 5
-  m_Name: Speed
+  m_Name: Penetrate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44417,6 +44416,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 141019389}
+    - target: {fileID: 4501260438555152265, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4501260438555152265, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4641130483989746872, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -44600,6 +44607,10 @@ PrefabInstance:
     - target: {fileID: 3505192344621144939, guid: ccd50ebea705a6243908570f1ed92725, type: 3}
       propertyPath: m_Name
       value: ExpBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3600747026239153176, guid: ccd50ebea705a6243908570f1ed92725, type: 3}
+      propertyPath: m_text
+      value: LV. 1
       objectReference: {fileID: 0}
     - target: {fileID: 5014903515791340042, guid: ccd50ebea705a6243908570f1ed92725, type: 3}
       propertyPath: m_Pivot.x

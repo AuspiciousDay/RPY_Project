@@ -14,7 +14,7 @@ public class MonsterSpawner : MonoBehaviour
     private readonly List<Monster> monsters = new List<Monster>();
     private Camera mainCam;
 
-    private float spawnInterval = 3.5f;
+    private float spawnInterval = 5f;
     private float timer = 0f;
     public UiManager uiManager;
 
@@ -26,6 +26,8 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Update()
     {
+        monsters.RemoveAll(monster => monster == null);
+
         timer += Time.deltaTime;
 
         if (timer >= spawnInterval || monsters.Count == 0)

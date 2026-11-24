@@ -5,46 +5,59 @@ using TMPro;
 public class WeaponUpgrade : MonoBehaviour
 {
     public Button countUpgradeButton;
-    public Button intervalUpgradeButton;
+    public Button penetrateUpgradeButton;
     public Button damageUpgradeButton;
 
     public TMP_Text countUpgradeDescription;
-    public TMP_Text intervalUpgradeDescription;
+    public TMP_Text penetrateUpgradeDescription;
     public TMP_Text damageUpgradeDescription;
 
-    public PlayerAbility weaponAbility;
     public PlayerShooter playerShooter;
+
+    private void Awake()
+    {
+        countUpgradeButton.onClick.AddListener(UpgradeCount);
+        penetrateUpgradeButton.onClick.AddListener(UpgradePenetrate);
+        damageUpgradeButton.onClick.AddListener(UpgradeDamage);
+    }
 
     private void Start()
     {
-        countUpgradeButton.onClick.AddListener(UpgradeCount);
-        intervalUpgradeButton.onClick.AddListener(UpgradeInterval);
-        damageUpgradeButton.onClick.AddListener(UpgradeDamage);
-        gameObject.SetActive(false);
+        CloseUpgrade();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        countUpgradeDescription.text = $"Count: {playerShooter.AttackCount}";
-        intervalUpgradeDescription.text = $"Interval: {playerShooter.AttackInterval:F2}s";
-        damageUpgradeDescription.text = $"Damage: {weaponAbility.Damage}";
+        countUpgradeDescription.text =
+            $"Count: {playerShooter.AttackCount}";
+
+        penetrateUpgradeDescription.text =
+            $"Penetrate: {playerShooter.PenetrateCount}";
+
+        damageUpgradeDescription.text =
+            $"Damage: {playerShooter.AttackDamage}";
     }
 
     public void UpgradeCount()
     {
         playerShooter.AttackCount++;
-        gameObject.SetActive(false);
-        GameManager.PauseGame(1f);
+        CloseUpgrade();
     }
-    public void UpgradeInterval()
+
+    public void UpgradePenetrate()
     {
-        playerShooter.AttackInterval -= 0.1f; 
-        gameObject.SetActive(false);
-        GameManager.PauseGame(1f);
+        playerShooter.PenetrateCount++;
+        CloseUpgrade();
     }
+
     public void UpgradeDamage()
     {
-        weaponAbility.Damage += 10;
+        playerShooter.AttackDamage += 5;
+        CloseUpgrade();
+    }
+
+    private void CloseUpgrade()
+    {
         gameObject.SetActive(false);
         GameManager.PauseGame(1f);
     }
