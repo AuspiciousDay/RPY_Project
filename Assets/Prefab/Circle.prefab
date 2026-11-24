@@ -170,4 +170,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAbility
   Speed: 5
-  Damage: 100
+  Damage: 10
