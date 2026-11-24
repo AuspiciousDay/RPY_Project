@@ -3,9 +3,9 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [Header("몬스터 Data 연결")]
-    [SerializeField]private MonsterData monsterData;
+    [SerializeField] private MonsterData monsterData;
 
-    [SerializeField]private GameObject expGem;
+    [SerializeField] private GameObject expGem;
 
     public int Health = 100;
     public int Damage = 10;
@@ -22,7 +22,6 @@ public class Monster : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        uiManager = FindFirstObjectByType<UiManager>();
     }
 
     private void Start()
@@ -33,7 +32,7 @@ public class Monster : MonoBehaviour
             playerTarget = playerObj.transform;
         }
     }
-    
+
     private void Update()
     {
         if (playerTarget == null) return;
@@ -70,7 +69,7 @@ public class Monster : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(isDead) return;
+        if (isDead) return;
 
         Health -= damage;
 
@@ -89,7 +88,7 @@ public class Monster : MonoBehaviour
         int randomValue = Random.Range(0, percent);
         uiManager.UpdateKillCount(1);
 
-        if(expGem != null && randomValue < 50)
+        if (expGem != null && randomValue < 70)
         {
             Instantiate(expGem, transform.position, Quaternion.identity);
         }
@@ -98,10 +97,10 @@ public class Monster : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(!collision.gameObject.CompareTag("Player")) return;
-        
+        if (!collision.gameObject.CompareTag("Player")) return;
+
         PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-        
+
         if (playerHealth != null)
         {
             playerHealth.Damage(Damage);
