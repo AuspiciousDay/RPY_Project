@@ -16,10 +16,13 @@ public class Monster : MonoBehaviour
     private Transform playerTarget;
     private SpriteRenderer spriteRenderer;
 
+    public UiManager uiManager;
+
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        uiManager = FindFirstObjectByType<UiManager>();
     }
 
     private void Start()
@@ -52,9 +55,10 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void Setup(MonsterData data)
+    public void Setup(MonsterData data, UiManager uiManager)
     {
         monsterData = data;
+        this.uiManager = uiManager;
 
         Health = data.maxHp;
         Damage = (int)data.damage;
@@ -83,6 +87,7 @@ public class Monster : MonoBehaviour
     {
         int percent = 100;
         int randomValue = Random.Range(0, percent);
+        uiManager.UpdateKillCount(1);
 
         if(expGem != null && randomValue < 50)
         {

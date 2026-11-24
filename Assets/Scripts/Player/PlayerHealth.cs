@@ -12,9 +12,13 @@ public class PlayerHealth : MonoBehaviour
     private bool Invincibility = false; 
     private bool IsDead = false;
     public event Action OnDeath;
+    
+    public UiManager uiManager;
+    public GameManager gameManager;
     private void Start()
     {
         Health = HealthMax;
+        uiManager.GetComponent<UiManager>();
     }
     public void Damage(int Damage)
     {
@@ -22,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
             return;
 
         Health -= Damage;
-
+        uiManager.UpdateHp(Health, HealthMax);
         if (Health <= 0)
         {
             Health = 0;
@@ -47,7 +51,7 @@ public class PlayerHealth : MonoBehaviour
         IsDead = true;
 
         Debug.Log("Die");
-
         OnDeath?.Invoke();
+        
     }
 }

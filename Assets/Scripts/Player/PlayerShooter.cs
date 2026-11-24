@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class PlayerShooter : MonoBehaviour
@@ -8,6 +9,8 @@ public class PlayerShooter : MonoBehaviour
     public float AttackInterval = 1f;
     public int AttackCount = 1;
     private float AttackTimer = 0f;
+    private Monster TargetMonster;
+    private float Distance;
 
     private void Update()
     {
@@ -15,11 +18,11 @@ public class PlayerShooter : MonoBehaviour
 
         if (AttackTimer >= AttackInterval)
         {
-            Monster Target = FindNearestMonster();
+            TargetMonster = FindNearestMonster();
 
-            if (Target != null)
+            if (TargetMonster != null)
             {
-                Shoot(Target);
+                Shoot(TargetMonster);
                 AttackTimer = 0f;
             }
         }
@@ -30,11 +33,11 @@ public class PlayerShooter : MonoBehaviour
         Monster[] Monsters = FindObjectsByType<Monster>(FindObjectsSortMode.None);
 
         Monster NearestMonster = null;
-        float NearestDistance = Mathf.Infinity;
+        float NearestDistance = 20f;
 
         foreach (Monster Monster in Monsters)
         {
-            float Distance = Vector2.Distance(
+            Distance = Vector2.Distance(
                 transform.position,
                 Monster.transform.position
             );
@@ -51,13 +54,18 @@ public class PlayerShooter : MonoBehaviour
 
     private void Shoot(Monster Target)
     {
-        GameObject[] bullets = new GameObject[AttackCount];
+        StartCoroutine(ShootCoroutine(Target));
+    }
+
+    private IEnumerator ShootCoroutine(Monster Target)
+    {
         for (int i = 0; i < AttackCount; i++)
         {
-            bullets[i] = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
-            PlayerAbility ability = bullets[i].GetComponent<PlayerAbility>();
+            GameObject bullet = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
+            PlayerAbility ability = bullet.GetComponent<PlayerAbility>();
             Vector2 direction = (Target.transform.position - transform.position).normalized;
             ability.SetDirection(direction);
+            yield return new WaitForSeconds(0.1f); 
         }
     }
 

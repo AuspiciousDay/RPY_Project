@@ -41,20 +41,20 @@ public class PlayerLevel : MonoBehaviour
         }
     }
 
-    // private void OnCollisionEnter2D(Collision2D collision)
-    // {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
 
-    //     if (collision.gameObject.CompareTag("Gem10"))
-    //     {
-    //         GainExp(10);
-    //         Destroy(collision.gameObject);
-    //         Debug.Log("Player Level : " + level + ", Exp : " + exp);
-    //     }
-    //     else if (collision.gameObject.CompareTag("Gem30"))
-    //     {
-    //         GainExp(30);
-    //         Destroy(collision.gameObject);
-    //         Debug.Log("Player Level : " + level + ", Exp : " + exp);
-    //     }
-    // }
+        if (collision.gameObject.CompareTag("Gem10"))
+        {
+            GainExp(10);
+            Destroy(collision.gameObject);
+            Debug.Log("Player Level : " + level + ", Exp : " + exp);
+        }
+        else if (collision.gameObject.CompareTag("Gem30"))
+        {
+            GainExp(30);
+            Destroy(collision.gameObject);
+            Debug.Log("Player Level : " + level + ", Exp : " + exp);
+        }
+    }
 }

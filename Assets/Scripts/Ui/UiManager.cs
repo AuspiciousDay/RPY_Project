@@ -19,6 +19,8 @@ public class UiManager : MonoBehaviour
     public GameObject optionPanel;
 
     [Header("GameOver 결과창 텍스트")]
+    public TMP_Text gameOverTitleText;
+    public TMP_Text victoryTitleText;
     public TMP_Text gameOverTimerText;
     public TMP_Text gameOverKillCountText;
 
@@ -42,8 +44,9 @@ public class UiManager : MonoBehaviour
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (optionPanel != null) optionPanel.SetActive(false);
         if (expBar != null) expBar.fillAmount = 0f;
-
-        UpdateKillCount(0);
+        gameOverTitleText.gameObject.SetActive(false);
+        victoryTitleText.gameObject.SetActive(false);
+        currentKillCount = 0;
         if (restartButton != null) restartButton.onClick.AddListener(OnClickRestart);
     }
 
@@ -101,7 +104,7 @@ public class UiManager : MonoBehaviour
 
     public void UpdateKillCount(int killCount)
     {
-        currentKillCount = killCount;
+        currentKillCount += killCount;
 
         if (killCountText != null)
             killCountText.text = $"X: {currentKillCount}";
@@ -115,6 +118,11 @@ public class UiManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(gameOverDelay);
+        if (gameOverTitleText != null )
+        {
+            gameOverTitleText.gameObject.SetActive(true);
+            gameOverTitleText.text = "Game Over!";            
+        }
 
         if (gameOverTimerText != null)
         {
@@ -127,6 +135,30 @@ public class UiManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
+    }
+    private IEnumerator VictorySequenceRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (victoryTitleText != null )
+        {
+            victoryTitleText.gameObject.SetActive(true);
+            victoryTitleText.text = "Victory!";            
+        }
+
+        if (gameOverTimerText != null)
+        {
+            gameOverTimerText.text = FormatTime(elapsedTime);
+        }
+        if (gameOverKillCountText != null)
+        {
+            gameOverKillCountText.text = $"X: {currentKillCount}";
+        }
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 
@@ -145,6 +177,11 @@ public class UiManager : MonoBehaviour
 
         if (timerText != null)
             timerText.text = FormatTime(elapsedTime);
+        if(elapsedTime >= 300f && !isGameOver)
+        {
+            isGameOver = true;
+            StartCoroutine(VictorySequenceRoutine());
+        }
     }
 
     private string FormatTime(float timeInSeconds)
@@ -181,7 +218,6 @@ public class UiManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            testKills++;
             UpdateKillCount(testKills);
 
             testExp += 35f;
