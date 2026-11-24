@@ -44,16 +44,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 direction = new Vector2(
-            PlayerInput.Side,
-            PlayerInput.Move
-        ).normalized;
+        Vector2 direction = new Vector2(PlayerInput.Side, PlayerInput.Move).normalized;
 
-        Vector2 movement =
-            direction * MoveSpeed * Time.fixedDeltaTime;
+        Vector2 movement = direction * MoveSpeed * Time.fixedDeltaTime;
 
-        PlayerRigidbody.MovePosition(
-            PlayerRigidbody.position + movement
+        PlayerRigidbody.MovePosition(PlayerRigidbody.position + movement
         );
     }
 }

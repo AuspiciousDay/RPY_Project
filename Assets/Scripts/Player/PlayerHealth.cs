@@ -34,8 +34,6 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
         StartCoroutine(Invincible());
-
-        Debug.Log("Player Health : " + Health);
     }
     private IEnumerator Invincible()
     {
@@ -49,8 +47,6 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         IsDead = true;
-
-        Debug.Log("Die");
         OnDeath?.Invoke();
 
     }

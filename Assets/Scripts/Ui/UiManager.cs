@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -17,6 +16,7 @@ public class UiManager : MonoBehaviour
     [Header("패널 UI")]
     public GameObject gameOverPanel;
     public GameObject optionPanel;
+    public GameObject startPanel;
 
     [Header("GameOver 결과창 텍스트")]
     public TMP_Text gameOverTitleText;
@@ -32,6 +32,10 @@ public class UiManager : MonoBehaviour
     public Animator playerAnimator;
     public float gameOverDelay = 1.5f;
 
+    [Header("시작 화면 버튼")]
+    public Button startButton;
+    public Button exitButton;
+
     private float elapsedTime = 0f;
     private bool isGameOver = false;
     private int currentKillCount = 0;
@@ -39,8 +43,16 @@ public class UiManager : MonoBehaviour
     private float targetExpRatio = 0f;
     private int lastLevel = 1;
 
+    private static bool skipStartPanel = false;
+
     private void Start()
     {
+        if (startPanel != null)
+        {
+            startPanel.SetActive(!skipStartPanel);
+            Time.timeScale = skipStartPanel ? 1f : 0f;
+        }
+        skipStartPanel = false;
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (optionPanel != null) optionPanel.SetActive(false);
         if (expBar != null) expBar.fillAmount = 0f;
@@ -48,6 +60,9 @@ public class UiManager : MonoBehaviour
         victoryTitleText.gameObject.SetActive(false);
         currentKillCount = 0;
         if (restartButton != null) restartButton.onClick.AddListener(OnClickRestart);
+        if (quitButton != null) quitButton.onClick.AddListener(OnClickQuit);
+        if (startButton != null) startButton.onClick.AddListener(OnClickStart);
+        if (exitButton != null) exitButton.onClick.AddListener(OnClickExit);
     }
 
     private void Update()
@@ -69,8 +84,27 @@ public class UiManager : MonoBehaviour
 
     public void OnClickRestart()
     {
-        // 혹시 Time.timeScale이 0으로 멈춰있을 경우를 대비해 1로 복구 후 현재 씬 재시작
+        skipStartPanel = true;
+
         Time.timeScale = 1f;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void OnClickExit()
+    {
+        Application.Quit();
+    }
+
+    public void OnClickStart()
+    {
+        if (startPanel != null) startPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void OnClickQuit()
+    {
+        skipStartPanel = false;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -118,10 +152,10 @@ public class UiManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(gameOverDelay);
-        if (gameOverTitleText != null )
+        if (gameOverTitleText != null)
         {
             gameOverTitleText.gameObject.SetActive(true);
-            gameOverTitleText.text = "Game Over!";            
+            gameOverTitleText.text = "Game Over!";
         }
 
         if (gameOverTimerText != null)
@@ -141,10 +175,10 @@ public class UiManager : MonoBehaviour
     private IEnumerator VictorySequenceRoutine()
     {
         yield return new WaitForSeconds(0.1f);
-        if (victoryTitleText != null )
+        if (victoryTitleText != null)
         {
             victoryTitleText.gameObject.SetActive(true);
-            victoryTitleText.text = "Victory!";            
+            victoryTitleText.text = "Victory!";
         }
 
         if (gameOverTimerText != null)
@@ -164,6 +198,8 @@ public class UiManager : MonoBehaviour
 
     public void ToggleOptionUI()
     {
+        if (isGameOver) return;
+        if (startPanel != null && startPanel.activeSelf) return;
         if (optionPanel == null) return;
 
         bool nextState = !optionPanel.activeSelf;
@@ -177,7 +213,7 @@ public class UiManager : MonoBehaviour
 
         if (timerText != null)
             timerText.text = FormatTime(elapsedTime);
-        if(elapsedTime >= 300f && !isGameOver)
+        if (elapsedTime >= 300f && !isGameOver)
         {
             isGameOver = true;
             StartCoroutine(VictorySequenceRoutine());

@@ -73,8 +73,6 @@ public class Monster : MonoBehaviour
 
         Health -= damage;
 
-        Debug.Log("Monster Health : " + Health);
-
         if (Health <= 0)
         {
             isDead = true;
