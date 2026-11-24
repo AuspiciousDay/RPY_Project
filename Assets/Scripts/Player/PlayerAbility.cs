@@ -44,7 +44,6 @@ public class PlayerAbility : MonoBehaviour
         if (count >= maxCount)
         {
             Destroy(gameObject);
-            Debug.Log(count);
         }
 
     }

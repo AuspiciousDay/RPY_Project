@@ -47,13 +47,11 @@ public class PlayerLevel : MonoBehaviour
         {
             GainExp(10);
             Destroy(collision.gameObject);
-            Debug.Log("Player Level : " + level + ", Exp : " + exp);
         }
         else if (collision.gameObject.CompareTag("Gem30"))
         {
             GainExp(30);
             Destroy(collision.gameObject);
-            Debug.Log("Player Level : " + level + ", Exp : " + exp);
         }
     }
 }

@@ -9,12 +9,15 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GameOverUi.SetActive(false);
+        // StartUi.SetActive(true);
         PlayerHealth.OnDeath += GameOver;
     }
+
     private void GameOver()
     {
         GameOverUi.SetActive(true);
     }
+
     private void OnDestroy()
     {
         PlayerHealth.OnDeath -= GameOver;
@@ -24,4 +27,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = timeScale;
     }
+
+
 }

@@ -23,19 +23,16 @@ public class WeaponUpgrade : MonoBehaviour
 
     private void Start()
     {
-        CloseUpgrade();
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
-        countUpgradeDescription.text =
-            $"Count: {playerShooter.AttackCount}";
+        countUpgradeDescription.text = $"Count: {playerShooter.AttackCount}";
 
-        penetrateUpgradeDescription.text =
-            $"Penetrate: {playerShooter.PenetrateCount}";
+        penetrateUpgradeDescription.text = $"Penetrate: {playerShooter.PenetrateCount}";
 
-        damageUpgradeDescription.text =
-            $"Damage: {playerShooter.AttackDamage}";
+        damageUpgradeDescription.text = $"Damage: {playerShooter.AttackDamage}";
     }
 
     public void UpgradeCount()
