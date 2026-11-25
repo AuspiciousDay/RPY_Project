@@ -8,8 +8,8 @@ public class Monster : MonoBehaviour
     [SerializeField] private GameObject expGem;
     [SerializeField] protected Animator animator;
 
-    public int health = 100;
-    public int damage = 10;
+    public float health = 100f;
+    public float damage = 10f;
 
     public float moveSpeed = 3f;
     public float attackTime = 0.5f;
@@ -71,7 +71,7 @@ public class Monster : MonoBehaviour
 
     private bool isDead = false;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (isDead) return;
 
