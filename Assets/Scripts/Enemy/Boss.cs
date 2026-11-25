@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Boss : Monster
 {
-    [SerializeField] private Animator animator;
+    private Animator bossAnimator;
 
     [Header("공격 1")]
     [SerializeField] private GameObject attack1Prefab;
@@ -15,7 +15,7 @@ public class Boss : Monster
     private int attack2Damage = 20;
     private float attackCooldown = 3f;
 
-    private Transform bossTargetPlayer;
+    private Transform bossPlayerTarget;
     private SpriteRenderer bossSpriteRenderer;
 
     [Header("그림자")]
@@ -31,15 +31,15 @@ public class Boss : Monster
         if (bossSpriteRenderer == null)
             bossSpriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (animator == null)
-            animator = GetComponent<Animator>();
+        if (bossAnimator == null)
+            bossAnimator = GetComponent<Animator>();
 
-        if (bossTargetPlayer == null)
+        if (bossPlayerTarget == null)
         {
             GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null)
             {
-                bossTargetPlayer = playerObj.transform;
+                bossPlayerTarget = playerObj.transform;
             }
         }
 
@@ -53,7 +53,7 @@ public class Boss : Monster
             return;
         }
 
-        if (bossTargetPlayer == null) return;
+        if (bossPlayerTarget == null) return;
 
         UpdateSkillPointsDirection();
 
@@ -108,7 +108,7 @@ public class Boss : Monster
                 bossMoveSpeed = moveSpeed;
                 moveSpeed = 0f;
                 isAttacking = true;
-                animator.SetTrigger("Attack1");
+                bossAnimator.SetTrigger("Attack1");
             }
             return;
 
@@ -120,7 +120,7 @@ public class Boss : Monster
                 bossMoveSpeed = moveSpeed;
                 moveSpeed = 0f;
                 isAttacking = true;
-                animator.SetTrigger("Attack2");
+                bossAnimator.SetTrigger("Attack2");
             }
             return;
         }
@@ -141,7 +141,7 @@ public class Boss : Monster
 
     public void SpawnAttack1Effect()
     {
-        if (attack1Prefab == null || bossTargetPlayer == null) return;
+        if (attack1Prefab == null || bossPlayerTarget == null) return;
 
         Vector3 spawnPos = attack1Position != null ? attack1Position.position : transform.position;
         GameObject projObj = Instantiate(attack1Prefab, spawnPos, Quaternion.identity);
@@ -149,13 +149,13 @@ public class Boss : Monster
         BossAbility projectile = projObj.GetComponent<BossAbility>();
         if (projectile != null)
         {
-            projectile.Init(bossTargetPlayer, attack1Damage);
+            projectile.Init(bossPlayerTarget, attack1Damage);
         }
     }
 
     public void SpawnAttack2Effect()
     {
-        if (attack2Prefab == null || bossTargetPlayer == null) return;
+        if (attack2Prefab == null || bossPlayerTarget == null) return;
 
         Vector3 spawnPos = attack2Position != null ? attack2Position.position : transform.position;
         GameObject projObj = Instantiate(attack2Prefab, spawnPos, Quaternion.identity);
@@ -163,7 +163,7 @@ public class Boss : Monster
         BossAbility projectile = projObj.GetComponent<BossAbility>();
         if (projectile != null)
         {
-            projectile.Init(bossTargetPlayer, attack2Damage);
+            projectile.Init(bossPlayerTarget, attack2Damage);
         }
     }
 

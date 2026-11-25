@@ -196,12 +196,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Monster
   monsterData: {fileID: 11400000, guid: 6fbb3c1831bc20b4b98cfb59da653bdb, type: 2}
   expGem: {fileID: 4163536546525974710, guid: 78aa471e7eeb10947a045f762cdf39ad, type: 3}
-  Health: 100
-  Damage: 10
+  animator: {fileID: 8540367079244756912}
+  health: 100
+  damage: 10
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
-  hitFlash: {fileID: 0}
 --- !u!114 &1793191665610522735
 MonoBehaviour:
   m_ObjectHideFlags: 0

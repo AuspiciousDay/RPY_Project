@@ -48,5 +48,10 @@ public class PlayerLevel : MonoBehaviour
         {
             gem.SetTarget(this);
         }
+        else if (collision.gameObject.CompareTag("Gem50"))
+        {
+            GainExp(50);
+            Destroy(collision.gameObject);
+        }
     }
 }

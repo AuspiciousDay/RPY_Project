@@ -6,29 +6,29 @@ public class Monster : MonoBehaviour
     [SerializeField] private MonsterData monsterData;
 
     [SerializeField] private GameObject expGem;
+    [SerializeField] protected Animator animator;
 
-    public float Health = 100f;
-    public float Damage = 10f;
+    public int health = 100;
+    public int damage = 10;
 
     public float moveSpeed = 3f;
-    public float attackTime = 0.1f;
-    private float nextAttackTime;
+    public float attackTime = 0.5f;
 
-    private Transform playerTarget;
-    private SpriteRenderer spriteRenderer;
+    protected Transform playerTarget;
+    protected SpriteRenderer spriteRenderer;
 
     public UiManager uiManager;
 
-    public HitFlash hitFlash;
+    private HitFlash hitFlash;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         hitFlash = GetComponent<HitFlash>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
@@ -37,7 +37,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (playerTarget == null) return;
 
@@ -63,30 +63,36 @@ public class Monster : MonoBehaviour
         monsterData = data;
         this.uiManager = uiManager;
 
-        Health = data.maxHp;
-        Damage = (int)data.damage;
+        health = data.maxHp;
+        damage = (int)data.damage;
         moveSpeed = data.speed;
         attackTime = data.attackTime;
     }
 
     private bool isDead = false;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         if (isDead) return;
 
-        Health -= damage;
+        health -= damage;
         hitFlash.Flash();
 
-        if (Health <= 0)
+        if (health <= 0)
         {
             isDead = true;
+
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+
+            if (animator != null) animator.SetTrigger("Die");
             Die();
         }
     }
 
     public void Die()
     {
+        moveSpeed = 0f;
         int percent = 100;
         int randomValue = Random.Range(0, percent);
         uiManager.UpdateKillCount(1);
@@ -95,22 +101,18 @@ public class Monster : MonoBehaviour
         {
             Instantiate(expGem, transform.position, Quaternion.identity);
         }
-        Destroy(gameObject);
+        Destroy(gameObject, 0.5f);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
 
-        if (Time.time < nextAttackTime) return;
-
         PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
 
         if (playerHealth != null)
         {
-            playerHealth.Damage(Damage);
-
-            nextAttackTime = Time.time + attackTime;
+            playerHealth.Damage(damage);
         }
     }
 }

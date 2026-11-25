@@ -511,6 +511,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
+--- !u!1001 &301342975766635394
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1578370992574624688, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_Name
+      value: Elite Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.0839
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0419
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782721207689694965, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
 --- !u!1001 &9109143573937178428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -523,10 +580,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vampire
       objectReference: {fileID: 0}
-    - target: {fileID: 7206064454805492924, guid: dac4bc250fe1c074daa06e8b11d1e789, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -7583233051353887865, guid: 3a9284569a975e04d94843499ade170b, type: 3}
     - target: {fileID: 7329971139622262086, guid: dac4bc250fe1c074daa06e8b11d1e789, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.33
@@ -580,5 +633,6 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1795352821}
   - {fileID: 9109143573937178428}
+  - {fileID: 301342975766635394}
   - {fileID: 435827558}
   - {fileID: 1092521360}

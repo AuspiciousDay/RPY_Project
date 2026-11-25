@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossAbility : MonoBehaviour
@@ -6,14 +7,14 @@ public class BossAbility : MonoBehaviour
     public float speed = 6f;
     public float rotateSpeed = 100f;
     public float lifeTime = 5f;
-    public float damage = 15f;
+    public int damage = 15;
 
     private Transform target;
 
-    public void Init(Transform playerTarget, float projectileDamage)
+    public void Init(Transform playerTarget, int SkillDamage)
     {
         target = playerTarget;
-        damage = projectileDamage;
+        damage = SkillDamage;
 
         // 공격이 나오자마자 대상을 따라감
         if (target != null)
@@ -42,14 +43,19 @@ public class BossAbility : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (!collision.gameObject.CompareTag("Player")) return;
+
+
+        PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
+        if (playerHealth == null)
         {
-            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                playerHealth.Damage(damage);
-            }
-            Destroy(gameObject);
+            playerHealth = collision.GetComponentInParent<PlayerHealth>();
         }
+        if (playerHealth != null)
+        {
+            playerHealth.Damage(damage);
+        }
+        Destroy(gameObject);
+
     }
 }
