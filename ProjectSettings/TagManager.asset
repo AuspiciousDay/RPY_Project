@@ -7,6 +7,7 @@ TagManager:
   - Gem10
   - Gem30
   - Gem
+  - Gem50
   layers:
   - Default
   - TransparentFX
