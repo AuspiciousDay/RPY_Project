@@ -42,21 +42,11 @@ public class PlayerLevel : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Gem gem = collision.GetComponent<Gem>();
 
-        if (collision.gameObject.CompareTag("Gem30"))
+        if (gem != null)
         {
-            GainExp(30);
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("Gem50"))
-        {
-            GainExp(50);
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("Gem100"))
-        {
-            GainExp(100);
-            Destroy(collision.gameObject);
+            gem.SetTarget(this);
         }
     }
 }
