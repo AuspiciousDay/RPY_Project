@@ -15,6 +15,7 @@ public class GunUpgrade : WeaponController
         {
             case 1:
                 playerShooter.enabled = true;
+                UiManager.Instance?.ShowSkillIcon("Gun");
                 break;
 
             case 2:

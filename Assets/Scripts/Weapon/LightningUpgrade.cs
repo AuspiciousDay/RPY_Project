@@ -15,6 +15,7 @@ public class LightningUpgrade : WeaponController
         {
             case 1:
                 lightningWeapon.enabled = true;
+                UiManager.Instance?.ShowSkillIcon("Lightning");
                 break;
 
             case 2:

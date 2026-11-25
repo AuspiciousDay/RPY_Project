@@ -7,6 +7,7 @@ public class PassiveAddMaxHp : PassiveController
 
     protected override void Apply()
     {
+        UiManager.Instance?.ShowPassiveIcon("MaxHp");
         playerHealth.HealthMax += addMaxHp;
         playerHealth.Health += addMaxHp;
 

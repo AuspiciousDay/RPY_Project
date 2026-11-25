@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections.Generic;
+
+
 
 public class UiManager : MonoBehaviour
 {
@@ -35,6 +38,35 @@ public class UiManager : MonoBehaviour
     [Header("시작 화면 버튼")]
     public Button startButton;
     public Button exitButton;
+
+    [System.Serializable]
+    public struct SlotEntry
+    {
+        public string key;
+        public GameObject iconObj;
+    }
+    public static UiManager Instance { get; private set; }
+
+    [Header("아이콘 슬롯")]
+    [SerializeField] private List<SlotEntry> skillSlots = new List<SlotEntry>();
+    [SerializeField] private List<SlotEntry> passiveSlots = new List<SlotEntry>();
+
+    private readonly Dictionary<string, GameObject> skillMap = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, GameObject> passiveMap = new Dictionary<string, GameObject>();
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        InitIconMap(skillSlots, skillMap);
+        InitIconMap(passiveSlots, passiveMap);
+    }
+
 
     private float elapsedTime = 0f;
     private bool isGameOver = false;
@@ -81,6 +113,58 @@ public class UiManager : MonoBehaviour
         RunTestInputs();
 #endif
     }
+
+    private void InitIconMap(List<SlotEntry> entries, Dictionary<string, GameObject> map)
+    {
+        map.Clear();
+        if (entries == null) return;
+
+        foreach (var entry in entries)
+        {
+            if (string.IsNullOrEmpty(entry.key) || entry.iconObj == null) continue;
+
+            // 처음엔 꺼진 상태로 시작
+            entry.iconObj.SetActive(false);
+
+            if (!map.ContainsKey(entry.key))
+            {
+                map.Add(entry.key, entry.iconObj);
+            }
+            else
+            {
+                Debug.LogWarning($"[UiManager] 중복된 아이콘 키입니다: {entry.key}");
+            }
+        }
+    }
+
+    public void ShowSkillIcon(string key)
+    {
+        if (string.IsNullOrEmpty(key)) return;
+
+        if (skillMap.TryGetValue(key, out GameObject obj) && obj != null && !obj.activeSelf)
+        {
+            if (!obj.activeSelf)
+            {
+                obj.transform.SetAsLastSibling();
+                obj.SetActive(true);
+            }
+        }
+    }
+
+    public void ShowPassiveIcon(string key)
+    {
+        if (string.IsNullOrEmpty(key)) return;
+
+        if (passiveMap.TryGetValue(key, out GameObject obj) && obj != null && !obj.activeSelf)
+        {
+            if (!obj.activeSelf)
+            {
+                obj.transform.SetAsLastSibling();
+                obj.SetActive(true);
+            }
+        }
+    }
+
 
     public void OnClickRestart()
     {
