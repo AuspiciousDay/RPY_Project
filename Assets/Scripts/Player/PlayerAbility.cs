@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 public class PlayerAbility : MonoBehaviour
 {
     public float speed = 5f;
-    public int damage = 10;
+    public float damage = 10f;
     public int count = 0;
     public int maxCount = 1;
 
@@ -44,7 +44,6 @@ public class PlayerAbility : MonoBehaviour
         if (count >= maxCount)
         {
             Destroy(gameObject);
-            Debug.Log(count);
         }
         
     }

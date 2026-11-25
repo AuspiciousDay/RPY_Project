@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerShooter : MonoBehaviour
 {
     public int PenetrateCount = 1;
-    public int AttackDamage = 10;
+    public float AttackDamage = 25f;
     public GameObject AbilityPrefab;
 
     public float AttackInterval = 1f;
@@ -39,10 +39,7 @@ public class PlayerShooter : MonoBehaviour
 
         foreach (Monster Monster in Monsters)
         {
-            Distance = Vector2.Distance(
-                transform.position,
-                Monster.transform.position
-            );
+            Distance = Vector2.Distance(transform.position, Monster.transform.position);
 
             if (Distance < NearestDistance)
             {
@@ -73,11 +70,9 @@ public class PlayerShooter : MonoBehaviour
                 yield break;
             }
 
-            Vector2 direction =
-                (Target.transform.position - transform.position).normalized;
+            Vector2 direction = (Target.transform.position - transform.position).normalized;
 
-            GameObject bullet = Instantiate(
-                AbilityPrefab, transform.position, Quaternion.identity);
+            GameObject bullet = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
 
             PlayerAbility ability = bullet.GetComponent<PlayerAbility>();
 

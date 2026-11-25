@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class Monster : MonoBehaviour
 {
@@ -8,23 +7,25 @@ public class Monster : MonoBehaviour
 
     [SerializeField] private GameObject expGem;
 
-    public int Health = 100;
-    public int Damage = 10;
+    public float Health = 100f;
+    public float Damage = 10f;
 
     public float moveSpeed = 3f;
-    public float attackTime = 0.5f;
+    public float attackTime = 0.1f;
+    private float nextAttackTime;
+
     private Transform playerTarget;
     private SpriteRenderer spriteRenderer;
 
     public UiManager uiManager;
 
-    private Color originalColor;
-    private Coroutine hitCoroutine;
+    public HitFlash hitFlash;
+
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        originalColor = spriteRenderer.color;
+        hitFlash = GetComponent<HitFlash>();
     }
 
     private void Start()
@@ -70,33 +71,18 @@ public class Monster : MonoBehaviour
 
     private bool isDead = false;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (isDead) return;
 
         Health -= damage;
-
-        Debug.Log("Monster Health : " + Health);
-
-        if(hitCoroutine != null)
-        {
-            StopCoroutine(hitCoroutine);
-        }
-        hitCoroutine = StartCoroutine(HitEffect());
+        hitFlash.Flash();
 
         if (Health <= 0)
         {
             isDead = true;
             Die();
         }
-    }
-    private IEnumerator HitEffect()
-    {
-        spriteRenderer.color = Color.blueViolet;
-        yield return new WaitForSeconds(0.2f);
-
-        spriteRenderer.color = originalColor;
-        yield return null;
     }
 
     public void Die()
@@ -116,11 +102,15 @@ public class Monster : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) return;
 
+        if (Time.time < nextAttackTime) return;
+
         PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
 
         if (playerHealth != null)
         {
             playerHealth.Damage(Damage);
+
+            nextAttackTime = Time.time + attackTime;
         }
     }
 }
