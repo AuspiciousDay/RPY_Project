@@ -46,6 +46,6 @@ public class PlayerAbility : MonoBehaviour
             Destroy(gameObject);
             Debug.Log(count);
         }
-
+        
     }
 }

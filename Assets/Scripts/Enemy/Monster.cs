@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Monster : MonoBehaviour
 {
@@ -12,16 +13,18 @@ public class Monster : MonoBehaviour
 
     public float moveSpeed = 3f;
     public float attackTime = 0.5f;
-
     private Transform playerTarget;
     private SpriteRenderer spriteRenderer;
 
     public UiManager uiManager;
 
+    private Color originalColor;
+    private Coroutine hitCoroutine;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
     }
 
     private void Start()
@@ -75,11 +78,25 @@ public class Monster : MonoBehaviour
 
         Debug.Log("Monster Health : " + Health);
 
+        if(hitCoroutine != null)
+        {
+            StopCoroutine(hitCoroutine);
+        }
+        hitCoroutine = StartCoroutine(HitEffect());
+
         if (Health <= 0)
         {
             isDead = true;
             Die();
         }
+    }
+    private IEnumerator HitEffect()
+    {
+        spriteRenderer.color = Color.blueViolet;
+        yield return new WaitForSeconds(0.2f);
+
+        spriteRenderer.color = originalColor;
+        yield return null;
     }
 
     public void Die()
