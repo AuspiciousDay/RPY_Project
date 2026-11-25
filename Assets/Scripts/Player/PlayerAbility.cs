@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 public class PlayerAbility : MonoBehaviour
 {
     public float speed = 5f;
-    public float damage = 10f;
+    public int damage = 10;
     public int count = 0;
     public int maxCount = 1;
 

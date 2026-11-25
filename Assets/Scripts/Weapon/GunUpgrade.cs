@@ -18,7 +18,7 @@ public class GunUpgrade : WeaponController
                 break;
 
             case 2:
-                playerShooter.AttackDamage += 5f;
+                playerShooter.AttackDamage += 5;
                 break;
 
             case 3:

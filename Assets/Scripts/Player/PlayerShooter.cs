@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerShooter : MonoBehaviour
 {
     public int PenetrateCount = 1;
-    public float AttackDamage = 25f;
+    public int AttackDamage = 25;
     public GameObject AbilityPrefab;
 
     public float AttackInterval = 1f;
