@@ -18,10 +18,13 @@ public class Monster : MonoBehaviour
 
     public UiManager uiManager;
 
+    public HitFlash hitFlash;
+
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        hitFlash = GetComponent<HitFlash>();
     }
 
     private void Start()
@@ -72,6 +75,7 @@ public class Monster : MonoBehaviour
         if (isDead) return;
 
         Health -= damage;
+        hitFlash.Flash();
 
         if (Health <= 0)
         {
