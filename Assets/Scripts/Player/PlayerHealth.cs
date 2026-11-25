@@ -71,6 +71,22 @@ public class PlayerHealth : MonoBehaviour
 
         Invincibility = false;
     }
+    public void Heal(int Amount)
+    {
+        if (IsDead)
+            return;
+
+        Health += Amount;
+
+        if (Health > HealthMax)
+        {
+            Health = HealthMax;
+        }
+
+        uiManager.UpdateHp(Health, HealthMax);
+
+        Debug.Log("Player Heal : " + Health);
+    }
 
     private void Die()
     {
@@ -79,4 +95,5 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Die");
         OnDeath?.Invoke();
     }
+
 }
