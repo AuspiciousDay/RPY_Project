@@ -10,8 +10,8 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        Move = Input.GetAxis(MoveAxis);
-        Side = Input.GetAxis(SideAxis);
+        Move = Input.GetAxisRaw(MoveAxis);
+        Side = Input.GetAxisRaw(SideAxis);
     }
 
     private void OnEnable()

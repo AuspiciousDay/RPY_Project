@@ -6,7 +6,7 @@ public class PlayerLevel : MonoBehaviour
     public float exp;
     public int level;
 
-    public WeaponUpgrade weaponUpgrade;
+    public PassiveUpgradeUI passiveUpgradeUI;
 
     private void Start()
     {
@@ -36,22 +36,17 @@ public class PlayerLevel : MonoBehaviour
             level++;
             uiManager.UpdateExp(exp, level * 50, level);
             GameManager.PauseGame(0f);
-            weaponUpgrade.gameObject.SetActive(true);
+            passiveUpgradeUI.gameObject.SetActive(true);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Gem gem = collision.GetComponent<Gem>();
 
-        if (collision.gameObject.CompareTag("Gem10"))
+        if (gem != null)
         {
-            GainExp(10);
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("Gem30"))
-        {
-            GainExp(30);
-            Destroy(collision.gameObject);
+            gem.SetTarget(this);
         }
         else if (collision.gameObject.CompareTag("Gem50"))
         {

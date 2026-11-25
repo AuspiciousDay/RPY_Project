@@ -5,11 +5,8 @@ using System;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int Health = 100;
-    public int HealthMax = 100;
-
-    public float InvincibilityTime = 2f; // 무적시간
-    private bool Invincibility = false;
+    public float Health = 100f;
+    public float HealthMax = 100f;
     private bool IsDead = false;
     public event Action OnDeath;
 
@@ -20,9 +17,9 @@ public class PlayerHealth : MonoBehaviour
         Health = HealthMax;
         uiManager.UpdateHp(Health, HealthMax);
     }
-    public void Damage(int Damage)
+    public void Damage(float Damage)
     {
-        if (IsDead || Invincibility)
+        if (IsDead)
             return;
 
         Health -= Damage;
@@ -33,21 +30,24 @@ public class PlayerHealth : MonoBehaviour
             Die();
             return;
         }
-        StartCoroutine(Invincible());
-    }
-    private IEnumerator Invincible()
-    {
-        Invincibility = true;
-
-        yield return new WaitForSeconds(InvincibilityTime);
-
-        Invincibility = false;
     }
 
     private void Die()
     {
         IsDead = true;
         OnDeath?.Invoke();
+    }
 
+    public void Heal(float amount)
+    {
+        if (IsDead)
+            return;
+
+        Health += amount;
+        if (Health > HealthMax)
+        {
+            Health = HealthMax;
+        }
+        uiManager.UpdateHp(Health, HealthMax);
     }
 }

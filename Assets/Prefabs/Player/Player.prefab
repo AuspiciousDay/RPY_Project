@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3569353405591733174}
   - component: {fileID: 1170517495247014783}
+  - component: {fileID: 7958358440892336391}
   m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
@@ -26,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 623835995937608686}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.82, y: 0.27, z: 1}
+  m_LocalPosition: {x: 0, y: -0.53, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8391993721873550071}
+  m_Father: {fileID: 4641130483989746872}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1170517495247014783
 SpriteRenderer:
@@ -90,7 +91,23 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
+--- !u!114 &7958358440892336391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623835995937608686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de19534df9b784b4b9877bb9c2615dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShadowController
+  characterSprite: {fileID: 5272088016980917143}
+  widthMultiplier: 0.8
+  heightMultiplier: 0.2
+  offsetY: 0
 --- !u!1 &4181412259043722226
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.2}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1034160462888930588
@@ -193,7 +210,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &4634385611858482207
+--- !u!1 &6915288533097548650
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,30 +218,66 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8391993721873550071}
+  - component: {fileID: 4253227676228439639}
+  - component: {fileID: 7620407897730855186}
   m_Layer: 0
-  m_Name: Shadow (1)
+  m_Name: GemMagnet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8391993721873550071
+--- !u!4 &4253227676228439639
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4634385611858482207}
+  m_GameObject: {fileID: 6915288533097548650}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3569353405591733174}
+  m_Children: []
   m_Father: {fileID: 4641130483989746872}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &7620407897730855186
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6915288533097548650}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 1
 --- !u!1 &7534513451284742156
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +295,15 @@ GameObject:
   - component: {fileID: 484255165117261000}
   - component: {fileID: 500962735334359352}
   - component: {fileID: 6373021666512726674}
+  - component: {fileID: 3444407264250234805}
+  - component: {fileID: 576335577422710730}
+  - component: {fileID: 7013095124870973588}
+  - component: {fileID: 2483207977683154519}
+  - component: {fileID: 4084843440587020573}
+  - component: {fileID: 7827462117160444511}
+  - component: {fileID: 479856356705026245}
+  - component: {fileID: 1900976747291461224}
+  - component: {fileID: 7486103099497389225}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -258,12 +320,13 @@ Transform:
   m_GameObject: {fileID: 7534513451284742156}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.034, z: 0}
+  m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8344475766024561646}
-  - {fileID: 8391993721873550071}
+  - {fileID: 4253227676228439639}
+  - {fileID: 3569353405591733174}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5272088016980917143
@@ -313,7 +376,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1434739705
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1936107718862870309, guid: 473fe1be837f58741a786ed7946421c3, type: 3}
   m_Color: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
@@ -324,7 +387,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &4501260438555152265
 Rigidbody2D:
   serializedVersion: 5
@@ -335,10 +398,10 @@ Rigidbody2D:
   m_GameObject: {fileID: 7534513451284742156}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -350,7 +413,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &6921241692642492363
 Animator:
@@ -425,8 +488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLevel
   uiManager: {fileID: 0}
   exp: 0
-  level: 0
-  weaponUpgrade: {fileID: 0}
+  level: 1
+  passiveUpgradeUI: {fileID: 0}
 --- !u!114 &484255165117261000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,6 +532,159 @@ MonoBehaviour:
   AbilityPrefab: {fileID: 8660560994638883625, guid: 9a51c52c52615ea42b1db58e44be40f2, type: 3}
   AttackInterval: 1
   AttackCount: 1
+--- !u!114 &3444407264250234805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2f36381d197e2469e0d33889ad95f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  Health: 100
+  HealthMax: 100
+  uiManager: {fileID: 0}
+--- !u!114 &576335577422710730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c0b9f26b299c7489b2ed1c5a4cd1bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightningWeapon
+  damage: 10
+  maxCount: 2
+  attackInterval: 5
+  lightningPrefab: {fileID: 1133047909230942936, guid: 624ba087b5f06624eaf5b5cae14fc500, type: 3}
+--- !u!114 &7013095124870973588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1a969ed775d9a43a8bf22c49f7ede2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassiveAddDamage
+  upgradeName: Damage
+  description: Increases all weapon damage by 5
+  icon: {fileID: 4192807381020634485, guid: e62ff9a5c9b7ffb48a2178a6c582b729, type: 3}
+  maxLevel: 5
+  playerShooter: {fileID: 6373021666512726674}
+  lightningWeapon: {fileID: 576335577422710730}
+  addDamage: 5
+--- !u!114 &2483207977683154519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1157d3c256594d34b9eb2574078da9a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassiveAddMagnet
+  upgradeName: Magnet
+  description: Increases pickup range by 0.5
+  icon: {fileID: -7030677071274569992, guid: 8cc87a1b7f22fc44abf220c4fd67ade7, type: 3}
+  maxLevel: 5
+  gemMagnet: {fileID: 7620407897730855186}
+  addRadius: 0.5
+--- !u!114 &4084843440587020573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2056b07b1782d7488211b1f3b000e86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassiveAddMaxHp
+  upgradeName: MaxHp
+  description: Increases max HP by 20 and restores 20 HP
+  icon: {fileID: 6455965668766618852, guid: 892b323474fd9134ea21214f527f2e6a, type: 3}
+  maxLevel: 5
+  playerHealth: {fileID: 3444407264250234805}
+  addMaxHp: 20
+--- !u!114 &7827462117160444511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2792996c407b61489a5c9ffa9e8bcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassiveAddSpeed
+  upgradeName: Speed
+  description: Increases movement speed by 0.5
+  icon: {fileID: -2613198082214950641, guid: 652f15dc9567ae044b8897885e7fef0c, type: 3}
+  maxLevel: 5
+  playerMovement: {fileID: 484255165117261000}
+  addSpeed: 0.5
+--- !u!114 &479856356705026245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2f36381d197e2469e0d33889ad95f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  Health: 100
+  HealthMax: 100
+  uiManager: {fileID: 0}
+--- !u!114 &1900976747291461224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a338e57347a7f4cae9db4ba1f54e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunUpgrade
+  upgradeName: Cross
+  description: 
+  icon: {fileID: 2120024003875985145, guid: 40dd03f5b3ba79b4094c341ae90f65de, type: 3}
+  maxLevel: 5
+  playerShooter: {fileID: 6373021666512726674}
+--- !u!114 &7486103099497389225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02464a868404fc046892d6815d6150b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightningUpgrade
+  upgradeName: Lightning
+  description: 
+  icon: {fileID: -7243629492567491295, guid: 0a24e2ca1ffb0354cab86d1406685f55, type: 3}
+  maxLevel: 5
+  lightningWeapon: {fileID: 576335577422710730}
 --- !u!1001 &7986320899504449077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -551,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458152670658060920, guid: d8f8eb210422e344ca2fb22f1a7c35e2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -690
+      value: -293
       objectReference: {fileID: 0}
     - target: {fileID: 8458152670658060920, guid: d8f8eb210422e344ca2fb22f1a7c35e2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
