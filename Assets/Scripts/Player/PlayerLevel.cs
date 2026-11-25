@@ -53,5 +53,10 @@ public class PlayerLevel : MonoBehaviour
             GainExp(30);
             Destroy(collision.gameObject);
         }
+        else if (collision.gameObject.CompareTag("Gem50"))
+        {
+            GainExp(50);
+            Destroy(collision.gameObject);
+        }
     }
 }

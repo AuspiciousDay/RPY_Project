@@ -4,24 +4,32 @@ using UnityEngine.Tilemaps;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [Header("몬스터 스폰 위치")]
     [SerializeField] private TilemapRenderer backgroundRenderer;
     [SerializeField] private Tilemap backgroundTilemap;
-    [SerializeField] private float spawnPosition = 1.2f;
-    [SerializeField] private float spawnPadding = 0.5f;
+    private float spawnPosition = 1.2f;
+    private float spawnPadding = 0.5f;
 
     public Monster[] monsterPrefabs;
     public MonsterData[] monsterDatas;
+ 
+    private float eliteSpawnChance = 0.15f; 
+    private float bossSpawnTime = 300f;
 
     private readonly List<Monster> monsters = new List<Monster>();
     private Camera mainCam;
 
     private float spawnInterval = 5f;
     private float timer = 0f;
+    private float playTime = 0f; 
+    private bool hasSpawnedBoss = false;
 
     public UiManager uiManager;
 
     private int wave = 3;
+
+    private readonly List<int> normalIndex = new List<int>();
+    private readonly List<int> eliteIndex = new List<int>();
+    private int bossIndex = -1;
 
     private void Awake()
     {
@@ -31,6 +39,33 @@ public class MonsterSpawner : MonoBehaviour
         if (backgroundTilemap == null && backgroundRenderer != null)
         {
             backgroundTilemap = backgroundRenderer.GetComponent<Tilemap>();
+        }
+
+        CategorizeMonsters();
+    }
+
+    // 스크립트 타입 보고 알아서 판단
+    private void CategorizeMonsters()
+    {
+        normalIndex.Clear();
+        eliteIndex.Clear();
+        bossIndex = -1;
+
+        int count = Mathf.Min(monsterPrefabs.Length, monsterDatas.Length);
+        for (int i = 0; i < count; i++)
+        {
+            if (monsterPrefabs[i] is Boss)
+            {
+                bossIndex = i;
+            }
+            else if (monsterPrefabs[i] is EliteMonster)
+            {
+                eliteIndex.Add(i);
+            }
+            else
+            {
+                normalIndex.Add(i);
+            }
         }
     }
 
@@ -48,8 +83,16 @@ public class MonsterSpawner : MonoBehaviour
 
         monsters.RemoveAll(monster => monster == null);
 
-        timer += Time.deltaTime;
+        playTime += Time.deltaTime;
+        if (!hasSpawnedBoss && playTime >= bossSpawnTime)
+        {
+            if (SpawnBoss())
+            {
+                hasSpawnedBoss = true;
+            }
+        }
 
+        timer += Time.deltaTime;
         if (timer >= spawnInterval)
         {
             SpawnWave();
@@ -57,10 +100,9 @@ public class MonsterSpawner : MonoBehaviour
         }
     }
 
-
     private void SpawnWave()
     {
-        int nextWave = wave + 1;
+        int nextWave = wave++;
         int count = Mathf.RoundToInt(nextWave * 1.5f);
         bool spawned = false;
 
@@ -81,18 +123,38 @@ public class MonsterSpawner : MonoBehaviour
     private bool CreateMonster()
     {
         Vector2? spawnPos = GetRandomOutOfScreenPosition();
-
         if (!spawnPos.HasValue) return false;
 
-        int selectedIndex = Random.Range(0, Mathf.Min(monsterPrefabs.Length, monsterDatas.Length));
+        int selectedIndex = -1;
 
-        Monster monsterPrefabSpawn = monsterPrefabs[selectedIndex];
-        MonsterData data = monsterDatas[selectedIndex];
+        if (eliteIndex.Count > 0 && Random.value < eliteSpawnChance)
+        {
+            selectedIndex = eliteIndex[Random.Range(0, eliteIndex.Count)];
+        }
+        else if (normalIndex.Count > 0)
+        {
+            selectedIndex = normalIndex[Random.Range(0, normalIndex.Count)];
+        }
 
-        Monster monster = Instantiate(monsterPrefabSpawn, spawnPos.Value, Quaternion.identity);
+        if (selectedIndex == -1) return false;
 
-        monster.Setup(data, uiManager);
+        Monster monster = Instantiate(monsterPrefabs[selectedIndex], spawnPos.Value, Quaternion.identity);
+        monster.Setup(monsterDatas[selectedIndex], uiManager);
         monsters.Add(monster);
+
+        return true;
+    }
+
+    private bool SpawnBoss()
+    {
+        if (bossIndex == -1) return false;
+
+        Vector2? spawnPos = GetRandomOutOfScreenPosition();
+        if (!spawnPos.HasValue) return false;
+
+        Monster boss = Instantiate(monsterPrefabs[bossIndex], spawnPos.Value, Quaternion.identity);
+        boss.Setup(monsterDatas[bossIndex], uiManager);
+        monsters.Add(boss);
 
         return true;
     }
