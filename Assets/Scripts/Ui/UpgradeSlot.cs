@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[RequireComponent(typeof(Button))]
 public class UpgradeSlot : MonoBehaviour
 {
     [SerializeField] private Image icon;
@@ -9,30 +10,33 @@ public class UpgradeSlot : MonoBehaviour
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text descriptionText;
 
-    private PassiveController passive;
+    private UpgradeBase upgrade;
     private PassiveUpgradeUI upgradeUI;
+
     private void Awake()
     {
         GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
-    public void Setup(PassiveController passive, PassiveUpgradeUI upgradeUI)
+    public void Setup(UpgradeBase upgrade, PassiveUpgradeUI upgradeUI)
     {
-        this.passive = passive;
+        this.upgrade = upgrade;
         this.upgradeUI = upgradeUI;
 
-        icon.sprite = passive.icon;
-        nameText.text = passive.passiveName;
-        descriptionText.text = passive.description;
+        icon.sprite = upgrade.icon;
+        nameText.text = upgrade.upgradeName;
+        descriptionText.text = upgrade.GetDescription();
 
-        levelText.text = passive.Level == 0 ? "NEW!" : $"Lv. {passive.Level + 1}";
+        levelText.text = upgrade.Level == 0
+            ? "NEW!"
+            : $"Lv. {upgrade.Level + 1}";
     }
 
     public void OnClick()
     {
-        if (passive == null) return;
+        if (upgrade == null) return;
 
-        passive.Upgrade();
+        upgrade.Upgrade();
         upgradeUI.Close();
     }
 }

@@ -36,6 +36,18 @@ public class PlayerHealth : MonoBehaviour
     {
         IsDead = true;
         OnDeath?.Invoke();
+    }
 
+    public void Heal(float amount)
+    {
+        if (IsDead)
+            return;
+
+        Health += amount;
+        if (Health > HealthMax)
+        {
+            Health = HealthMax;
+        }
+        uiManager.UpdateHp(Health, HealthMax);
     }
 }

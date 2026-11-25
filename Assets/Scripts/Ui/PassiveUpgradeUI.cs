@@ -3,29 +3,27 @@ using UnityEngine;
 
 public class PassiveUpgradeUI : MonoBehaviour
 {
-    [SerializeField] private PassiveController[] passives;
+    [SerializeField] private UpgradeBase[] upgrades;
     [SerializeField] private UpgradeSlot[] slots;
-
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
 
     private void OnEnable()
     {
         ShowOptions();
     }
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
 
     private void ShowOptions()
     {
-        List<PassiveController> candidates =
-            new List<PassiveController>();
+        List<UpgradeBase> candidates = new List<UpgradeBase>();
 
-        foreach (PassiveController passive in passives)
+        foreach (UpgradeBase upgrade in upgrades)
         {
-            if (!passive.IsMaxLevel)
+            if (upgrade != null && !upgrade.IsMaxLevel)
             {
-                candidates.Add(passive);
+                candidates.Add(upgrade);
             }
         }
 
@@ -45,7 +43,7 @@ public class PassiveUpgradeUI : MonoBehaviour
 
             int index = Random.Range(0, candidates.Count);
 
-            PassiveController selected = candidates[index];
+            UpgradeBase selected = candidates[index];
 
             candidates.RemoveAt(index);
 
