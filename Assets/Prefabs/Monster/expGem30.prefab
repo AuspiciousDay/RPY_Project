@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8051003438453709209}
   - component: {fileID: 3426261040697793791}
   m_Layer: 0
-  m_Name: expGem(Bat)
-  m_TagString: Gem10
+  m_Name: expGem30
+  m_TagString: Gem30
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

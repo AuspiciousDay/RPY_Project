@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Gem10
   - Gem30
-  - Gem
+  - Gem50
+  - Gem100
   layers:
   - Default
   - TransparentFX

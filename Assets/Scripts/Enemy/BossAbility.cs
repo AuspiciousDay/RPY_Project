@@ -6,11 +6,11 @@ public class BossAbility : MonoBehaviour
     public float speed = 6f;
     public float rotateSpeed = 100f;
     public float lifeTime = 5f;
-    public int damage = 15;
+    public float damage = 15f;
 
     private Transform target;
 
-    public void Init(Transform playerTarget, int projectileDamage)
+    public void Init(Transform playerTarget, float projectileDamage)
     {
         target = playerTarget;
         damage = projectileDamage;

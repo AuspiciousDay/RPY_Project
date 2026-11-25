@@ -7,11 +7,12 @@ public class Monster : MonoBehaviour
 
     [SerializeField] private GameObject expGem;
 
-    public int Health = 100;
-    public int Damage = 10;
+    public float Health = 100f;
+    public float Damage = 10f;
 
     public float moveSpeed = 3f;
-    public float attackTime = 0.5f;
+    public float attackTime = 0.1f;
+    private float nextAttackTime;
 
     private Transform playerTarget;
     private SpriteRenderer spriteRenderer;
@@ -70,7 +71,7 @@ public class Monster : MonoBehaviour
 
     private bool isDead = false;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (isDead) return;
 
@@ -101,11 +102,15 @@ public class Monster : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player")) return;
 
+        if (Time.time < nextAttackTime) return;
+
         PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
 
         if (playerHealth != null)
         {
             playerHealth.Damage(Damage);
+
+            nextAttackTime = Time.time + attackTime;
         }
     }
 }
