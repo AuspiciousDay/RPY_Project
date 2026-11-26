@@ -1495,14 +1495,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawner
   backgroundRenderer: {fileID: 605727538}
   backgroundTilemap: {fileID: 0}
+  cageMonsterPrefab: {fileID: 2491377393351173767, guid: 684b5e9896dccb7429c363d76e734734, type: 3}
+  cageMonsterData: {fileID: 11400000, guid: e6ecfff66122f8d4296e8ae8a484657d, type: 2}
+  cageCount: 60
+  cageRadius: 12
+  cageDuration: 15
+  eilteEventInterval: 50
+  cageInnerNormalCount: 8
+  minMonsterDistanceFromPlayer: 3
   monsterPrefabs:
   - {fileID: 3717021719959381445, guid: 6a1df589c93c6a74488dc02f6bad76eb, type: 3}
   - {fileID: 7181941470513761970, guid: cba7a975a13bb3244a6a9a74b7a0d433, type: 3}
-  - {fileID: 1282274918626518793, guid: f1eff75a2f85d904d98d2ee02b2d14b4, type: 3}
+  - {fileID: 3305901973939594607, guid: f1d6a5df33ecdcf44a7e3699a62cde30, type: 3}
+  - {fileID: 7104542043587005786, guid: 901c52cdcb48e064fb0aef04679251ea, type: 3}
+  - {fileID: 9100324861992958418, guid: b563e3f702a431740a36da46abc6a48b, type: 3}
+  - {fileID: 2155981253505938316, guid: 1220ea52d4cd77d4385261d08cbcee80, type: 3}
   - {fileID: 8933039515839534635, guid: dac4bc250fe1c074daa06e8b11d1e789, type: 3}
   monsterDatas:
   - {fileID: 11400000, guid: 6fbb3c1831bc20b4b98cfb59da653bdb, type: 2}
   - {fileID: 11400000, guid: ed40eb8e5fd28314191e631144ca6daf, type: 2}
+  - {fileID: 11400000, guid: d70f1ec470ae0bb44911975e893719ed, type: 2}
+  - {fileID: 11400000, guid: 12cf955a66f0467448d438233e70a7f8, type: 2}
+  - {fileID: 11400000, guid: 5ff1bf06f25c96745bff926f6eee00bf, type: 2}
   - {fileID: 11400000, guid: 584e456e51604e743ba2faf8fc5fdfce, type: 2}
   - {fileID: 11400000, guid: a4c2475680bdce4468627d0f7c354a6d, type: 2}
   uiManager: {fileID: 15619976}
@@ -2311,7 +2325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 570011875990084262, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 600483555053865390, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_Pivot.x
@@ -2395,35 +2409,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2505027854030431990, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2505027854030431990, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2505027854030431990, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 350
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2505027854030431990, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -117.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4471415094495763954, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4471415094495763954, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4471415094495763954, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 350
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4471415094495763954, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -282.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6213845741635790751, guid: 5919407514633f34385cb8a0e4b5878e, type: 3}
       propertyPath: m_SpriteState.m_PressedSprite
