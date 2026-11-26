@@ -1,22 +1,16 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Coin : MagneticPickup
 {
     [SerializeField] private int goldAmount = 10;
 
-    private bool isCollected = false;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override bool ApplyPickup(PlayerLevel player)
     {
-        if (isCollected) return;
-        if (!collision.CompareTag("Player")) return;
-        if (GoldManager.Instance == null) return;
+        if (GoldManager.Instance == null) return false;
 
-        isCollected = true;
-
+        GameAudio.Play("gem_large_pickup", 0.45f, 0.1f);
         GoldManager.Instance.AddGold(goldAmount);
         UiManager.Instance?.UpdateCoinCount(goldAmount);
-
-        Destroy(gameObject);
+        return true;
     }
 }

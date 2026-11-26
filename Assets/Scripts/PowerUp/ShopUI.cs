@@ -22,19 +22,24 @@ public class ShopUI : MonoBehaviour
 
     private void OnEnable()
     {
-        PowerUpManager.Instance.OnPowerUpChanged += OnPowerUpChanged;
-        GoldManager.Instance.OnGoldChanged += OnGoldChanged;
+        PowerUpManager powerUps = PowerUpManager.Instance;
+        GoldManager gold = GoldManager.Instance;
+        if (powerUps != null) powerUps.OnPowerUpChanged += OnPowerUpChanged;
+        if (gold != null) gold.OnGoldChanged += OnGoldChanged;
 
         RefreshSlots();
 
-        if (selectedData == null && slots.Length > 0)
+        if (selectedData == null)
         {
-            SelectPowerUp(slots[0].Data);
+            foreach (ShopSlot slot in slots)
+            {
+                if (slot == null || slot.Data == null) continue;
+                selectedData = slot.Data;
+                break;
+            }
         }
-        else
-        {
-            RefreshDetails();
-        }
+
+        RefreshDetails();
     }
 
     private void OnDisable()
@@ -59,21 +64,24 @@ public class ShopUI : MonoBehaviour
 
     private void RefreshDetails()
     {
-        if (selectedData == null) return;
-
         PowerUpManager manager = PowerUpManager.Instance;
+        if (selectedData == null || manager == null)
+        {
+            buyButton.interactable = false;
+            return;
+        }
 
         int level = manager.GetLevel(selectedData.type);
 
         selectedIcon.sprite = selectedData.icon;
 
-        nameText.text = $"{selectedData.powerUpName} ({level}/{selectedData.maxLevel})";
+        nameText.text = $"{GameLanguage.Translate(selectedData.powerUpName)} ({level}/{selectedData.maxLevel})";
 
-        descriptionText.text = selectedData.description;
+        descriptionText.text = GameLanguage.Translate(selectedData.description);
 
         if (manager.IsMaxLevel(selectedData.type))
         {
-            priceText.text = "MAX";
+            priceText.text = GameLanguage.Translate("MAX");
             buyButton.interactable = false;
         }
         else
@@ -87,7 +95,8 @@ public class ShopUI : MonoBehaviour
     {
         if (selectedData == null) return;
 
-        PowerUpManager.Instance.Purchase(selectedData.type);
+        bool purchased = PowerUpManager.Instance != null && PowerUpManager.Instance.Purchase(selectedData.type);
+        GameAudio.Play(purchased ? "upgrade_select" : "ui_error");
     }
 
     private void RefreshSlots()

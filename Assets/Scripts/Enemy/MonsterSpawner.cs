@@ -18,6 +18,7 @@ public class MonsterSpawner : MonoBehaviour
     public float minMonsterDistanceFromPlayer = 3f;
 
     private float eliteEventTimer = 0f;
+    private float nextEliteSpawnAttempt;
 
     private float spawnPosition = 1.2f;
     private float spawnPadding = 0.5f;
@@ -28,6 +29,7 @@ public class MonsterSpawner : MonoBehaviour
     private float bossSpawnTime = 300f;
     [SerializeField, Min(0.01f)] private float bossHealthMultiplier = 1f;
     [SerializeField, Min(0.01f)] private float bossSpeedMultiplier = 1f;
+    [SerializeField, Min(0f)] private float bossSpawnInvulnerabilityDuration;
     [SerializeField, Min(0f)] private float healthGrowthPerStep;
     private const float HealthGrowthInterval = 20f;
     private int healthGrowthSteps;
@@ -102,8 +104,16 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (hasSpawnedBoss) return;
+        if (hasSpawnedBoss || (uiManager != null && uiManager.IsRunOver)) return;
         if (Time.timeScale == 0f) return;
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            hasSpawnedBoss = SpawnBoss();
+            if (hasSpawnedBoss) return;
+        }
+#endif
 
         if (!hasStarted)
         {
@@ -113,7 +123,11 @@ public class MonsterSpawner : MonoBehaviour
 
         monsters.RemoveAll(monster => monster == null);
 
+        int previousCountdown = Mathf.CeilToInt(bossSpawnTime - playTime);
         playTime += Time.deltaTime;
+        int countdown = Mathf.CeilToInt(bossSpawnTime - playTime);
+        if (bossIndex >= 0 && countdown < previousCountdown && countdown >= 1 && countdown <= 3)
+            GameAudio.Play("countdown", 0.75f);
         int elapsedSteps = Mathf.FloorToInt(playTime / HealthGrowthInterval);
         if (healthGrowthPerStep > 0f && elapsedSteps > healthGrowthSteps)
         {
@@ -143,16 +157,18 @@ public class MonsterSpawner : MonoBehaviour
         // 뼈 감옥 이벤트
         eliteEventTimer += Time.deltaTime;
 
-        if (eliteEventTimer >= eilteEventInterval)
+        if (eliteEventTimer >= eilteEventInterval && playTime >= nextEliteSpawnAttempt)
         {
-            SpawnEliteCageEvent();
-            eliteEventTimer = 0f;
+            if (TrySpawnEliteCageEvent())
+                eliteEventTimer = 0f;
+            else
+                nextEliteSpawnAttempt = playTime + 1f;
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
         if (Input.GetKeyDown(KeyCode.T))
         {
-            SpawnEliteCageEvent();
+            TrySpawnEliteCageEvent();
         }
 #endif
     }
@@ -173,6 +189,7 @@ public class MonsterSpawner : MonoBehaviour
 
         if (spawned)
         {
+            if (wave % 6 == 0 && playTime < bossSpawnTime - 3f) GameAudio.Play("wave_start", 0.5f);
             wave++;
         }
     }
@@ -197,11 +214,18 @@ public class MonsterSpawner : MonoBehaviour
     }
 
     // 뼈 감옥 이벤트
-    private void SpawnEliteCageEvent()
+    private bool TrySpawnEliteCageEvent()
     {
-        if (playerTransform == null || eliteIndex.Count == 0) return;
+        if (playerTransform == null || eliteIndex.Count == 0) return false;
 
         Vector2 centerPos = playerTransform.position;
+        Vector2? elitePos = GetValidInnerCagePosition(centerPos, cageRadius * 0.75f, minMonsterDistanceFromPlayer);
+        if (!elitePos.HasValue) return false;
+
+        int selectedElite = eliteIndex[Random.Range(0, eliteIndex.Count)];
+        Monster elite = Instantiate(monsterPrefabs[selectedElite], elitePos.Value, Quaternion.identity);
+        SetupWaveMonster(elite, monsterDatas[selectedElite]);
+        monsters.Add(elite);
 
         // 원형 뼈 감옥 생성
         if (cageMonsterPrefab != null && cageMonsterData != null && backgroundRenderer != null)
@@ -233,20 +257,6 @@ public class MonsterSpawner : MonoBehaviour
             }
         }
 
-        // 엘리트 몬스터 1마리 생성
-        int selectedElite = eliteIndex[Random.Range(0, eliteIndex.Count)];
-
-        Vector2? elitePos = GetValidInnerCagePosition(centerPos, cageRadius * 0.75f, minMonsterDistanceFromPlayer);
-
-        if (elitePos.HasValue)
-        {
-            Monster elite = Instantiate(monsterPrefabs[selectedElite], elitePos.Value, Quaternion.identity);
-
-            SetupWaveMonster(elite, monsterDatas[selectedElite]);
-
-            monsters.Add(elite);
-        }
-
         // 감옥 내부 일반 몬스터 생성
         if (normalIndex.Count > 0)
         {
@@ -265,6 +275,8 @@ public class MonsterSpawner : MonoBehaviour
                 monsters.Add(normal);
             }
         }
+
+        return true;
     }
 
     // 감옥 내부의 유효한 생성 위치 탐색
@@ -302,11 +314,12 @@ public class MonsterSpawner : MonoBehaviour
 
         if (!spawnPos.HasValue) return false;
 
-        Monster boss = Instantiate(monsterPrefabs[bossIndex], spawnPos.Value, Quaternion.identity);
+        Boss boss = Instantiate((Boss)monsterPrefabs[bossIndex], spawnPos.Value, Quaternion.identity);
 
         boss.Setup(monsterDatas[bossIndex], uiManager);
         boss.health *= bossHealthMultiplier;
         boss.moveSpeed *= bossSpeedMultiplier;
+        boss.SetSpawnInvulnerability(bossSpawnInvulnerabilityDuration);
 
         foreach (Monster monster in monsters)
         {
@@ -316,6 +329,8 @@ public class MonsterSpawner : MonoBehaviour
         }
         monsters.Clear();
         monsters.Add(boss);
+        GameAudio.PlayMusic(GameAudio.Track.Boss);
+        GameAudio.Play("boss_spawn");
 
         return true;
     }

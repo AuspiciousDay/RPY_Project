@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7a448e624861d42a15bad7453c2054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossAbility
-  speed: 3
+  speed: 11
   rotateSpeed: 0
   lifeTime: 5
   damage: 20

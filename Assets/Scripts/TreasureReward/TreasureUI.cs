@@ -57,6 +57,7 @@ public class TreasureUI : MonoBehaviour
     {
         if (!IsTreasureOpen || isOpening || isRewardReady) return;
 
+        GameAudio.Play("chest_open");
         isOpening = true;
 
         openButton.SetActive(false);

@@ -714,7 +714,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerHealth: {fileID: 3444407264250234805}
-  lifeSteal: 1
+  lifeSteal: 0.2
   evolvedPrefab: {fileID: 5304482822209197150, guid: 12e67334b34d17c4aa9a459c03e49bc9, type: 3}
 --- !u!114 &137939575472834995
 MonoBehaviour:

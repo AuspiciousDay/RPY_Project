@@ -10,6 +10,7 @@ using System.Collections.Generic;
 public class UiManager : MonoBehaviour
 {
     [Header("HUD - 인게임 게이지 및 텍스트")]
+    [SerializeField] private GameObject hudPrefab;
     public Image playerHp;
     public Image expBar;
     public TMP_Text levelText;
@@ -73,8 +74,72 @@ public class UiManager : MonoBehaviour
         }
         Instance = this;
 
+        if (hudPrefab != null) BindHud();
         InitIconMap(skillSlots, skillMap);
         InitIconMap(passiveSlots, passiveMap);
+    }
+
+    private void BindHud()
+    {
+        Transform hud = Instantiate(hudPrefab, transform, false).transform;
+        hud.SetAsFirstSibling();
+
+        expBar = FindHudComponent<Image>(hud, "ExpBar/ExpBarFrame/EXP");
+        levelText = FindHudComponent<TMP_Text>(hud, "ExpBar/Level");
+        timerText = FindHudComponent<TMP_Text>(hud, "Timer/Text");
+        killCountText = FindHudComponent<TMP_Text>(hud, "Kill (1)/Kill/KillCount");
+
+        Transform result = FindHudComponent<Transform>(hud, "GamOverBackground");
+        if (result != null)
+        {
+            gameOverPanel = result.gameObject;
+            gameOverPanel.SetActive(false);
+            const string frame = "GamOver/GamOverFrame/";
+            gameOverTitleText = FindHudComponent<TMP_Text>(result, frame + "GameOver");
+            victoryTitleText = gameOverTitleText;
+            gameOverTimerText = FindHudComponent<TMP_Text>(result, frame + "OverTime/Time (1)/Text");
+            gameOverKillCountText = FindHudComponent<TMP_Text>(result, frame + "Total KillCount/GameObject (1)/KillCount");
+            restartButton = FindHudComponent<Button>(result, frame + "Buttons/Restart");
+            quitButton = FindHudComponent<Button>(result, frame + "Buttons/Quit");
+        }
+
+        if (playerHp == null && playerAnimator != null)
+        {
+            foreach (Image image in playerAnimator.GetComponentsInChildren<Image>(true))
+            {
+                if (image.name != "PlayerHp" || image.transform.parent.name != "PlayerUnderHp") continue;
+                playerHp = image;
+                break;
+            }
+        }
+
+        skillSlots.Clear();
+        AddHudSlot(skillSlots, hud, "Gun", "SkillBox/Gun Frame");
+        AddHudSlot(skillSlots, hud, "Lightning", "SkillBox/Lightning Frame");
+        AddHudSlot(skillSlots, hud, "Spear", "SkillBox/SpearSkill");
+        AddHudSlot(skillSlots, hud, "HolyWater", "SkillBox/HolyWaterSkill");
+        AddHudSlot(skillSlots, hud, "Whip", "SkillBox/RosaryWhipSkill");
+        AddHudSlot(skillSlots, hud, "Bell", "SkillBox/JudgmentBookSkill");
+        AddHudSlot(skillSlots, hud, "Garlic", "SkillBox/SanctumCenserSkill");
+
+        passiveSlots.Clear();
+        foreach (string key in new[] { "Damage", "Magnet", "MaxHp", "Speed", "Area", "Count", "Duration" })
+            AddHudSlot(passiveSlots, hud, key, "PassiveBox/" + key);
+    }
+
+    private void AddHudSlot(List<SlotEntry> slots, Transform hud, string key, string path)
+    {
+        Transform slot = FindHudComponent<Transform>(hud, path);
+        if (slot != null) slots.Add(new SlotEntry { key = key, iconObj = slot.gameObject });
+    }
+
+    private T FindHudComponent<T>(Transform parent, string path) where T : Component
+    {
+        Transform child = parent.Find(path);
+        if (child != null && child.TryGetComponent(out T component)) return component;
+
+        Debug.LogError($"[UiManager] Missing {typeof(T).Name} at {path} in {parent.name}.", this);
+        return null;
     }
 
 
@@ -86,6 +151,7 @@ public class UiManager : MonoBehaviour
     private int lastLevel = 1;
 
     private static bool skipStartPanel = false;
+    private GameLanguage language;
 
     private void Start()
     {
@@ -94,9 +160,31 @@ public class UiManager : MonoBehaviour
             startPanel.SetActive(!skipStartPanel);
             Time.timeScale = skipStartPanel ? 1f : 0f;
         }
+        GameAudio.PlayMusic(startPanel != null && startPanel.activeSelf ? GameAudio.Track.Menu : GameAudio.Track.Battle);
         skipStartPanel = false;
+        language = new GameLanguage(transform, shopManager != null ? shopManager.Panel : null);
+        language.AddButton(startPanel, startButton);
+        language.AddButton(optionPanel, startButton);
+        language.Changed += RefreshHudLanguage;
+        language.Refresh();
+
+        if (TryGetComponent(out GameAudio audio))
+        {
+            audio.BindSettings(optionPanel);
+            audio.BindButtonHover();
+        }
+
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
-        if (optionPanel != null) optionPanel.SetActive(false);
+        if (optionPanel != null)
+        {
+            optionPanel.SetActive(false);
+            foreach (Button button in optionPanel.GetComponentsInChildren<Button>(true))
+            {
+                if (button.name != "Continue") continue;
+                button.onClick.AddListener(ResumeFromOptionMenu);
+                break;
+            }
+        }
         if (expBar != null) expBar.fillAmount = 0f;
         if (gameOverTitleText != null) gameOverTitleText.gameObject.SetActive(false);
         if (victoryTitleText != null) victoryTitleText.gameObject.SetActive(false);
@@ -130,7 +218,7 @@ public class UiManager : MonoBehaviour
         }
 
 #if UNITY_EDITOR
-        RunTestInputs();
+        if (!isGameOver) RunTestInputs();
 #endif
     }
 
@@ -201,6 +289,8 @@ public class UiManager : MonoBehaviour
 
     public void OnClickStart()
     {
+        GameAudio.PlayMusic(GameAudio.Track.Battle);
+        GameAudio.Play("game_start");
         if (startPanel != null) startPanel.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -234,8 +324,24 @@ public class UiManager : MonoBehaviour
         lastLevel = currentLevel;
         targetExpRatio = Mathf.Clamp01(currentExp / maxExp);
 
+        RefreshLevelLabel();
+    }
+
+    private void OnDestroy()
+    {
+        language?.Dispose();
+    }
+
+    private void RefreshHudLanguage()
+    {
+        RefreshLevelLabel();
+        RefreshKillCount();
+    }
+
+    private void RefreshLevelLabel()
+    {
         if (levelText != null)
-            levelText.text = $"LV. {currentLevel}";
+            levelText.text = GameLanguage.Choose($"LV. {lastLevel}", $"레벨 {lastLevel}");
     }
 
     public void UpdateKillCount(int killCount)
@@ -249,8 +355,8 @@ public class UiManager : MonoBehaviour
 
         if (killCountText != null)
             killCountText.text = showRunGoldUnderKills
-                ? $"X: {currentKillCount}\nGold: {currentCoinCount:N0}"
-                : $"X: {currentKillCount}";
+                ? GameLanguage.Choose($"X: {currentKillCount}\nGold: {currentCoinCount:N0}", $"처치: {currentKillCount}\n골드: {currentCoinCount:N0}")
+                : GameLanguage.Choose($"X: {currentKillCount}", $"처치: {currentKillCount}");
     }
 
     public void UpdateCoinCount(int coinCount)
@@ -266,16 +372,19 @@ public class UiManager : MonoBehaviour
 
     private IEnumerator DeathSequenceRoutine()
     {
+        GameAudio.Play("player_death");
         if (playerAnimator != null)
         {
             playerAnimator.SetTrigger("Die");
         }
 
         yield return new WaitForSecondsRealtime(gameOverDelay);
+        GameAudio.PlayMusic(GameAudio.Track.GameOver);
+        GameAudio.Play("game_over", 0.65f);
         if (gameOverTitleText != null)
         {
             gameOverTitleText.gameObject.SetActive(true);
-            gameOverTitleText.text = "Game Over!";
+            gameOverTitleText.text = GameLanguage.Translate("Game Over!");
         }
 
         if (gameOverTimerText != null)
@@ -284,7 +393,7 @@ public class UiManager : MonoBehaviour
         }
         if (gameOverKillCountText != null)
         {
-            gameOverKillCountText.text = $"X: {currentKillCount}";
+            gameOverKillCountText.text = GameLanguage.Choose($"X: {currentKillCount}", $"처치: {currentKillCount}");
         }
         if (gameOverPanel != null)
         {
@@ -295,10 +404,12 @@ public class UiManager : MonoBehaviour
     private IEnumerator VictorySequenceRoutine()
     {
         yield return new WaitForSecondsRealtime(0.1f);
+        GameAudio.PlayMusic(GameAudio.Track.Victory);
+        GameAudio.Play("victory", 0.65f);
         if (victoryTitleText != null)
         {
             victoryTitleText.gameObject.SetActive(true);
-            victoryTitleText.text = "Victory!";
+            victoryTitleText.text = GameLanguage.Translate("Victory!");
         }
 
         if (gameOverTimerText != null)
@@ -307,7 +418,7 @@ public class UiManager : MonoBehaviour
         }
         if (gameOverKillCountText != null)
         {
-            gameOverKillCountText.text = $"X: {currentKillCount}";
+            gameOverKillCountText.text = GameLanguage.Choose($"X: {currentKillCount}", $"처치: {currentKillCount}");
         }
         if (gameOverPanel != null)
         {
@@ -325,8 +436,15 @@ public class UiManager : MonoBehaviour
         if (optionPanel == null) return;
 
         bool nextState = !optionPanel.activeSelf;
+        GameAudio.Play(nextState ? "pause" : "resume");
         optionPanel.SetActive(nextState);
         Time.timeScale = nextState ? 0f : 1f;
+    }
+
+    private void ResumeFromOptionMenu()
+    {
+        if (optionPanel != null && optionPanel.activeInHierarchy)
+            ToggleOptionUI();
     }
 
     private void UpdateTimer()

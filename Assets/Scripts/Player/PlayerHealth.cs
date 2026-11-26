@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour
         }
 #endif
 
-        if (IsDead) return;
+        if (IsDead || (uiManager != null && uiManager.IsRunOver)) return;
 
         Health -= Mathf.Max(1f, Damage - Armor);
 
@@ -40,6 +40,8 @@ public class PlayerHealth : MonoBehaviour
             Die();
             return;
         }
+
+        GameAudio.Play("player_hit", 0.8f, 0.2f);
     }
 
     private void Die()

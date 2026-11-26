@@ -18,6 +18,7 @@ public class PlayerShooter : MonoBehaviour
     public bool IsEvolved { get; private set; }
 
     [SerializeField] private float evolvedInterval = 0.05f;
+    [SerializeField, Range(0.01f, 1f)] private float evolvedDamageMultiplier = 0.15f;
     [SerializeField] private GameObject evolvedPrefab;
 
     private PassiveAddDamage damagePassive;
@@ -115,12 +116,14 @@ public class PlayerShooter : MonoBehaviour
     {
         Vector2 direction = (target.position - transform.position).normalized;
 
+        GameAudio.Play(IsEvolved ? "cross_evolved" : "cross_normal", 0.55f, 0.22f);
         GameObject bullet = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
 
         PlayerAbility ability = bullet.GetComponent<PlayerAbility>();
 
         ability.maxCount = PenetrateCount;
         ability.damage = AttackDamage * (damagePassive != null ? damagePassive.Multiplier : 1f);
+        if (IsEvolved) ability.damage *= evolvedDamageMultiplier;
         ability.speed *= ProjectileSpeedMultiplier;
 
         ability.SetDirection(direction);

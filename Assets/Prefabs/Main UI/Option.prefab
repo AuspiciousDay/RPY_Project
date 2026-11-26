@@ -1985,6 +1985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5844bf09a2fcb4844a444bd94c80f618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeUi
+  goldRewardIcon: {fileID: -800850941170983130, guid: 2b0a9e7340be0974e85fda814b5bbc71, type: 3}
+  healRewardIcon: {fileID: 21300000, guid: 572478e38b1524d4595e72cd12f325cd, type: 3}
   upgrades:
   - {fileID: 0}
   - {fileID: 0}

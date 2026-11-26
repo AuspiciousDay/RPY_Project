@@ -25,6 +25,19 @@ public class Boss : Monster
     private float bossMoveSpeed;
     private bool isEntryDone = false;
     private bool isAttacking = false;
+    private float invulnerableUntil;
+
+    public void SetSpawnInvulnerability(float duration)
+    {
+        invulnerableUntil = Time.time + duration;
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        if (Time.time < invulnerableUntil) return;
+
+        base.TakeDamage(damage);
+    }
 
     private void LateUpdate()
     {

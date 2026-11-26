@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92308688b3112d840b68523821000286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAbility
-  speed: 5
+  speed: 20
   damage: 10
   count: 0
   maxCount: 1

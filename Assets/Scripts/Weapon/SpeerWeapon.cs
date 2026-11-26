@@ -46,6 +46,7 @@ public class SpearWeapon : MonoBehaviour
             : attackCount;
 
         float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
+        if (count > 0) GameAudio.Play(IsEvolved ? "spear_evolved" : "spear_normal", 0.65f, 0.2f);
         float randomAngle = Random.Range(0f, 360f);
 
         for (int i = 0; i < count; i++)

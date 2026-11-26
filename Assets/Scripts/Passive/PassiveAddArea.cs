@@ -33,7 +33,7 @@ public class PassiveAddArea : PassiveController
             bellWeapon.radius *= areaMultiplier;
         if (garlic != null)
         {
-            garlic.IncreaseRange(0.2f);
+            garlic.MultiplyRange(areaMultiplier);
         }
     }
 }

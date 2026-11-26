@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -10,7 +11,7 @@ public class UpgradeSlot : MonoBehaviour
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text descriptionText;
 
-    private UpgradeBase upgrade;
+    private Action select;
     private PassiveUpgradeUI upgradeUI;
 
     private void Awake()
@@ -20,23 +21,29 @@ public class UpgradeSlot : MonoBehaviour
 
     public void Setup(UpgradeBase upgrade, PassiveUpgradeUI upgradeUI)
     {
-        this.upgrade = upgrade;
+        string levelLabel = upgrade.Level == 0 ? "NEW!" : GameLanguage.Choose($"Lv. {upgrade.Level + 1}", $"레벨 {upgrade.Level + 1}");
+        SetupChoice(upgrade.upgradeName, upgrade.GetDescription(), levelLabel, upgrade.icon, upgrade.Upgrade, upgradeUI);
+    }
+
+    public void SetupChoice(string title, string description, string levelLabel, Sprite sprite, Action reward, PassiveUpgradeUI upgradeUI)
+    {
+        select = reward;
         this.upgradeUI = upgradeUI;
-
-        icon.sprite = upgrade.icon;
-        nameText.text = upgrade.upgradeName;
-        descriptionText.text = upgrade.GetDescription();
-
-        levelText.text = upgrade.Level == 0
-            ? "NEW!"
-            : $"Lv. {upgrade.Level + 1}";
+        icon.sprite = sprite;
+        icon.enabled = sprite != null;
+        nameText.text = GameLanguage.Translate(title);
+        descriptionText.text = GameLanguage.Translate(description);
+        levelText.text = GameLanguage.Translate(levelLabel);
     }
 
     public void OnClick()
     {
-        if (upgrade == null) return;
+        if (select == null) return;
 
-        upgrade.Upgrade();
+        Action reward = select;
+        select = null;
+        GameAudio.Play("upgrade_select");
+        reward();
         upgradeUI.Close();
     }
 }

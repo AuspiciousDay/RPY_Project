@@ -19,7 +19,7 @@ public class WhipWeapon : MonoBehaviour
     public bool IsEvolved { get; private set; }
 
     [SerializeField] private PlayerHealth playerHealth;
-    [SerializeField] private float lifeSteal = 1f;
+    [SerializeField] private float lifeSteal = 0.2f;
 
     [SerializeField] private GameObject evolvedPrefab;
 
@@ -45,6 +45,7 @@ public class WhipWeapon : MonoBehaviour
 
     private void Attack()
     {
+        if (attackCount > 0) GameAudio.Play(IsEvolved ? "whip_evolved" : "whip_normal", 0.65f, 0.2f);
         float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
         int direction = playerSprite.flipX ? -1 : 1;
 
@@ -76,10 +77,11 @@ public class WhipWeapon : MonoBehaviour
 
             if (IsEvolved && target is Monster monster)
             {
-                float actualDamage = Mathf.Min(effectiveDamage, Mathf.Max(0f, monster.health));
+                float healthBeforeHit = Mathf.Max(0f, monster.health);
 
                 monster.TakeDamage(effectiveDamage);
 
+                float actualDamage = healthBeforeHit - Mathf.Max(0f, monster.health);
                 playerHealth.Heal(actualDamage * lifeSteal);
             }
             else
@@ -93,6 +95,15 @@ public class WhipWeapon : MonoBehaviour
             GameObject whip = Instantiate(whipPrefab, center, Quaternion.identity);
 
             Vector3 scale = whip.transform.localScale;
+            if (whip.TryGetComponent(out SpriteRenderer spriteRenderer))
+            {
+                Vector3 visualSize = spriteRenderer.bounds.size;
+                if (visualSize.x > 0f && visualSize.y > 0f)
+                {
+                    scale.x *= size.x / visualSize.x;
+                    scale.y *= size.y / visualSize.y;
+                }
+            }
             scale.x = Mathf.Abs(scale.x) * direction;
             whip.transform.localScale = scale;
 

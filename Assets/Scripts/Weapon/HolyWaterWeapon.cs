@@ -44,6 +44,7 @@ public class HolyWaterWeapon : MonoBehaviour
 
     private void Attack()
     {
+        if (attackCount > 0) GameAudio.Play(IsEvolved ? "holy_water_evolved" : "holy_water_normal", 0.65f, 0.2f);
         float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
         List<Monster> targets = FindTargets();
 

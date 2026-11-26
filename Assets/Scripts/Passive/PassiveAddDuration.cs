@@ -13,6 +13,8 @@ public class PassiveAddDuration : PassiveController
         if (TryGetComponent(out LightningWeapon lightningWeapon))
             lightningWeapon.MultiplyAreaDuration(durationMultiplier);
 
+        if (TryGetComponent(out SpearWeapon spearWeapon))
+            spearWeapon.lifeTime *= durationMultiplier;
 
         if (holyWaterWeapon != null)
             holyWaterWeapon.duration *= durationMultiplier;

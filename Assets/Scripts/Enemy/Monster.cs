@@ -95,9 +95,9 @@ public class Monster : MonoBehaviour, IDamageable
         health += monsterData.maxHp * fraction;
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
-        if (isDead) return;
+        if (isDead || (uiManager != null && uiManager.IsRunOver)) return;
 
 #if UNITY_EDITOR
         if (DebugManager.Instance != null &&
@@ -116,12 +116,19 @@ public class Monster : MonoBehaviour, IDamageable
             isDead = true;
             Die();
         }
+        else if (damage > 0f)
+        {
+            GameAudio.Play("monster_hit", 0.25f, 0.13f);
+        }
     }
 
 
     public virtual void Die()
     {
         moveSpeed = 0f;
+        if (this is Boss) GameAudio.Play("boss_death");
+        else if (this is EliteMonster) GameAudio.Play("elite_death");
+        else GameAudio.Play("monster_death", 0.32f, 0.15f);
         int percent = 100;
         int randomValue = Random.Range(0, percent);
         uiManager.UpdateKillCount(1);

@@ -15,6 +15,8 @@ public class PassiveAddDamage : PassiveController
 
     public override string GetDescription()
     {
-        return $"Increases weapon damage by {bonusPerLevel:P0} of base damage per level.";
+        return GameLanguage.Choose(
+            $"Increases weapon damage by {bonusPerLevel:P0} of base damage per level.",
+            $"레벨당 무기 피해량이 기본 피해량의 {bonusPerLevel:0%}만큼 증가합니다.");
     }
 }

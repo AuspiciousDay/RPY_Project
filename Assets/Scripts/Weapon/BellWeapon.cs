@@ -48,6 +48,7 @@ public class BellWeapon : MonoBehaviour
 
     private void Attack()
     {
+        if (attackCount > 0) GameAudio.Play("bell_normal", 0.65f, 0.2f);
         activeBells.RemoveAll(bell => bell == null);
 
         for (int i = 0; i < attackCount; i++)
@@ -96,6 +97,7 @@ public class BellWeapon : MonoBehaviour
         if (IsEvolved) return;
 
         IsEvolved = true;
+        GameAudio.Play("bell_evolved", 0.7f);
 
         if (evolvedPrefab != null)
         {

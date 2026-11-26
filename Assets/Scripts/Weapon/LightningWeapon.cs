@@ -51,6 +51,7 @@ public class LightningWeapon : MonoBehaviour
 
         foreach (Monster monster in monsters)
         {
+            if (monster.health <= 0f) continue;
             Vector3 viewPos = mainCam.WorldToViewportPoint(monster.transform.position);
 
             if (viewPos.x >= 0f && viewPos.x <= 1f && viewPos.y >= 0f && viewPos.y <= 1f && viewPos.z > 0f)
@@ -68,6 +69,8 @@ public class LightningWeapon : MonoBehaviour
 
         int count = Mathf.Min(maxCount, targets.Count);
         float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
+
+        if (count > 0) GameAudio.Play(IsEvolved ? "lightning_evolved" : "lightning_normal", 0.7f, 0.2f);
 
         for (int i = 0; i < count; i++)
         {

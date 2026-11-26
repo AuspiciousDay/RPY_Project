@@ -15,6 +15,13 @@ public class LightningArea : MonoBehaviour
     {
         this.damage = damage;
         this.radius = radius;
+        if (TryGetComponent(out SpriteRenderer spriteRenderer))
+        {
+            Vector3 size = spriteRenderer.bounds.size;
+            float diameter = radius * 2f;
+            if (size.x > 0f && size.y > 0f)
+                transform.localScale = Vector3.Scale(transform.localScale, new Vector3(diameter / size.x, diameter / size.y, 1f));
+        }
 
         timer = 0f;
 

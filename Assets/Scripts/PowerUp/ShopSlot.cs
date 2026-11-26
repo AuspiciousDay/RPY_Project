@@ -50,6 +50,9 @@ public class ShopSlot : MonoBehaviour
 
     private void OnClick()
     {
+        if (shopUI == null || data == null) return;
+
+        GameAudio.Play("ui_click");
         shopUI.SelectPowerUp(data);
     }
 }

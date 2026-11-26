@@ -133,6 +133,7 @@ public class EliteMonster : Monster
     {
         if (treasurePrefab != null)
         {
+            GameAudio.Play("chest_drop");
             Instantiate(treasurePrefab, transform.position, Quaternion.identity);
         }
 

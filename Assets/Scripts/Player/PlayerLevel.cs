@@ -26,6 +26,7 @@ public class PlayerLevel : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.E))
         {
+            GameAudio.Play("gem_large_pickup", 0.6f, 0.07f);
             GainExp(50);
             return;
         }
@@ -51,20 +52,23 @@ public class PlayerLevel : MonoBehaviour
             exp -= requiredExperience;
             level++;
             uiManager.UpdateExp(exp, ExperienceToNextLevel, level);
-            passiveUpgradeUI.Open();
+            GameAudio.Play("level_up");
+            passiveUpgradeUI.Open(this);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Gem gem = collision.GetComponent<Gem>();
+        if (uiManager != null && uiManager.IsRunOver) return;
 
-        if (gem != null)
+        MagneticPickup pickup = collision.GetComponent<MagneticPickup>();
+        if (pickup != null)
         {
-            gem.SetTarget(this);
+            pickup.SetTarget(this);
         }
         else if (collision.gameObject.CompareTag("Gem50"))
         {
+            GameAudio.Play("gem_large_pickup", 0.6f, 0.07f);
             GainExp(50);
             Destroy(collision.gameObject);
         }

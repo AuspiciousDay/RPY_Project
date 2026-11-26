@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 92687dc4dfe14515972c13f1b020a59e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Galmuri11
+  fallbackFontReferences: []
+  fontRenderingMode: 0
+  shouldRoundAdvanceValue: 1

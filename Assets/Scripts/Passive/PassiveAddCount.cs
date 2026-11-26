@@ -13,7 +13,6 @@ public class PassiveAddCount : PassiveController
 
     protected override void Apply()
     {
-        UiManager.Instance?.ShowPassiveIcon("Count");
         if (playerShooter != null)
             playerShooter.AttackCount += addCount;
 

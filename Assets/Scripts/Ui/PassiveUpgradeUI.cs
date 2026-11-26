@@ -6,12 +6,19 @@ public class PassiveUpgradeUI : MonoBehaviour
     [SerializeField] private UpgradeBase[] upgrades;
     [SerializeField] private UpgradeSlot[] slots;
     [SerializeField] private bool favorOwnedWeaponUpgrades;
+    [SerializeField] private Sprite goldRewardIcon;
+    [SerializeField] private Sprite healRewardIcon;
+
+    private const int GoldReward = 100;
+    private const int HealReward = 20;
+    private PlayerLevel player;
     private bool openedForLevelUp;
 
-    public void Open()
+    public void Open(PlayerLevel levelOwner)
     {
         if (gameObject.activeInHierarchy) return;
 
+        player = levelOwner;
         openedForLevelUp = true;
         GameManager.PauseGame(0f);
         gameObject.SetActive(true);
@@ -32,7 +39,7 @@ public class PassiveUpgradeUI : MonoBehaviour
 
         if (candidates.Count == 0)
         {
-            Close();
+            ShowFallbackRewards();
             return;
         }
 
@@ -81,6 +88,34 @@ public class PassiveUpgradeUI : MonoBehaviour
             slot.gameObject.SetActive(true);
             slot.Setup(selected, this);
         }
+    }
+
+    private void ShowFallbackRewards()
+    {
+        if (player == null || slots.Length < 2)
+        {
+            Close();
+            return;
+        }
+
+        slots[0].SetupChoice(GameLanguage.Choose($"{GoldReward} Gold", $"골드 {GoldReward} 획득"), "Gain gold for the shop.", "", goldRewardIcon, GiveGold, this);
+        slots[1].SetupChoice(GameLanguage.Choose($"Heal {HealReward} HP", $"체력 {HealReward} 회복"), "Restore health up to your maximum.", "", healRewardIcon, HealPlayer, this);
+        for (int i = 0; i < slots.Length; i++)
+            slots[i].gameObject.SetActive(i < 2);
+    }
+
+    private void GiveGold()
+    {
+        if (GoldManager.Instance == null) return;
+
+        GoldManager.Instance.AddGold(GoldReward);
+        player.uiManager.UpdateCoinCount(GoldReward);
+    }
+
+    private void HealPlayer()
+    {
+        if (player.TryGetComponent(out PlayerHealth health))
+            health.Heal(HealReward);
     }
 
     public void Close()

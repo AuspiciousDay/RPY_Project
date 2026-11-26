@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerAbility : MonoBehaviour
 
     private Vector2 Direction;
     private Rigidbody2D AbilityRigidbody;
+    private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
+    private bool spent;
 
 
     private void Awake()
@@ -30,15 +33,18 @@ public class PlayerAbility : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (spent) return;
+
         if (collision.CompareTag("Wall"))
         {
+            spent = true;
             Destroy(gameObject);
             return;
         }
 
         IDamageable target = collision.GetComponentInParent<IDamageable>();
 
-        if (target != null)
+        if (target != null && hitTargets.Add(target))
         {
             target.TakeDamage(damage);
             count++;
@@ -46,6 +52,7 @@ public class PlayerAbility : MonoBehaviour
 
         if (count >= maxCount)
         {
+            spent = true;
             Destroy(gameObject);
         }
     }

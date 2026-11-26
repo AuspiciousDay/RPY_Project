@@ -116,6 +116,7 @@ public class GarlicAbility : MonoBehaviour
 
     private void Attack()
     {
+        if (hitTargets.Count > 0) GameAudio.Play(IsEvolved ? "garlic_evolved" : "garlic_normal", 0.65f, 0.2f);
         float effectiveDamage = Damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
         foreach (IDamageable target in hitTargets)
         {

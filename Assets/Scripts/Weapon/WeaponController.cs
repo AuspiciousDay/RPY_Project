@@ -28,6 +28,7 @@ public abstract class WeaponController : UpgradeBase
         upgradeName = evolvedName;
         icon = evolvedIcon;
 
+        GameAudio.Play("weapon_evolution", 0.9f, 0.3f);
         UiManager.Instance?.ChangeSkillIcon(skillKey, evolvedIcon);
 
         return true;
@@ -37,7 +38,11 @@ public abstract class WeaponController : UpgradeBase
 
     protected override void OnFirstUpgrade()
     {
-        UiManager.Instance?.ShowSkillIcon(skillKey);
+        UiManager ui = UiManager.Instance;
+        if (ui == null) return;
+
+        ui.ChangeSkillIcon(skillKey, icon);
+        ui.ShowSkillIcon(skillKey);
     }
 
 #if UNITY_EDITOR
