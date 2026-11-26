@@ -9,7 +9,7 @@ public class HolyWaterAbility : MonoBehaviour
     private float radius;
     private float timer;
 
-    private readonly HashSet<Monster> hitMonsters = new HashSet<Monster>();
+    private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
     private bool isEvolved;
 
@@ -46,15 +46,15 @@ public class HolyWaterAbility : MonoBehaviour
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
-        hitMonsters.Clear();
+        hitTargets.Clear();
 
         foreach (Collider2D hit in hits)
         {
-            Monster monster = hit.GetComponentInParent<Monster>();
+            IDamageable target = hit.GetComponentInParent<IDamageable>();
 
-            if (monster != null && hitMonsters.Add(monster))
+            if (target != null && hitTargets.Add(target))
             {
-                monster.TakeDamage(damage);
+                target.TakeDamage(damage);
             }
         }
     }

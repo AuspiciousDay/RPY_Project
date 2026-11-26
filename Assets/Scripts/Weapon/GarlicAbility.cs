@@ -14,6 +14,7 @@ public class GarlicAbility : MonoBehaviour
     private CircleCollider2D rangeCollider;
     private float timer;
 
+    private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
     private readonly HashSet<Monster> hitMonsters = new HashSet<Monster>();
     private readonly HashSet<Monster> slowedMonsters = new HashSet<Monster>();
 
@@ -24,12 +25,22 @@ public class GarlicAbility : MonoBehaviour
 
     [SerializeField] private GameObject evolvedPrefab;
 
+    private bool isInitialized;
+
     private void Awake()
     {
-        rangeCollider = GetComponent<CircleCollider2D>();
+        Initialize();
+    }
 
+    private void Initialize()
+    {
+        if (isInitialized) return;
+
+        rangeCollider = GetComponent<CircleCollider2D>();
         originalRadius = rangeCollider.radius;
         originalScale = garlicVisual.localScale;
+
+        isInitialized = true;
     }
 
     private void Update()
@@ -49,8 +60,9 @@ public class GarlicAbility : MonoBehaviour
 
     public void IncreaseRange(float amount)
     {
-        rangeCollider.radius += amount;
+        Initialize();
 
+        rangeCollider.radius += amount;
         UpdateVisualScale();
     }
 
@@ -68,13 +80,18 @@ public class GarlicAbility : MonoBehaviour
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius);
 
+        hitTargets.Clear();
         hitMonsters.Clear();
 
         foreach (Collider2D hit in hits)
         {
-            Monster monster = hit.GetComponentInParent<Monster>();
+            IDamageable target = hit.GetComponentInParent<IDamageable>();
 
-            if (monster != null)
+            if (target == null) continue;
+
+            hitTargets.Add(target);
+
+            if (target is Monster monster)
             {
                 hitMonsters.Add(monster);
             }
@@ -88,11 +105,11 @@ public class GarlicAbility : MonoBehaviour
 
     private void Attack()
     {
-        foreach (Monster monster in hitMonsters)
+        foreach (IDamageable target in hitTargets)
         {
-            if (monster != null)
+            if (target is MonoBehaviour behaviour && behaviour != null)
             {
-                monster.TakeDamage(Damage);
+                target.TakeDamage(Damage);
             }
         }
     }

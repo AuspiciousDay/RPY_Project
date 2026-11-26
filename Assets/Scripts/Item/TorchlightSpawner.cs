@@ -1,18 +1,16 @@
-
 using UnityEngine;
-using UnityEngine.Tilemaps; // 추가
 
 public class TorchlightSpawner : MonoBehaviour
 {
     public GameObject TorchlightPrefab;
 
-    public float SpawnInterval = 10f;
+    public float SpawnInterval = 30f;
     public int SpawnCount = 3;
 
-    public Vector2 SpawnArea = new Vector2(20f, 20f);
+    public SpriteRenderer Ground;
+    public LayerMask Obstacles;
 
-    public Tilemap Ground; 
-    public Tilemap Obstacles;
+    public float spawnPadding = 0.5f;
 
     private Camera mainCam;
 
@@ -23,36 +21,36 @@ public class TorchlightSpawner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SpawnTorchlight", 2f, SpawnInterval);
+        InvokeRepeating(nameof(SpawnTorchlight), 2f, SpawnInterval);
     }
 
     private void SpawnTorchlight()
     {
+        if (Ground == null || mainCam == null || TorchlightPrefab == null) return;
+
+        Bounds bounds = Ground.bounds;
+
+        bounds.Expand(new Vector3(-spawnPadding * 2f, -spawnPadding * 2f, 0f));
+
+        if (bounds.size.x <= 0f || bounds.size.y <= 0f) return;
+
         int count = 0;
 
         for (int i = 0; i < 100; i++)
         {
-            float randomX = Random.Range(-SpawnArea.x, SpawnArea.x);
-            float randomY = Random.Range(-SpawnArea.y, SpawnArea.y);
+            float randomX = Random.Range(bounds.min.x, bounds.max.x);
+            float randomY = Random.Range(bounds.min.y, bounds.max.y);
 
             Vector3 spawnPosition = new Vector3(randomX, randomY, 0f);
 
-            // 바닥이 없으면 생성하지 않음
-            if (!Ground.HasTile(Ground.WorldToCell(spawnPosition)))
-            {
-                continue;
-            }
-
-            // 장애물이 있으면 생성하지 않음
-            if (Obstacles.HasTile(Obstacles.WorldToCell(spawnPosition)))
+            if (Physics2D.OverlapCircle(spawnPosition, spawnPadding, Obstacles) != null)
             {
                 continue;
             }
 
             Vector3 viewPos = mainCam.WorldToViewportPoint(spawnPosition);
 
-            if (viewPos.x >= -0.1f && viewPos.x <= 1.1f &&
-                viewPos.y >= -0.1f && viewPos.y <= 1.1f)
+            if (viewPos.x >= -0.1f && viewPos.x <= 1.1f && viewPos.y >= -0.1f && viewPos.y <= 1.1f)
             {
                 continue;
             }

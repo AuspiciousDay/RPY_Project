@@ -80,6 +80,18 @@ public class HolyWaterWeapon : MonoBehaviour
 
     public void Evolve()
     {
+        if (IsEvolved) return;
+
         IsEvolved = true;
+
+        if (evolvedWaterPrefab != null)
+        {
+            waterPrefab = evolvedWaterPrefab;
+        }
+
+        if (evolvedAreaPrefab != null)
+        {
+            areaPrefab = evolvedAreaPrefab;
+        }
     }
 }

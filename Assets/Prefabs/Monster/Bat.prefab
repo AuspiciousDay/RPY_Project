@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5560324012005994242}
   - component: {fileID: 3717021719959381445}
   - component: {fileID: 1793191665610522735}
+  - component: {fileID: -7031657358778148634}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Monster
@@ -83,8 +84,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -199537341
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3771409155479769685, guid: 7dc4505af46731d4395a8e27d71c4f3c, type: 3}
@@ -202,6 +203,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &1793191665610522735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +220,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaee792cb1efd574ab5b7f50fdc0fd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+--- !u!114 &-7031657358778148634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823648772989707380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ef5f085e44cb3498de3d07fe07aa4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSorting
+  offsetY: 0
 --- !u!1 &7364071132894480961
 GameObject:
   m_ObjectHideFlags: 0

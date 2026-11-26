@@ -55,22 +55,28 @@ public class WhipWeapon : MonoBehaviour
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f);
 
-        HashSet<Monster> hitMonsters = new HashSet<Monster>();
+        HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
         foreach (Collider2D hit in hits)
         {
-            Monster monster = hit.GetComponentInParent<Monster>();
+            IDamageable target = hit.GetComponentInParent<IDamageable>();
 
-            if (monster == null || !hitMonsters.Add(monster))
-                continue;
-
-            float actualDamage = Mathf.Min(damage, Mathf.Max(0f, monster.health));
-
-            monster.TakeDamage(damage);
-
-            if (IsEvolved && playerHealth != null)
+            if (target == null || !hitTargets.Add(target))
             {
+                continue;
+            }
+
+            if (IsEvolved && target is Monster monster)
+            {
+                float actualDamage = Mathf.Min(damage, Mathf.Max(0f, monster.health));
+
+                monster.TakeDamage(damage);
+
                 playerHealth.Heal(actualDamage * lifeSteal);
+            }
+            else
+            {
+                target.TakeDamage(damage);
             }
         }
 

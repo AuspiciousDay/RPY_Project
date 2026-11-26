@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Torchlight : MonoBehaviour
+public class Torchlight : MonoBehaviour, IDamageable
 {
-    public int Health = 20;
+    public float Health = 1f;
 
     public GameObject CoinPrefab;
     public GameObject HealthItem50Prefab;
@@ -16,7 +16,8 @@ public class Torchlight : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void TakeDamage(int damage)
+
+    public void TakeDamage(float damage)
     {
         if (Health <= 0) return;
 
@@ -55,4 +56,5 @@ public class Torchlight : MonoBehaviour
             Instantiate(HealthItem100Prefab, transform.position, Quaternion.identity);
         }
     }
+
 }

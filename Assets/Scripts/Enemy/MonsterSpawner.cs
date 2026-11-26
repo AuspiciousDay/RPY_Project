@@ -4,23 +4,23 @@ using UnityEngine.Tilemaps;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [SerializeField] private TilemapRenderer backgroundRenderer;
-    [SerializeField] private Tilemap backgroundTilemap;
+    [SerializeField] private SpriteRenderer backgroundRenderer;
+    [SerializeField] private LayerMask obstacleLayer;
     private float spawnPosition = 1.2f;
     private float spawnPadding = 0.5f;
 
     public Monster[] monsterPrefabs;
     public MonsterData[] monsterDatas;
- 
-    private float eliteSpawnChance = 0.15f; 
-    private float bossSpawnTime = 300f;
+
+    private float eliteSpawnChance = 0.15f;
+    private float bossSpawnTime = 60f;
 
     private readonly List<Monster> monsters = new List<Monster>();
     private Camera mainCam;
 
     private float spawnInterval = 5f;
     private float timer = 0f;
-    private float playTime = 0f; 
+    private float playTime = 0f;
     private bool hasSpawnedBoss = false;
 
     public UiManager uiManager;
@@ -35,11 +35,6 @@ public class MonsterSpawner : MonoBehaviour
     {
         mainCam = Camera.main;
         uiManager = FindFirstObjectByType<UiManager>();
-
-        if (backgroundTilemap == null && backgroundRenderer != null)
-        {
-            backgroundTilemap = backgroundRenderer.GetComponent<Tilemap>();
-        }
 
         CategorizeMonsters();
     }
@@ -102,8 +97,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private void SpawnWave()
     {
-        int nextWave = wave++;
-        int count = Mathf.RoundToInt(nextWave * 1.5f);
+        int count = Mathf.RoundToInt(wave * 1.5f);
         bool spawned = false;
 
         for (int i = 0; i < count; ++i)
@@ -116,7 +110,7 @@ public class MonsterSpawner : MonoBehaviour
 
         if (spawned)
         {
-            wave = nextWave;
+            wave++;
         }
     }
 
@@ -161,7 +155,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private Vector2? GetRandomOutOfScreenPosition()
     {
-        if (backgroundRenderer == null || backgroundTilemap == null || mainCam == null)
+        if (backgroundRenderer == null || mainCam == null)
         {
             return null;
         }
@@ -230,28 +224,6 @@ public class MonsterSpawner : MonoBehaviour
 
     private bool IsValidSpawnPosition(Vector2 position)
     {
-        if (!backgroundTilemap.HasTile(
-            backgroundTilemap.WorldToCell(position)))
-        {
-            return false;
-        }
-
-        for (int x = -1; x <= 1; x += 2)
-        {
-            for (int y = -1; y <= 1; y += 2)
-            {
-                Vector2 checkPosition = position + new Vector2(x * spawnPadding, y * spawnPadding);
-
-                Vector3Int cell =
-                    backgroundTilemap.WorldToCell(checkPosition);
-
-                if (!backgroundTilemap.HasTile(cell))
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return Physics2D.OverlapCircle(position, spawnPadding, obstacleLayer) == null;
     }
 }

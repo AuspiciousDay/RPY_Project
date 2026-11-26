@@ -41,6 +41,14 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 direction = new Vector2(PlayerInput.Side, PlayerInput.Move).normalized;
 
+        if (direction == Vector2.zero)
+        {
+            PlayerRigidbody.linearVelocity = Vector2.zero;
+            PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            return;
+        }
+
+        PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         PlayerRigidbody.linearVelocity = direction * MoveSpeed;
     }
 

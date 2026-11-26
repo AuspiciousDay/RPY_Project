@@ -9,7 +9,7 @@ public class LightningArea : MonoBehaviour
 
     [SerializeField] private float hitInterval = 0.5f;
 
-    private readonly HashSet<Monster> hitMonsters = new HashSet<Monster>();
+    private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
     public void Init(float damage, float radius, float duration)
     {
@@ -36,13 +36,13 @@ public class LightningArea : MonoBehaviour
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
-        hitMonsters.Clear();
+        hitTargets.Clear();
 
         foreach (Collider2D hit in hits)
         {
             Monster monster = hit.GetComponentInParent<Monster>();
 
-            if (monster != null && hitMonsters.Add(monster))
+            if (monster != null && hitTargets.Add(monster))
             {
                 monster.TakeDamage(damage);
             }

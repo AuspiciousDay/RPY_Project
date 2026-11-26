@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 5726067140106614430}
   - component: {fileID: 3951332100021639451}
   - component: {fileID: -4647706784760949667}
+  - component: {fileID: -2724869923253924369}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -206,8 +207,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -199537341
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4198619325960196568, guid: 9bf92ee0095d365439e8257a944f2173, type: 3}
@@ -262,6 +263,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!50 &5726067140106614430
 Rigidbody2D:
   serializedVersion: 5
@@ -337,3 +343,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaee792cb1efd574ab5b7f50fdc0fd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+--- !u!114 &-2724869923253924369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6574745667238596826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ef5f085e44cb3498de3d07fe07aa4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSorting
+  offsetY: 0

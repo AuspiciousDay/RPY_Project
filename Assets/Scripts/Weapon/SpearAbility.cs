@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class SpearAbility : MonoBehaviour
@@ -11,7 +10,7 @@ public class SpearAbility : MonoBehaviour
     private float damage;
     private float speed;
 
-    private HashSet<Monster> hitMonsters = new HashSet<Monster>();
+    private HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
     private void Awake()
     {
@@ -32,23 +31,19 @@ public class SpearAbility : MonoBehaviour
         rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Monster monster = collision.GetComponentInParent<Monster>();
-
-        if (monster != null)
+        if (other.CompareTag("Wall"))
         {
-            if (hitMonsters.Add(monster))
-            {
-                monster.TakeDamage(damage);
-            }
-
+            Destroy(gameObject);
             return;
         }
 
-        if (collision.GetComponent<TilemapCollider2D>() != null)
+        IDamageable target = other.GetComponentInParent<IDamageable>();
+
+        if (target != null && hitTargets.Add(target))
         {
-            Destroy(gameObject);
+            target.TakeDamage(damage);
         }
     }
 }
