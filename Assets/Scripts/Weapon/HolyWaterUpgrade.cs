@@ -60,4 +60,9 @@ public class HolyWaterUpgrade : WeaponController
                 return "Max Level";
         }
     }
+
+    protected override void ApplyEvolution()
+    {
+        holyWaterWeapon.Evolve();
+    }
 }

@@ -11,8 +11,15 @@ public class PlayerShooter : MonoBehaviour
     public float AttackInterval = 1f;
     public int AttackCount = 1;
     private float AttackTimer = 0f;
-    private Monster TargetMonster;
+
+    private Transform Target; // 수정
     private float Distance;
+
+    public bool IsEvolved { get; private set; }
+
+    [SerializeField] private float evolvedInterval = 0.05f;
+
+    [SerializeField] private GameObject evolvedPrefab;
 
     private void Update()
     {
@@ -20,21 +27,29 @@ public class PlayerShooter : MonoBehaviour
 
         if (AttackTimer >= AttackInterval)
         {
-            TargetMonster = FindNearestMonster();
+            Target = FindNearestTarget(); // 수정
 
-            if (TargetMonster != null)
+            if (Target != null)
             {
-                Shoot(TargetMonster);
+                Shoot(Target);
                 AttackTimer = 0f;
             }
         }
+        if (Time.timeScale == 0f) return;
+
+        if (IsEvolved)
+        {
+            EvolvedAttack();
+            return;
+        }
     }
 
-    private Monster FindNearestMonster()
+    // 수정 : 몬스터와 화로 탐색
+    private Transform FindNearestTarget()
     {
         Monster[] Monsters = FindObjectsByType<Monster>(FindObjectsSortMode.None);
 
-        Monster NearestMonster = null;
+        Transform NearestTarget = null;
         float NearestDistance = 20f;
 
         foreach (Monster Monster in Monsters)
@@ -44,25 +59,41 @@ public class PlayerShooter : MonoBehaviour
             if (Distance < NearestDistance)
             {
                 NearestDistance = Distance;
-                NearestMonster = Monster;
+                NearestTarget = Monster.transform;
             }
         }
 
-        return NearestMonster;
+        // 추가 : 화로 탐색
+        Torchlight[] Torchlights = FindObjectsByType<Torchlight>(FindObjectsSortMode.None);
+
+        foreach (Torchlight Torchlight in Torchlights)
+        {
+            if (Torchlight.Health <= 0) continue;
+
+            Distance = Vector2.Distance(transform.position, Torchlight.transform.position);
+
+            if (Distance < NearestDistance)
+            {
+                NearestDistance = Distance;
+                NearestTarget = Torchlight.transform;
+            }
+        }
+
+        return NearestTarget;
     }
 
-    private void Shoot(Monster Target)
+    private void Shoot(Transform Target) // 수정
     {
         StartCoroutine(ShootCoroutine(Target));
     }
 
-    private IEnumerator ShootCoroutine(Monster Target)
+    private IEnumerator ShootCoroutine(Transform Target) // 수정
     {
         for (int i = 0; i < AttackCount; i++)
         {
             if (Target == null)
             {
-                Target = FindNearestMonster();
+                Target = FindNearestTarget(); // 수정
             }
 
             if (Target == null)
@@ -70,7 +101,7 @@ public class PlayerShooter : MonoBehaviour
                 yield break;
             }
 
-            Vector2 direction = (Target.transform.position - transform.position).normalized;
+            Vector2 direction = (Target.position - transform.position).normalized;
 
             GameObject bullet = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
 
@@ -85,4 +116,54 @@ public class PlayerShooter : MonoBehaviour
         }
     }
 
+    public void Evolve()
+    {
+        if (IsEvolved) return;
+
+        IsEvolved = true;
+
+        if (evolvedPrefab != null)
+        {
+            AbilityPrefab = evolvedPrefab;
+        }
+
+        StopAllCoroutines();
+        AttackTimer = 0f;
+    }
+
+    private void EvolvedAttack()
+    {
+        AttackTimer += Time.deltaTime;
+
+        if (AttackTimer < evolvedInterval)
+            return;
+
+        if (Target == null)
+        {
+            Target = FindNearestTarget();
+        }
+
+        if (Target == null)
+            return;
+
+        Vector2 direction =
+            (Target.transform.position -
+            transform.position).normalized;
+
+        GameObject bullet = Instantiate(
+            AbilityPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        PlayerAbility ability =
+            bullet.GetComponent<PlayerAbility>();
+
+        ability.damage = AttackDamage;
+        ability.maxCount = PenetrateCount;
+
+        ability.SetDirection(direction);
+
+        AttackTimer = 0f;
+    }
 }

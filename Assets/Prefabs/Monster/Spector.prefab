@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 1122921153317667250}
   - component: {fileID: 5171988922267411258}
   - component: {fileID: -4259112979477454690}
+  - component: {fileID: -8458902179908562235}
   m_Layer: 0
   m_Name: Spector
   m_TagString: Untagged
@@ -206,8 +207,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -199537341
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6717369691670077813, guid: c6933f59bb7bc594cb9942224a9adb48, type: 3}
@@ -262,6 +263,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!50 &1122921153317667250
 Rigidbody2D:
   serializedVersion: 5
@@ -354,3 +360,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaee792cb1efd574ab5b7f50fdc0fd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitFlash
+--- !u!114 &-8458902179908562235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5378528337807695584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ef5f085e44cb3498de3d07fe07aa4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSorting
+  offsetY: 0

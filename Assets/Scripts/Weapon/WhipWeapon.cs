@@ -16,6 +16,13 @@ public class WhipWeapon : MonoBehaviour
     private float timer;
     private float lifeTime = 0.3f;
 
+    public bool IsEvolved { get; private set; }
+
+    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private float lifeSteal = 1f;
+
+    [SerializeField] private GameObject evolvedPrefab;
+
     private void Update()
     {
         if (Time.timeScale == 0f) return;
@@ -35,9 +42,7 @@ public class WhipWeapon : MonoBehaviour
 
         for (int i = 0; i < attackCount; i++)
         {
-            int attackDirection = i % 2 == 0
-                ? direction
-                : -direction;
+            int attackDirection = i % 2 == 0 ? direction : -direction;
 
             Swing(attackDirection);
         }
@@ -46,23 +51,32 @@ public class WhipWeapon : MonoBehaviour
     private void Swing(int direction)
     {
         Vector2 center = (Vector2)transform.position + Vector2.right * direction * attackWidth / 2f;
-
         Vector2 size = new Vector2(attackWidth, attackHeight);
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f);
 
-        Debug.Log($"감지된 Collider 수: {hits.Length}");
-
-        HashSet<Monster> hitMonsters = new HashSet<Monster>();
+        HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
         foreach (Collider2D hit in hits)
         {
-            Monster monster = hit.GetComponentInParent<Monster>();
+            IDamageable target = hit.GetComponentInParent<IDamageable>();
 
-            if (monster != null && hitMonsters.Add(monster))
+            if (target == null || !hitTargets.Add(target))
             {
+                continue;
+            }
+
+            if (IsEvolved && target is Monster monster)
+            {
+                float actualDamage = Mathf.Min(damage, Mathf.Max(0f, monster.health));
 
                 monster.TakeDamage(damage);
+
+                playerHealth.Heal(actualDamage * lifeSteal);
+            }
+            else
+            {
+                target.TakeDamage(damage);
             }
         }
 
@@ -85,13 +99,21 @@ public class WhipWeapon : MonoBehaviour
         Vector3 size = new Vector3(attackWidth, attackHeight, 0f);
 
         Gizmos.DrawWireCube(
-            transform.position + Vector3.right * attackWidth / 2f,
-            size
-        );
+            transform.position + Vector3.right * attackWidth / 2f, size);
 
         Gizmos.DrawWireCube(
-            transform.position - Vector3.right * attackWidth / 2f,
-            size
-        );
+            transform.position - Vector3.right * attackWidth / 2f, size);
+    }
+
+    public void Evolve()
+    {
+        if (IsEvolved) return;
+
+        IsEvolved = true;
+
+        if (evolvedPrefab != null)
+        {
+            whipPrefab = evolvedPrefab;
+        }
     }
 }

@@ -59,4 +59,9 @@ public class GunUpgrade : WeaponController
                 return "Max Level";
         }
     }
+
+    protected override void ApplyEvolution()
+    {
+        playerShooter.Evolve();
+    }
 }

@@ -11,6 +11,12 @@ public class SpearWeapon : MonoBehaviour
 
     [SerializeField] private SpearAbility spearPrefab;
 
+    public bool IsEvolved { get; private set; }
+
+    [SerializeField] private int evolvedCount = 16;
+
+    [SerializeField] private SpearAbility evolvedPrefab;
+
     private float timer;
 
     private void Update()
@@ -28,12 +34,15 @@ public class SpearWeapon : MonoBehaviour
 
     private void Attack()
     {
+        int count = IsEvolved
+            ? evolvedCount + attackCount
+            : attackCount;
+
         float randomAngle = Random.Range(0f, 360f);
 
-        for (int i = 0; i < attackCount; i++)
+        for (int i = 0; i < count; i++)
         {
-            float angle = randomAngle + 360f / attackCount * i;
-
+            float angle = randomAngle + 360f / count * i;
             float radian = angle * Mathf.Deg2Rad;
 
             Vector2 direction = new Vector2(
@@ -51,5 +60,19 @@ public class SpearWeapon : MonoBehaviour
 
             spear.Init(direction, damage, speed, lifeTime);
         }
+    }
+
+    public void Evolve()
+    {
+        if (IsEvolved) return;
+
+        IsEvolved = true;
+
+        if (evolvedPrefab != null)
+        {
+            spearPrefab = evolvedPrefab;
+        }
+
+        timer = attackInterval;
     }
 }

@@ -12,15 +12,8 @@ public class BellAbility : MonoBehaviour
 
     [SerializeField] private float hitInterval = 0.5f;
 
-    private Dictionary<Monster, float> hitTimes = new Dictionary<Monster, float>();
-
-    public void Init(
-        Transform target,
-        float angle,
-        float radius,
-        float rotateSpeed,
-        float damage,
-        float duration)
+    private readonly Dictionary<IDamageable, float> nextHitTime = new Dictionary<IDamageable, float>();
+    public void Init(Transform target, float angle, float radius, float rotateSpeed, float damage, float duration, bool isEvolved = false)
     {
         this.target = target;
         this.angle = angle;
@@ -30,7 +23,10 @@ public class BellAbility : MonoBehaviour
 
         UpdatePosition();
 
-        Destroy(gameObject, duration);
+        if (!isEvolved)
+        {
+            Destroy(gameObject, duration);
+        }
     }
 
     private void FixedUpdate()
@@ -65,19 +61,19 @@ public class BellAbility : MonoBehaviour
         Hit(collision);
     }
 
-    private void Hit(Collider2D collision)
+    private void Hit(Collider2D other)
     {
-        Monster monster = collision.GetComponentInParent<Monster>();
+        IDamageable target = other.GetComponentInParent<IDamageable>();
 
-        if (monster == null) return;
+        if (target == null) return;
 
-        if (hitTimes.TryGetValue(monster, out float nextHitTime))
+        if (nextHitTime.TryGetValue(target, out float nextTime))
         {
-            if (Time.time < nextHitTime) return;
+            if (Time.time < nextTime) return;
         }
 
-        hitTimes[monster] = Time.time + hitInterval;
+        target.TakeDamage(damage);
 
-        monster.TakeDamage(damage);
+        nextHitTime[target] = Time.time + hitInterval;
     }
 }

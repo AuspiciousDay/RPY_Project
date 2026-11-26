@@ -9,22 +9,22 @@ public class HolyWaterAbility : MonoBehaviour
     private float radius;
     private float timer;
 
-    private readonly HashSet<Monster> hitMonsters = new HashSet<Monster>();
+    private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
 
-    public void Init(float damage, float radius, float duration)
+    private bool isEvolved;
+
+    [SerializeField] private float pullSpeed = 5f;
+    [SerializeField] private float pullRangeMultiplier = 1.5f;
+
+    private readonly HashSet<Monster> pulledMonsters = new HashSet<Monster>();
+
+    public void Init(float damage, float radius, float duration, bool isEvolved)
     {
         this.damage = damage;
         this.radius = radius;
+        this.isEvolved = isEvolved;
 
         timer = hitInterval;
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
-
-        if (sprite != null && sprite.sprite != null)
-        {
-            Vector2 spriteSize = sprite.sprite.bounds.size;
-
-            transform.localScale = new Vector3(radius * 2f / spriteSize.x, radius * 2f / spriteSize.y, 1f);
-        }
 
         Destroy(gameObject, duration);
     }
@@ -46,15 +46,15 @@ public class HolyWaterAbility : MonoBehaviour
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, radius);
 
-        hitMonsters.Clear();
+        hitTargets.Clear();
 
         foreach (Collider2D hit in hits)
         {
-            Monster monster = hit.GetComponentInParent<Monster>();
+            IDamageable target = hit.GetComponentInParent<IDamageable>();
 
-            if (monster != null && hitMonsters.Add(monster))
+            if (target != null && hitTargets.Add(target))
             {
-                monster.TakeDamage(damage);
+                target.TakeDamage(damage);
             }
         }
     }
@@ -64,5 +64,40 @@ public class HolyWaterAbility : MonoBehaviour
         Gizmos.color = Color.cyan;
 
         Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    private void PullMonsters()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(
+            transform.position,
+            radius * pullRangeMultiplier
+        );
+
+        pulledMonsters.Clear();
+
+        foreach (Collider2D hit in hits)
+        {
+            Monster monster = hit.GetComponentInParent<Monster>();
+
+            if (monster == null)
+                continue;
+
+            if (!pulledMonsters.Add(monster))
+                continue;
+
+            monster.transform.position = Vector3.MoveTowards(
+                monster.transform.position,
+                transform.position,
+                pullSpeed * Time.fixedDeltaTime
+            );
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isEvolved)
+        {
+            PullMonsters();
+        }
     }
 }

@@ -14,6 +14,7 @@ public class HealthItem : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.Heal(HealAmount);
+                Debug.Log("회복 아이템 획득 : " + HealAmount);
                 Destroy(gameObject);
             }
         }

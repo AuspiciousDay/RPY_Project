@@ -16,7 +16,9 @@ public class HolyWaterProjectile : MonoBehaviour
     private float duration;
     private float timer;
 
-    public void Init(Vector2 targetPosition, HolyWaterAbility areaPrefab, float damage, float radius, float duration)
+    private bool isEvolved;
+
+    public void Init(Vector2 targetPosition, HolyWaterAbility areaPrefab, float damage, float radius, float duration, bool isEvolved)
     {
         startPosition = transform.position;
 
@@ -25,6 +27,7 @@ public class HolyWaterProjectile : MonoBehaviour
         this.damage = damage;
         this.radius = radius;
         this.duration = duration;
+        this.isEvolved = isEvolved;
     }
 
     private void Update()
@@ -49,9 +52,13 @@ public class HolyWaterProjectile : MonoBehaviour
 
     private void Land()
     {
-        HolyWaterAbility area = Instantiate(areaPrefab, targetPosition, Quaternion.identity);
+        HolyWaterAbility area = Instantiate(
+            areaPrefab,
+            targetPosition,
+            Quaternion.identity
+        );
 
-        area.Init(damage, radius, duration);
+        area.Init(damage, radius, duration, isEvolved);
 
         Destroy(gameObject);
     }

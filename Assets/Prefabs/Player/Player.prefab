@@ -1,5 +1,89 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &256269953210791756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7828398030243453566}
+  - component: {fileID: 6474017167440879216}
+  m_Layer: 0
+  m_Name: Spot Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7828398030243453566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256269953210791756}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4641130483989746872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6474017167440879216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256269953210791756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
+  m_ComponentVersion: 3
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 0.94509804, b: 0.8392157, a: 1}
+  m_Intensity: 0.8
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 00000000313e1be5434d1bf4237ee96d
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 1
+  m_PointLightOuterRadius: 5
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &623835995937608686
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +164,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
@@ -305,12 +389,18 @@ GameObject:
   - component: {fileID: 2483207977683154519}
   - component: {fileID: 4084843440587020573}
   - component: {fileID: 7827462117160444511}
+  - component: {fileID: 9122074204225266050}
+  - component: {fileID: 6806311550848019861}
+  - component: {fileID: 8374465215304001866}
   - component: {fileID: 1900976747291461224}
   - component: {fileID: 7486103099497389225}
   - component: {fileID: 4463830865799851281}
   - component: {fileID: 7506775743442700380}
   - component: {fileID: 5496033278900852303}
   - component: {fileID: 4019491428882045714}
+  - component: {fileID: 5228748696577296088}
+  - component: {fileID: 6550025037382877164}
+  - component: {fileID: 5143539985694611421}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -334,6 +424,8 @@ Transform:
   - {fileID: 8344475766024561646}
   - {fileID: 4253227676228439639}
   - {fileID: 3569353405591733174}
+  - {fileID: 4880397425667652349}
+  - {fileID: 7828398030243453566}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5272088016980917143
@@ -381,9 +473,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1434739705
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -199537341
+  m_SortingLayer: 2
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1936107718862870309, guid: 473fe1be837f58741a786ed7946421c3, type: 3}
   m_Color: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
@@ -418,7 +510,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -539,6 +631,8 @@ MonoBehaviour:
   AbilityPrefab: {fileID: 8660560994638883625, guid: 9a51c52c52615ea42b1db58e44be40f2, type: 3}
   AttackInterval: 1
   AttackCount: 1
+  evolvedInterval: 0.05
+  evolvedPrefab: {fileID: 6604593484145879789, guid: 34846dc71107ba4408e90df1f60843b0, type: 3}
 --- !u!114 &3444407264250234805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,6 +648,7 @@ MonoBehaviour:
   Health: 100
   HealthMax: 100
   uiManager: {fileID: 0}
+  playerInput: {fileID: 500962735334359352}
 --- !u!114 &576335577422710730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,6 +665,11 @@ MonoBehaviour:
   maxCount: 2
   attackInterval: 5
   lightningPrefab: {fileID: 1133047909230942936, guid: 624ba087b5f06624eaf5b5cae14fc500, type: 3}
+  lightningAreaPrefab: {fileID: -946880927724955164, guid: 69f18389e50fc144990460b666f6d7ce, type: 3}
+  areaRadius: 2
+  areaDuration: 3
+  areaDamageMultiplier: 0.3
+  evolvedPrefab: {fileID: 951033644884384982, guid: 5c742ebd91403ee42afde71500fbfeaa, type: 3}
 --- !u!114 &4194926586061722606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,6 +689,7 @@ MonoBehaviour:
   rotateSpeed: 180
   attackCount: 1
   bellPrefab: {fileID: 8326856160855720047, guid: 29db7866eb66e5b4498d6e80a93deb27, type: 3}
+  evolvedPrefab: {fileID: 8827163955345978779, guid: a1ba72b06d2442c44ba7fa901f3f1a50, type: 3}
 --- !u!114 &7814384550158580947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,6 +712,9 @@ MonoBehaviour:
   monsterLayer:
     serializedVersion: 2
     m_Bits: 8
+  playerHealth: {fileID: 3444407264250234805}
+  lifeSteal: 1
+  evolvedPrefab: {fileID: 5304482822209197150, guid: 12e67334b34d17c4aa9a459c03e49bc9, type: 3}
 --- !u!114 &137939575472834995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,6 +734,8 @@ MonoBehaviour:
   sizeMultiplier: 1
   attackCount: 1
   spearPrefab: {fileID: 6096581178350370261, guid: e29fb7dae808a7f4fac598ca5998ddc8, type: 3}
+  evolvedCount: 16
+  evolvedPrefab: {fileID: 5622878527324697725, guid: bce432ad1ec78e249b479ce67a5d2084, type: 3}
 --- !u!114 &1256251814731635018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,6 +756,8 @@ MonoBehaviour:
   attackCount: 1
   waterPrefab: {fileID: 5713153304314051386, guid: f179745095f271d4abb434294fc15521, type: 3}
   areaPrefab: {fileID: 7363950524325853634, guid: ccbcb227595b6eb4aac318f03b443c9c, type: 3}
+  evolvedWaterPrefab: {fileID: 7864949939760549017, guid: 71346b5742b84d14ea7549b5adf65063, type: 3}
+  evolvedAreaPrefab: {fileID: 6046666138826954180, guid: 4207d8267f5c8334298854304575c758, type: 3}
 --- !u!114 &7013095124870973588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,10 +772,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PassiveAddDamage
   upgradeName: Damage
   description: Increases all weapon damage by 5
-  icon: {fileID: 4192807381020634485, guid: e62ff9a5c9b7ffb48a2178a6c582b729, type: 3}
+  icon: {fileID: 652014910188745132, guid: 9eb4af7f4d3021f4da7c311769ab80c5, type: 3}
   maxLevel: 5
   playerShooter: {fileID: 6373021666512726674}
   lightningWeapon: {fileID: 576335577422710730}
+  garlic: {fileID: 2061312984340274368}
   addDamage: 5
 --- !u!114 &2483207977683154519
 MonoBehaviour:
@@ -683,7 +792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PassiveAddMagnet
   upgradeName: Magnet
   description: Increases pickup range by 0.5
-  icon: {fileID: -7030677071274569992, guid: 8cc87a1b7f22fc44abf220c4fd67ade7, type: 3}
+  icon: {fileID: -3365732141601700962, guid: 4b2667da0b4a4234c872e4b383f95850, type: 3}
   maxLevel: 5
   gemMagnet: {fileID: 7620407897730855186}
   addRadius: 0.5
@@ -701,7 +810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PassiveAddMaxHp
   upgradeName: MaxHp
   description: Increases max HP by 20 and restores 20 HP
-  icon: {fileID: 6455965668766618852, guid: 892b323474fd9134ea21214f527f2e6a, type: 3}
+  icon: {fileID: -2527229881167060075, guid: de4efad6d6c2e3447b766726ad4e2839, type: 3}
   maxLevel: 5
   playerHealth: {fileID: 3444407264250234805}
   addMaxHp: 20
@@ -719,10 +828,74 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PassiveAddSpeed
   upgradeName: Speed
   description: Increases movement speed by 0.5
-  icon: {fileID: -2613198082214950641, guid: 652f15dc9567ae044b8897885e7fef0c, type: 3}
+  icon: {fileID: -3083705612385841469, guid: 156b2b08ee23b004eb9dc4872a095084, type: 3}
   maxLevel: 5
   playerMovement: {fileID: 484255165117261000}
   addSpeed: 0.5
+--- !u!114 &9122074204225266050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c491587fc518dbe489ad1b90ac13aa7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassiveAddArea
+  upgradeName: Area
+  description: Increases weapon attack range and size by 10%
+  icon: {fileID: 2916394345453820611, guid: 9e9a55055621b6a4cb318b912927fb8d, type: 3}
+  maxLevel: 5
+  spearWeapon: {fileID: 137939575472834995}
+  holyWaterWeapon: {fileID: 1256251814731635018}
+  whipWeapon: {fileID: 7814384550158580947}
+  bellWeapon: {fileID: 4194926586061722606}
+  garlic: {fileID: 2061312984340274368}
+  areaMultiplier: 1.1
+--- !u!114 &6806311550848019861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a51928fd3601a3746b6beca26de58ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassiveAddCount
+  upgradeName: Count
+  description: Increases the number of projectiles by 1
+  icon: {fileID: -5257510477732491406, guid: 3fd45eea11e808745b46ecef25243e98, type: 3}
+  maxLevel: 5
+  playerShooter: {fileID: 6373021666512726674}
+  spearWeapon: {fileID: 137939575472834995}
+  holyWaterWeapon: {fileID: 1256251814731635018}
+  lightningWeapon: {fileID: 576335577422710730}
+  whipWeapon: {fileID: 7814384550158580947}
+  bellWeapon: {fileID: 4194926586061722606}
+  addCount: 1
+--- !u!114 &8374465215304001866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2786bd9c63204784089a7245fc67cd17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassiveAddDuration
+  upgradeName: Duration
+  description: Increases weapon effect duration by 10%
+  icon: {fileID: -1024609342689927110, guid: 96bc720fb6dbc2b499e98f564121cfcd, type: 3}
+  maxLevel: 5
+  holyWaterWeapon: {fileID: 1256251814731635018}
+  bellWeapon: {fileID: 4194926586061722606}
+  durationMultiplier: 1.1
 --- !u!114 &1900976747291461224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +912,9 @@ MonoBehaviour:
   description: 
   icon: {fileID: 2120024003875985145, guid: 40dd03f5b3ba79b4094c341ae90f65de, type: 3}
   maxLevel: 5
+  requiredPassive: {fileID: 6806311550848019861}
+  evolvedName: EVCROSS
+  evolvedIcon: {fileID: -3878735715004965243, guid: 92db4f8409e1412488dbf43fc7574837, type: 3}
   playerShooter: {fileID: 6373021666512726674}
 --- !u!114 &7486103099497389225
 MonoBehaviour:
@@ -756,6 +932,9 @@ MonoBehaviour:
   description: 
   icon: {fileID: -7243629492567491295, guid: 0a24e2ca1ffb0354cab86d1406685f55, type: 3}
   maxLevel: 5
+  requiredPassive: {fileID: 7013095124870973588}
+  evolvedName: EVLIGHTNING
+  evolvedIcon: {fileID: -1543966838856490151, guid: 3d4b6f3fa8129504296a13a90e2a2052, type: 3}
   lightningWeapon: {fileID: 576335577422710730}
 --- !u!114 &4463830865799851281
 MonoBehaviour:
@@ -773,6 +952,9 @@ MonoBehaviour:
   description: 
   icon: {fileID: -64827513782540775, guid: ea2329e3bcb55774e8829d8bf24536d0, type: 3}
   maxLevel: 5
+  requiredPassive: {fileID: 4084843440587020573}
+  evolvedName: EVWHIP
+  evolvedIcon: {fileID: 6785378297552224234, guid: df400e8b30d1b694186d4d1499a0aaaa, type: 3}
   whipWeapon: {fileID: 7814384550158580947}
 --- !u!114 &7506775743442700380
 MonoBehaviour:
@@ -790,6 +972,9 @@ MonoBehaviour:
   description: 
   icon: {fileID: 6512610903270207045, guid: 8bc279ba5dbeca94fad4e57a8f1a0208, type: 3}
   maxLevel: 5
+  requiredPassive: {fileID: 8374465215304001866}
+  evolvedName: EVBELL
+  evolvedIcon: {fileID: 2671665900361475083, guid: d64a546e62d6e6448922ba848f973032, type: 3}
   bellWeapon: {fileID: 4194926586061722606}
 --- !u!114 &5496033278900852303
 MonoBehaviour:
@@ -807,6 +992,9 @@ MonoBehaviour:
   description: 
   icon: {fileID: -4198122265255438757, guid: a28aaa271b116bb428b0674f83d7100f, type: 3}
   maxLevel: 5
+  requiredPassive: {fileID: 9122074204225266050}
+  evolvedName: EVSPEAR
+  evolvedIcon: {fileID: -569213343433918282, guid: a0916fee420fa2742a4a63412f2ee5dc, type: 3}
   spearWeapon: {fileID: 137939575472834995}
 --- !u!114 &4019491428882045714
 MonoBehaviour:
@@ -824,7 +1012,167 @@ MonoBehaviour:
   description: 
   icon: {fileID: 7556227072831788152, guid: c43507a356a624b45ad8aee236e22d26, type: 3}
   maxLevel: 5
+  requiredPassive: {fileID: 2483207977683154519}
+  evolvedName: EVHOLYWATER
+  evolvedIcon: {fileID: 1818434755874157591, guid: 5e5ba71a9304f7b4b835bb2f80695667, type: 3}
   holyWaterWeapon: {fileID: 1256251814731635018}
+--- !u!114 &5228748696577296088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115c3d8bf3bdd77449af6ddd3262ae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GarlicUpgrade
+  upgradeName: Garlic
+  description: 
+  icon: {fileID: -912498489993581376, guid: 7db978ebf5fbc5444848f43d9dca44b2, type: 3}
+  maxLevel: 5
+  requiredPassive: {fileID: 7827462117160444511}
+  evolvedName: EVGARLIC
+  evolvedIcon: {fileID: -5192154020212114655, guid: 601cde1d2c1f85c4484163f22ca795cf, type: 3}
+  garlicObject: {fileID: 8619789883087073671}
+  garlic: {fileID: 2061312984340274368}
+--- !u!114 &6550025037382877164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e3904989b5d854ab183ccd831c60a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvolutionManager
+  weapons:
+  - {fileID: 4019491428882045714}
+  - {fileID: 5496033278900852303}
+  - {fileID: 7506775743442700380}
+  - {fileID: 4463830865799851281}
+  - {fileID: 7486103099497389225}
+  - {fileID: 1900976747291461224}
+  - {fileID: 5228748696577296088}
+--- !u!114 &5143539985694611421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ef5f085e44cb3498de3d07fe07aa4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSorting
+  offsetY: 0
+--- !u!1001 &555735198867917409
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4641130483989746872}
+    m_Modifications:
+    - target: {fileID: 1958255518895347361, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: garlicVisual
+      value: 
+      objectReference: {fileID: 7402953655218359394}
+    - target: {fileID: 1958255518895347361, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: evolvedPrefab
+      value: 
+      objectReference: {fileID: 5514629974947628913, guid: e2046e4cb4e8e3841ba079b1f97ed0e7, type: 3}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082266995226917862, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_Name
+      value: Garlic
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082266995226917862, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+--- !u!114 &2061312984340274368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1958255518895347361, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+  m_PrefabInstance: {fileID: 555735198867917409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8619789883087073671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3359be0999c1465469ed8bbd926f2b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Garlic
+--- !u!4 &4880397425667652349 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4903568568111771804, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+  m_PrefabInstance: {fileID: 555735198867917409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7402953655218359394 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6992626876393735683, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+  m_PrefabInstance: {fileID: 555735198867917409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8619789883087073671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8082266995226917862, guid: 38a1b9d54790980499dfb39718bb99f8, type: 3}
+  m_PrefabInstance: {fileID: 555735198867917409}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7986320899504449077
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 1768900921907869211}
   - component: {fileID: 7367788583782038587}
   - component: {fileID: 7694667181851591125}
+  - component: {fileID: 7661941441690071549}
   m_Layer: 0
   m_Name: Vampire
   m_TagString: Monster
@@ -207,8 +208,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -199537341
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7583233051353887865, guid: 3a9284569a975e04d94843499ade170b, type: 3}
@@ -263,6 +264,11 @@ MonoBehaviour:
   moveSpeed: 0.2
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  detectDistance: 0.8
+  detectRadius: 0.25
   attack1Prefab: {fileID: 6930894858526126852, guid: db3ca77187a57b347a5d99b0208041f0, type: 3}
   attack1Position: {fileID: 974548004534051580}
   attack2Prefab: {fileID: 3834714310739977728, guid: 9d8792c5c2d6d6a44947a4889994c19a, type: 3}
@@ -344,6 +350,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0.016750097, y: 0.935411}
   m_Size: {x: 0.92004156, y: 2.2865515}
   m_Direction: 0
+--- !u!114 &7661941441690071549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096434172133564876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49ef5f085e44cb3498de3d07fe07aa4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSorting
+  offsetY: 0
 --- !u!1 &6785549287357142139
 GameObject:
   m_ObjectHideFlags: 0

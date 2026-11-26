@@ -51,14 +51,10 @@ public class PlayerHealth : MonoBehaviour
     }
     public void Heal(float amount)
     {
-        if (IsDead)
-            return;
+        if (IsDead || amount <= 0f) return;
 
-        Health += amount;
-        if (Health > HealthMax)
-        {
-            Health = HealthMax;
-        }
+        Health = Mathf.Min(Health + amount, HealthMax);
+
         uiManager.UpdateHp(Health, HealthMax);
     }
 }
