@@ -15,10 +15,11 @@ public class GunUpgrade : WeaponController
         {
             case 1:
                 playerShooter.enabled = true;
+                UiManager.Instance?.ShowSkillIcon("Gun");
                 break;
 
             case 2:
-                playerShooter.AttackDamage += 5f;
+                playerShooter.AttackDamage += 5;
                 break;
 
             case 3:
