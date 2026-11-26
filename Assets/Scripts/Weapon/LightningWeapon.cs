@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LightningWeapon : MonoBehaviour
 {
-    public int damage = 10;
+    public float damage = 10f;
     public int maxCount = 2;
 
     public float attackInterval = 5f;

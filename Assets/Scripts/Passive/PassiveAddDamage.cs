@@ -5,16 +5,14 @@ public class PassiveAddDamage : PassiveController
     [SerializeField] private PlayerShooter playerShooter;
     [SerializeField] private LightningWeapon lightningWeapon;
 
-    [SerializeField] private int addDamage = 5;
+    [SerializeField] private float addDamage = 5f;
 
     protected override void Apply()
     {
-        UiManager.Instance?.ShowPassiveIcon("Damage");
         if (playerShooter != null)
         {
             playerShooter.AttackDamage += addDamage;
         }
-
         if (lightningWeapon != null)
         {
             lightningWeapon.damage += addDamage;

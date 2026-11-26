@@ -1,0 +1,83 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BellAbility : MonoBehaviour
+{
+    private Transform target;
+
+    private float angle;
+    private float radius;
+    private float rotateSpeed;
+    private float damage;
+
+    [SerializeField] private float hitInterval = 0.5f;
+
+    private Dictionary<Monster, float> hitTimes = new Dictionary<Monster, float>();
+
+    public void Init(
+        Transform target,
+        float angle,
+        float radius,
+        float rotateSpeed,
+        float damage,
+        float duration)
+    {
+        this.target = target;
+        this.angle = angle;
+        this.radius = radius;
+        this.rotateSpeed = rotateSpeed;
+        this.damage = damage;
+
+        UpdatePosition();
+
+        Destroy(gameObject, duration);
+    }
+
+    private void FixedUpdate()
+    {
+        if (target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        angle += rotateSpeed * Time.fixedDeltaTime;
+
+        UpdatePosition();
+    }
+
+    private void UpdatePosition()
+    {
+        float radian = angle * Mathf.Deg2Rad;
+
+        Vector3 offset = new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0f) * radius;
+
+        transform.position = target.position + offset;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Hit(collision);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Hit(collision);
+    }
+
+    private void Hit(Collider2D collision)
+    {
+        Monster monster = collision.GetComponentInParent<Monster>();
+
+        if (monster == null) return;
+
+        if (hitTimes.TryGetValue(monster, out float nextHitTime))
+        {
+            if (Time.time < nextHitTime) return;
+        }
+
+        hitTimes[monster] = Time.time + hitInterval;
+
+        monster.TakeDamage(damage);
+    }
+}

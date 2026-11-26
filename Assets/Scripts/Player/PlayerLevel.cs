@@ -18,7 +18,7 @@ public class PlayerLevel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            GainExp(10);
+            GainExp(50);
         }
     }
     public void GainExp(float amount)

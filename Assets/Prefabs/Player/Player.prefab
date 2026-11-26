@@ -297,13 +297,20 @@ GameObject:
   - component: {fileID: 6373021666512726674}
   - component: {fileID: 3444407264250234805}
   - component: {fileID: 576335577422710730}
+  - component: {fileID: 4194926586061722606}
+  - component: {fileID: 7814384550158580947}
+  - component: {fileID: 137939575472834995}
+  - component: {fileID: 1256251814731635018}
   - component: {fileID: 7013095124870973588}
   - component: {fileID: 2483207977683154519}
   - component: {fileID: 4084843440587020573}
   - component: {fileID: 7827462117160444511}
-  - component: {fileID: 479856356705026245}
   - component: {fileID: 1900976747291461224}
   - component: {fileID: 7486103099497389225}
+  - component: {fileID: 4463830865799851281}
+  - component: {fileID: 7506775743442700380}
+  - component: {fileID: 5496033278900852303}
+  - component: {fileID: 4019491428882045714}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -321,7 +328,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.034, z: 0}
-  m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 1}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8344475766024561646}
@@ -528,7 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter
   PenetrateCount: 1
-  AttackDamage: 10
+  AttackDamage: 30
   AbilityPrefab: {fileID: 8660560994638883625, guid: 9a51c52c52615ea42b1db58e44be40f2, type: 3}
   AttackInterval: 1
   AttackCount: 1
@@ -563,6 +570,86 @@ MonoBehaviour:
   maxCount: 2
   attackInterval: 5
   lightningPrefab: {fileID: 1133047909230942936, guid: 624ba087b5f06624eaf5b5cae14fc500, type: 3}
+--- !u!114 &4194926586061722606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3e28ff3c46a8041a6a4a9f20c48175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BellWeapon
+  damage: 15
+  attackInterval: 5
+  duration: 3
+  radius: 2
+  rotateSpeed: 180
+  attackCount: 1
+  bellPrefab: {fileID: 8326856160855720047, guid: 29db7866eb66e5b4498d6e80a93deb27, type: 3}
+--- !u!114 &7814384550158580947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1324247666b189f4687fdff74dc1a724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WhipWeapon
+  damage: 20
+  attackInterval: 1.5
+  attackWidth: 3
+  attackHeight: 1.5
+  attackCount: 1
+  whipPrefab: {fileID: 8571707769416225535, guid: 19732388cc3206b4ca8039b1f241fac6, type: 3}
+  playerSprite: {fileID: 5272088016980917143}
+  monsterLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &137939575472834995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d27eb6b8ff52745899a372b698d4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpearWeapon
+  damage: 25
+  attackInterval: 2
+  speed: 10
+  lifeTime: 3
+  sizeMultiplier: 1
+  attackCount: 1
+  spearPrefab: {fileID: 6096581178350370261, guid: e29fb7dae808a7f4fac598ca5998ddc8, type: 3}
+--- !u!114 &1256251814731635018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a2bb02b8642894fbf967ef8aa3c0c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HolyWaterWeapon
+  damage: 10
+  attackInterval: 4
+  duration: 3
+  throwRange: 5
+  radius: 1.5
+  attackCount: 1
+  waterPrefab: {fileID: 5713153304314051386, guid: f179745095f271d4abb434294fc15521, type: 3}
+  areaPrefab: {fileID: 7363950524325853634, guid: ccbcb227595b6eb4aac318f03b443c9c, type: 3}
 --- !u!114 &7013095124870973588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,21 +723,6 @@ MonoBehaviour:
   maxLevel: 5
   playerMovement: {fileID: 484255165117261000}
   addSpeed: 0.5
---- !u!114 &479856356705026245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7534513451284742156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae2f36381d197e2469e0d33889ad95f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  Health: 100
-  HealthMax: 100
-  uiManager: {fileID: 0}
 --- !u!114 &1900976747291461224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,6 +757,74 @@ MonoBehaviour:
   icon: {fileID: -7243629492567491295, guid: 0a24e2ca1ffb0354cab86d1406685f55, type: 3}
   maxLevel: 5
   lightningWeapon: {fileID: 576335577422710730}
+--- !u!114 &4463830865799851281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98748500820b7c141890403b233cd343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WhipUpgrade
+  upgradeName: Whip
+  description: 
+  icon: {fileID: -64827513782540775, guid: ea2329e3bcb55774e8829d8bf24536d0, type: 3}
+  maxLevel: 5
+  whipWeapon: {fileID: 7814384550158580947}
+--- !u!114 &7506775743442700380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a639239fb05134893cec833a10b9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BellUpgrade
+  upgradeName: Bell
+  description: 
+  icon: {fileID: 6512610903270207045, guid: 8bc279ba5dbeca94fad4e57a8f1a0208, type: 3}
+  maxLevel: 5
+  bellWeapon: {fileID: 4194926586061722606}
+--- !u!114 &5496033278900852303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6faeed30d89561b4bb569d8d0b0ac4a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpearUpgrade
+  upgradeName: Spear
+  description: 
+  icon: {fileID: -4198122265255438757, guid: a28aaa271b116bb428b0674f83d7100f, type: 3}
+  maxLevel: 5
+  spearWeapon: {fileID: 137939575472834995}
+--- !u!114 &4019491428882045714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a8d63c062e74348bc7daa1ea815fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HolyWaterUpgrade
+  upgradeName: HolyWater
+  description: 
+  icon: {fileID: 7556227072831788152, guid: c43507a356a624b45ad8aee236e22d26, type: 3}
+  maxLevel: 5
+  holyWaterWeapon: {fileID: 1256251814731635018}
 --- !u!1001 &7986320899504449077
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using System.Collections;
 using System;
 
 public class PlayerHealth : MonoBehaviour
@@ -12,6 +11,8 @@ public class PlayerHealth : MonoBehaviour
 
     public UiManager uiManager;
 
+    [SerializeField] private PlayerInput playerInput;
+
     private void Start()
     {
         Health = HealthMax;
@@ -19,11 +20,19 @@ public class PlayerHealth : MonoBehaviour
     }
     public void Damage(float Damage)
     {
-        if (IsDead)
+#if UNITY_EDITOR
+        if (DebugManager.Instance != null && DebugManager.Instance.godMode)
+        {
             return;
+        }
+#endif
+
+        if (IsDead) return;
 
         Health -= Damage;
+
         uiManager.UpdateHp(Health, HealthMax);
+
         if (Health <= 0)
         {
             Health = 0;
@@ -35,9 +44,11 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         IsDead = true;
+
+        playerInput.enabled = false;
+
         OnDeath?.Invoke();
     }
-
     public void Heal(float amount)
     {
         if (IsDead)
