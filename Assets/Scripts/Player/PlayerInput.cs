@@ -19,4 +19,9 @@ public class PlayerInput : MonoBehaviour
         Move = 0f;
         Side = 0f;
     }
+    private void OnDisable()
+    {
+        Move = 0f;
+        Side = 0f;
+    }
 }

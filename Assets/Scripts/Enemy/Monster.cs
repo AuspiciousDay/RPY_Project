@@ -75,20 +75,25 @@ public class Monster : MonoBehaviour
     {
         if (isDead) return;
 
+#if UNITY_EDITOR
+        if (DebugManager.Instance != null &&
+            DebugManager.Instance.oneHitMode)
+        {
+            damage = health;
+        }
+#endif
+
         health -= damage;
+
         hitFlash.Flash();
 
         if (health <= 0)
         {
             isDead = true;
-
-            Collider2D col = GetComponent<Collider2D>();
-            if (col != null) col.enabled = false;
-
-            if (animator != null) animator.SetTrigger("Die");
             Die();
         }
     }
+
 
     public void Die()
     {

@@ -363,8 +363,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DES
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc4cc2181eccc7344aa6d23e953d2430, type: 2}
+  m_sharedMaterial: {fileID: -8114126664049660665, guid: dc4cc2181eccc7344aa6d23e953d2430, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -797,6 +797,7 @@ GameObject:
   - component: {fileID: 7207704948826152752}
   - component: {fileID: 1382126600261380662}
   - component: {fileID: 2318404379739343189}
+  - component: {fileID: 8211109886783178902}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -927,6 +928,22 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &8211109886783178902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2491555807791241356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ed4795b21fa364887a0644f9414e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSlot
+  icon: {fileID: 7748021221048761461}
+  nameText: {fileID: 392387722045855130}
+  levelText: {fileID: 7579294433490074436}
+  descriptionText: {fileID: 4590197345609407501}
 --- !u!1 &3799339874064890164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,8 +1149,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DES
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc4cc2181eccc7344aa6d23e953d2430, type: 2}
+  m_sharedMaterial: {fileID: -8114126664049660665, guid: dc4cc2181eccc7344aa6d23e953d2430, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1489,6 +1506,7 @@ GameObject:
   - component: {fileID: 8547578835428243901}
   - component: {fileID: 381814080949359441}
   - component: {fileID: 3992044756386125262}
+  - component: {fileID: 7618647897023551036}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -1619,6 +1637,22 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7618647897023551036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524017227919796763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ed4795b21fa364887a0644f9414e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSlot
+  icon: {fileID: 1450450366968695863}
+  nameText: {fileID: 8279267789725535504}
+  levelText: {fileID: 1932241342783856446}
+  descriptionText: {fileID: 1010201050034708308}
 --- !u!1 &7937276235735022038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,12 +1985,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5844bf09a2fcb4844a444bd94c80f618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeUi
-  passives: []
-  buttons:
-  - {fileID: 1382126600261380662}
+  upgrades:
   - {fileID: 0}
   - {fileID: 0}
-  descriptions: []
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  slots:
+  - {fileID: 8211109886783178902}
+  - {fileID: 7186214377813627777}
+  - {fileID: 7618647897023551036}
 --- !u!1 &8489370811984086542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,6 +2013,7 @@ GameObject:
   - component: {fileID: 4284135208294010176}
   - component: {fileID: 163809912131377567}
   - component: {fileID: 6834257854023306777}
+  - component: {fileID: 7186214377813627777}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -2100,6 +2144,22 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7186214377813627777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489370811984086542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ed4795b21fa364887a0644f9414e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeSlot
+  icon: {fileID: 6049645696246665366}
+  nameText: {fileID: 4392238731273192125}
+  levelText: {fileID: 5714867850317766746}
+  descriptionText: {fileID: 8078252750317572528}
 --- !u!1 &8736698222609909971
 GameObject:
   m_ObjectHideFlags: 0
