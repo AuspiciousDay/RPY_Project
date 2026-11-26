@@ -13,10 +13,12 @@ public class LightningWeapon : MonoBehaviour
 
     private Camera mainCam;
     private float timer;
+    private PassiveAddDamage damagePassive;
 
     private void Awake()
     {
         mainCam = Camera.main;
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
     }
 
     private void Update()
@@ -56,6 +58,7 @@ public class LightningWeapon : MonoBehaviour
         List<Monster> targets = FindTargets();
 
         int count = Mathf.Min(maxCount, targets.Count);
+        float effectiveDamage = damage * (damagePassive?.Multiplier ?? 1f);
 
         for (int i = 0; i < count; i++)
         {
@@ -69,7 +72,7 @@ public class LightningWeapon : MonoBehaviour
 
             GameObject lightning = Instantiate(lightningPrefab, target.transform.position, Quaternion.identity);
 
-            target.TakeDamage(damage);
+            target.TakeDamage(effectiveDamage);
 
             Destroy(lightning, lifeTime);
         }

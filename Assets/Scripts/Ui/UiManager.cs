@@ -17,6 +17,7 @@ public class UiManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject optionPanel;
     public GameObject startPanel;
+    [SerializeField] private PowerUpShopView shopView;
 
     [Header("GameOver 결과창 텍스트")]
     public TMP_Text gameOverTitleText;
@@ -67,6 +68,12 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
+        if (shopView != null && shopView.isActiveAndEnabled && Input.GetKeyDown(KeyCode.Escape))
+        {
+            shopView.ReturnToStart();
+            return;
+        }
+
         if (!isGameOver)
         {
             UpdateTimer();
@@ -172,9 +179,17 @@ public class UiManager : MonoBehaviour
             Time.timeScale = 0f;
         }
     }
+    public void ShowVictory()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+        StartCoroutine(VictorySequenceRoutine());
+    }
+
     private IEnumerator VictorySequenceRoutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.5f);
         if (victoryTitleText != null)
         {
             victoryTitleText.gameObject.SetActive(true);
@@ -199,6 +214,7 @@ public class UiManager : MonoBehaviour
     public void ToggleOptionUI()
     {
         if (isGameOver) return;
+        if (shopView != null && shopView.isActiveAndEnabled) return;
         if (startPanel != null && startPanel.activeSelf) return;
         if (optionPanel == null) return;
 
@@ -213,11 +229,6 @@ public class UiManager : MonoBehaviour
 
         if (timerText != null)
             timerText.text = FormatTime(elapsedTime);
-        if (elapsedTime >= 300f && !isGameOver)
-        {
-            isGameOver = true;
-            StartCoroutine(VictorySequenceRoutine());
-        }
     }
 
     private string FormatTime(float timeInSeconds)
@@ -240,7 +251,7 @@ public class UiManager : MonoBehaviour
 
     private void RunTestInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !EditorCombatModes.Invincible)
         {
             testHp -= 25f;
             UpdateHp(testHp, testMaxHp);

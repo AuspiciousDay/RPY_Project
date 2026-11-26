@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GunUpgrade : WeaponController
 {
-    [SerializeField] private PlayerShooter playerShooter;
+    [SerializeField] private GunWeapon playerShooter;
 
     private void Awake()
     {

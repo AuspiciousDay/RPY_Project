@@ -73,7 +73,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale == 0f) return;
+        if (Time.timeScale == 0f || hasSpawnedBoss) return;
 
         if (!hasStarted)
         {
@@ -84,12 +84,10 @@ public class MonsterSpawner : MonoBehaviour
         monsters.RemoveAll(monster => monster == null);
 
         playTime += Time.deltaTime;
-        if (!hasSpawnedBoss && playTime >= bossSpawnTime)
+        if (bossIndex >= 0 && playTime >= bossSpawnTime)
         {
-            if (SpawnBoss())
-            {
-                hasSpawnedBoss = true;
-            }
+            hasSpawnedBoss = SpawnBoss();
+            return;
         }
 
         timer += Time.deltaTime;
@@ -154,6 +152,13 @@ public class MonsterSpawner : MonoBehaviour
 
         Monster boss = Instantiate(monsterPrefabs[bossIndex], spawnPos.Value, Quaternion.identity);
         boss.Setup(monsterDatas[bossIndex], uiManager);
+
+        foreach (Monster monster in monsters)
+        {
+            monster.gameObject.SetActive(false);
+            Destroy(monster.gameObject);
+        }
+        monsters.Clear();
         monsters.Add(boss);
 
         return true;

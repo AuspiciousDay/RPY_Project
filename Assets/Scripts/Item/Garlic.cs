@@ -10,11 +10,13 @@ public class Garlic : MonoBehaviour
 
     private CircleCollider2D rangeCollider;
     private LineRenderer lineRenderer;
+    private PassiveAddDamage damagePassive;
 
     private void Awake()
     {
         rangeCollider = GetComponent<CircleCollider2D>();
         lineRenderer = GetComponent<LineRenderer>();
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
 
         lineRenderer.useWorldSpace = false;
         lineRenderer.loop = true;
@@ -76,7 +78,7 @@ public class Garlic : MonoBehaviour
     {
         while (monster != null)
         {
-            monster.TakeDamage(Damage);
+            monster.TakeDamage(Damage * (damagePassive?.Multiplier ?? 1f));
 
             Debug.Log("Garlic 지속 공격!");
 

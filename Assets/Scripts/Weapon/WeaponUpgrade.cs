@@ -12,7 +12,7 @@ public class WeaponUpgrade : MonoBehaviour
     public TMP_Text penetrateUpgradeDescription;
     public TMP_Text damageUpgradeDescription;
 
-    public PlayerShooter playerShooter;
+    public GunWeapon playerShooter;
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class WeaponUpgrade : MonoBehaviour
 
         penetrateUpgradeDescription.text = $"Penetrate: {playerShooter.PenetrateCount}";
 
-        damageUpgradeDescription.text = $"Damage: {playerShooter.AttackDamage}";
+        damageUpgradeDescription.text = $"Damage: {playerShooter.EffectiveDamage:0.##}";
     }
 
     public void UpgradeCount()

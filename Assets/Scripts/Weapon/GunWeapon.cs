@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerShooter : MonoBehaviour
+public class GunWeapon : MonoBehaviour
 {
     public int PenetrateCount = 1;
     public float AttackDamage = 25f;
@@ -13,6 +13,14 @@ public class PlayerShooter : MonoBehaviour
     private float AttackTimer = 0f;
     private Monster TargetMonster;
     private float Distance;
+    private PassiveAddDamage damagePassive;
+
+    public float EffectiveDamage => AttackDamage * (damagePassive?.Multiplier ?? 1f);
+
+    private void Awake()
+    {
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
+    }
 
     private void Update()
     {
@@ -77,7 +85,7 @@ public class PlayerShooter : MonoBehaviour
             PlayerAbility ability = bullet.GetComponent<PlayerAbility>();
 
             ability.maxCount = PenetrateCount;
-            ability.damage = AttackDamage;
+            ability.damage = EffectiveDamage;
 
             ability.SetDirection(direction);
 

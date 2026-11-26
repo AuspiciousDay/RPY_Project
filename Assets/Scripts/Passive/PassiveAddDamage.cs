@@ -2,21 +2,17 @@ using UnityEngine;
 
 public class PassiveAddDamage : PassiveController
 {
-    [SerializeField] private PlayerShooter playerShooter;
-    [SerializeField] private LightningWeapon lightningWeapon;
+    [SerializeField] private float bonusPerLevel = 0.3f;
 
-    [SerializeField] private int addDamage = 5;
+    public float Multiplier { get; private set; } = 1f;
 
     protected override void Apply()
     {
-        if (playerShooter != null)
-        {
-            playerShooter.AttackDamage += addDamage;
-        }
+        Multiplier = 1f + bonusPerLevel * Level;
+    }
 
-        if (lightningWeapon != null)
-        {
-            lightningWeapon.damage += addDamage;
-        }
+    public override string GetDescription()
+    {
+        return $"Increases weapon damage by {bonusPerLevel:P0} of base damage per level.";
     }
 }

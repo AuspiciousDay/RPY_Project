@@ -26,6 +26,12 @@ public class Boss : Monster
     private bool isEntryDone = false;
     private bool isAttacking = false;
 
+    public override void Die()
+    {
+        base.Die();
+        if (uiManager != null) uiManager.ShowVictory();
+    }
+
     private void LateUpdate()
     {
         if (bossSpriteRenderer == null)

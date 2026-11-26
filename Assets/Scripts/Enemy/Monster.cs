@@ -75,6 +75,11 @@ public class Monster : MonoBehaviour
     {
         if (isDead) return;
 
+#if UNITY_EDITOR
+        if (damage > 0f && EditorCombatModes.OneHitKill)
+            damage = health;
+#endif
+
         health -= damage;
         hitFlash.Flash();
 
@@ -90,12 +95,12 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void Die()
+    public virtual void Die()
     {
         moveSpeed = 0f;
         int percent = 100;
         int randomValue = Random.Range(0, percent);
-        uiManager.UpdateKillCount(1);
+        if (uiManager != null) uiManager.UpdateKillCount(1);
 
         if (expGem != null && randomValue < 70)
         {

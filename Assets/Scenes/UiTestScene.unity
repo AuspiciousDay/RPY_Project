@@ -44267,7 +44267,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4cbb64aea0521e48b7f2b33ef0ff63d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter
+  m_EditorClassIdentifier: Assembly-CSharp::GunWeapon
 --- !u!114 &1852598756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44677,9 +44677,11 @@ MonoBehaviour:
   monsterPrefabs:
   - {fileID: 3717021719959381445, guid: 6a1df589c93c6a74488dc02f6bad76eb, type: 3}
   - {fileID: 7181941470513761970, guid: cba7a975a13bb3244a6a9a74b7a0d433, type: 3}
+  - {fileID: 8933039515839534635, guid: dac4bc250fe1c074daa06e8b11d1e789, type: 3}
   monsterDatas:
   - {fileID: 11400000, guid: 6fbb3c1831bc20b4b98cfb59da653bdb, type: 2}
   - {fileID: 11400000, guid: ed40eb8e5fd28314191e631144ca6daf, type: 2}
+  - {fileID: 11400000, guid: a4c2475680bdce4468627d0f7c354a6d, type: 2}
   uiManager: {fileID: 0}
 --- !u!4 &2053857448
 Transform:

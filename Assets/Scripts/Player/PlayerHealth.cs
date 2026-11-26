@@ -22,6 +22,11 @@ public class PlayerHealth : MonoBehaviour
         if (IsDead)
             return;
 
+#if UNITY_EDITOR
+        if (Damage > 0f && EditorCombatModes.Invincible)
+            return;
+#endif
+
         Health -= Damage;
         uiManager.UpdateHp(Health, HealthMax);
         if (Health <= 0)

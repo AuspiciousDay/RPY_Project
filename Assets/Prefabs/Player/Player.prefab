@@ -526,7 +526,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4cbb64aea0521e48b7f2b33ef0ff63d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter
+  m_EditorClassIdentifier: Assembly-CSharp::GunWeapon
   PenetrateCount: 1
   AttackDamage: 10
   AbilityPrefab: {fileID: 8660560994638883625, guid: 9a51c52c52615ea42b1db58e44be40f2, type: 3}
@@ -576,12 +576,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PassiveAddDamage
   upgradeName: Damage
-  description: Increases all weapon damage by 5
+  description: Increases weapon damage by 30% of base damage per level.
   icon: {fileID: 4192807381020634485, guid: e62ff9a5c9b7ffb48a2178a6c582b729, type: 3}
   maxLevel: 5
-  playerShooter: {fileID: 6373021666512726674}
-  lightningWeapon: {fileID: 576335577422710730}
-  addDamage: 5
+  bonusPerLevel: 0.3
 --- !u!114 &2483207977683154519
 MonoBehaviour:
   m_ObjectHideFlags: 0
