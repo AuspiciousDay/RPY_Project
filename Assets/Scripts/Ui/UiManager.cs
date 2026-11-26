@@ -15,6 +15,7 @@ public class UiManager : MonoBehaviour
     public TMP_Text levelText;
     public TMP_Text timerText;
     public TMP_Text killCountText;
+    public TMP_Text coinText;
 
     [Header("패널 UI")]
     public GameObject gameOverPanel;
@@ -71,7 +72,7 @@ public class UiManager : MonoBehaviour
     private float elapsedTime = 0f;
     private bool isGameOver = false;
     private int currentKillCount = 0;
-
+    private int currentCoinCount = 0;
     private float targetExpRatio = 0f;
     private int lastLevel = 1;
 
@@ -91,6 +92,8 @@ public class UiManager : MonoBehaviour
         gameOverTitleText.gameObject.SetActive(false);
         victoryTitleText.gameObject.SetActive(false);
         currentKillCount = 0;
+        currentCoinCount = 0;
+        UpdateCoinCount(0);
         if (restartButton != null) restartButton.onClick.AddListener(OnClickRestart);
         if (quitButton != null) quitButton.onClick.AddListener(OnClickQuit);
         if (startButton != null) startButton.onClick.AddListener(OnClickStart);
@@ -226,6 +229,16 @@ public class UiManager : MonoBehaviour
 
         if (killCountText != null)
             killCountText.text = $"X: {currentKillCount}";
+    }
+
+    public void UpdateCoinCount(int coinCount)
+    {
+        currentCoinCount += coinCount;
+
+        if (coinText != null)
+        {
+            coinText.text = currentCoinCount.ToString();
+        }
     }
 
     private IEnumerator DeathSequenceRoutine()

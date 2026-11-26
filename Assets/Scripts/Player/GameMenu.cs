@@ -41,6 +41,6 @@ public class GameMenu : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
-        //SceneManager.LoadScene("Start");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

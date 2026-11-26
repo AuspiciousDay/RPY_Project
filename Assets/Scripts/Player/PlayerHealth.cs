@@ -54,11 +54,17 @@ public class PlayerHealth : MonoBehaviour
         if (IsDead)
             return;
 
+         float BeforeHealth = Health;
+
         Health += amount;
         if (Health > HealthMax)
         {
             Health = HealthMax;
         }
         uiManager.UpdateHp(Health, HealthMax);
+
+        Debug.Log("회복 전 체력 : " + BeforeHealth);
+        Debug.Log("회복 후 체력 : " + Health);
+        Debug.Log("실제 회복량 : " + (Health - BeforeHealth));
     }
 }
