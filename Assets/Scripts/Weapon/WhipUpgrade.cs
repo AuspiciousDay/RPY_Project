@@ -59,4 +59,9 @@ public class WhipUpgrade : WeaponController
                 return "Max Level";
         }
     }
+
+    protected override void ApplyEvolution()
+    {
+
+    }
 }
