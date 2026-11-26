@@ -60,4 +60,9 @@ public class SpearUpgrade : WeaponController
                 return "Max Level";
         }
     }
+
+    protected override void ApplyEvolution()
+    {
+
+    }
 }

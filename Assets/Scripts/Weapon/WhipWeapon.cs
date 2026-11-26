@@ -35,9 +35,7 @@ public class WhipWeapon : MonoBehaviour
 
         for (int i = 0; i < attackCount; i++)
         {
-            int attackDirection = i % 2 == 0
-                ? direction
-                : -direction;
+            int attackDirection = i % 2 == 0 ? direction : -direction;
 
             Swing(attackDirection);
         }
@@ -50,8 +48,6 @@ public class WhipWeapon : MonoBehaviour
         Vector2 size = new Vector2(attackWidth, attackHeight);
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f);
-
-        Debug.Log($"감지된 Collider 수: {hits.Length}");
 
         HashSet<Monster> hitMonsters = new HashSet<Monster>();
 
@@ -85,13 +81,9 @@ public class WhipWeapon : MonoBehaviour
         Vector3 size = new Vector3(attackWidth, attackHeight, 0f);
 
         Gizmos.DrawWireCube(
-            transform.position + Vector3.right * attackWidth / 2f,
-            size
-        );
+            transform.position + Vector3.right * attackWidth / 2f, size);
 
         Gizmos.DrawWireCube(
-            transform.position - Vector3.right * attackWidth / 2f,
-            size
-        );
+            transform.position - Vector3.right * attackWidth / 2f, size);
     }
 }

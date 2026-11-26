@@ -59,4 +59,9 @@ public class BellUpgrade : WeaponController
                 return "Max Level";
         }
     }
+
+    protected override void ApplyEvolution()
+    {
+
+    }
 }

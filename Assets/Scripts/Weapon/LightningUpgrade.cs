@@ -59,4 +59,9 @@ public class LightningUpgrade : WeaponController
                 return "Max Level";
         }
     }
+
+    protected override void ApplyEvolution()
+    {
+
+    }
 }
