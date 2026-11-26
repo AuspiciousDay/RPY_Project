@@ -32,9 +32,16 @@ public class PlayerAbility : MonoBehaviour
         Monster monster = collision.GetComponent<Monster>();
         TilemapCollider2D tilemapCollider = collision.GetComponent<TilemapCollider2D>();
 
+        Torchlight torchlight = collision.GetComponent<Torchlight>();
+
         if (monster != null)
         {
-            monster.TakeDamage(damage);
+            monster.TakeDamage((int)damage);
+            count++;
+        }
+        if(torchlight != null)
+        {
+            torchlight.TakeDamage((int)damage);
             count++;
         }
         if (tilemapCollider != null)
