@@ -8,7 +8,9 @@ public class PassiveAddDamage : PassiveController
 
     protected override void Apply()
     {
+
         Multiplier = 1f + bonusPerLevel * Level;
+
     }
 
     public override string GetDescription()

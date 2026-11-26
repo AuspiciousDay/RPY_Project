@@ -15,6 +15,7 @@ public class BellUpgrade : WeaponController
         {
             case 1:
                 bellWeapon.enabled = true;
+                UiManager.Instance?.ShowSkillIcon("Bell");
                 break;
 
             case 2:
