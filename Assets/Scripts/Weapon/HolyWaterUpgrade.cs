@@ -15,6 +15,7 @@ public class HolyWaterUpgrade : WeaponController
         {
             case 1:
                 holyWaterWeapon.enabled = true;
+                UiManager.Instance?.ShowSkillIcon("HolyWater");
                 break;
 
             case 2:

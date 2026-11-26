@@ -12,6 +12,7 @@ public class PassiveAddArea : PassiveController
 
     protected override void Apply()
     {
+        UiManager.Instance?.ShowPassiveIcon("Area");
         if (spearWeapon != null)
             spearWeapon.sizeMultiplier *= areaMultiplier;
 

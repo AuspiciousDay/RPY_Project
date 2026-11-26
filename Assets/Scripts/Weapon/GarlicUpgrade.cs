@@ -17,6 +17,7 @@ public class GarlicUpgrade : WeaponController
         {
             case 1:
                 garlicObject.SetActive(true);
+                UiManager.Instance?.ShowSkillIcon("Garlic");
                 break;
 
             case 2:
