@@ -13,6 +13,7 @@ public class LightningWeapon : MonoBehaviour
 
     private Camera mainCam;
     private float timer;
+    private PassiveAddDamage damagePassive;
 
     public bool IsEvolved { get; private set; }
 
@@ -26,6 +27,7 @@ public class LightningWeapon : MonoBehaviour
     private void Awake()
     {
         mainCam = Camera.main;
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
     }
 
     private void Update()
@@ -65,6 +67,7 @@ public class LightningWeapon : MonoBehaviour
         List<Monster> targets = FindTargets();
 
         int count = Mathf.Min(maxCount, targets.Count);
+        float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
 
         for (int i = 0; i < count; i++)
         {
@@ -80,7 +83,7 @@ public class LightningWeapon : MonoBehaviour
 
             GameObject lightning = Instantiate(lightningPrefab, targetPosition, Quaternion.identity);
 
-            target.TakeDamage(damage);
+            target.TakeDamage(effectiveDamage);
 
             Destroy(lightning, lifeTime);
 
@@ -88,9 +91,19 @@ public class LightningWeapon : MonoBehaviour
             {
                 LightningArea area = Instantiate(lightningAreaPrefab, targetPosition, Quaternion.identity);
 
-                area.Init(damage * areaDamageMultiplier, areaRadius, areaDuration);
+                area.Init(effectiveDamage * areaDamageMultiplier, areaRadius, areaDuration);
             }
         }
+    }
+
+    public void MultiplyAreaRadius(float multiplier)
+    {
+        areaRadius *= multiplier;
+    }
+
+    public void MultiplyAreaDuration(float multiplier)
+    {
+        areaDuration *= multiplier;
     }
 
     public void Evolve()

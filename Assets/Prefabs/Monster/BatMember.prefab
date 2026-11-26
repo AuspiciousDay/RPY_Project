@@ -325,6 +325,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &4290101959478106350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1341,6 +1346,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &2612288498755329035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1828,6 +1838,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &2139770497989217775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2074,6 +2089,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &2000737567025861741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2288,6 +2308,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &1928905901523365070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2871,6 +2896,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &640884011553512807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3331,6 +3361,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &8335369724396119804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3545,6 +3580,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &8292971194580646092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3759,6 +3799,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &8245822387503864287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3973,6 +4018,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &8208373023169400176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4187,6 +4237,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &7853446992151310795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4401,6 +4456,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &7637411095175980966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4706,6 +4766,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &7282871431231661410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4920,6 +4985,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &7116211119404251894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5166,6 +5236,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &7081525614337813036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5399,6 +5474,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &486856234277248865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5795,6 +5875,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &6570269950237326297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6100,6 +6185,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &6275842149184840260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6346,6 +6436,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &5513063493558139882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6651,6 +6746,11 @@ MonoBehaviour:
   moveSpeed: 3
   attackTime: 0.5
   uiManager: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  detectDistance: 0.8
+  detectRadius: 0.25
 --- !u!114 &5015526403800897708
 MonoBehaviour:
   m_ObjectHideFlags: 0

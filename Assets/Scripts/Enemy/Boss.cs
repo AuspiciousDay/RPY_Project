@@ -28,6 +28,8 @@ public class Boss : Monster
 
     private void LateUpdate()
     {
+        if (isDead) return;
+
         if (bossSpriteRenderer == null)
             bossSpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -64,7 +66,7 @@ public class Boss : Monster
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0f;
-                BossPlayeAttack();
+                PlayAttack();
             }
         }
     }
@@ -97,37 +99,14 @@ public class Boss : Monster
         }
     }
 
-    private void BossPlayeAttack()
+    private void PlayAttack()
     {
-        int randomAttack = Random.Range(0, 3);
+        if (moveSpeed <= 0f || bossAnimator == null) return;
 
-        if (randomAttack == 0)
-        {
-            if (moveSpeed > 0f)
-            {
-                bossMoveSpeed = moveSpeed;
-                moveSpeed = 0f;
-                isAttacking = true;
-                bossAnimator.SetTrigger("Attack1");
-            }
-            return;
-
-        }
-        else if (randomAttack == 1)
-        {
-            if (moveSpeed > 0f)
-            {
-                bossMoveSpeed = moveSpeed;
-                moveSpeed = 0f;
-                isAttacking = true;
-                bossAnimator.SetTrigger("Attack2");
-            }
-            return;
-        }
-        else
-        {
-            isAttacking = false;
-        }
+        bossMoveSpeed = moveSpeed;
+        moveSpeed = 0f;
+        isAttacking = true;
+        bossAnimator.SetTrigger(Random.Range(0, 2) == 0 ? "Attack1" : "Attack2");
     }
 
     public void OnEntryEnd()
@@ -141,7 +120,7 @@ public class Boss : Monster
 
     public void SpawnAttack1Effect()
     {
-        if (attack1Prefab == null || bossPlayerTarget == null) return;
+        if (isDead || attack1Prefab == null || bossPlayerTarget == null) return;
 
         Vector3 spawnPos = attack1Position != null ? attack1Position.position : transform.position;
         GameObject projObj = Instantiate(attack1Prefab, spawnPos, Quaternion.identity);
@@ -155,7 +134,7 @@ public class Boss : Monster
 
     public void SpawnAttack2Effect()
     {
-        if (attack2Prefab == null || bossPlayerTarget == null) return;
+        if (isDead || attack2Prefab == null || bossPlayerTarget == null) return;
 
         Vector3 spawnPos = attack2Position != null ? attack2Position.position : transform.position;
         GameObject projObj = Instantiate(attack2Prefab, spawnPos, Quaternion.identity);
@@ -171,5 +150,12 @@ public class Boss : Monster
     {
         isAttacking = false;
         moveSpeed = bossMoveSpeed;
+    }
+
+    public override void Die()
+    {
+        base.Die();
+
+        UiManager.Instance?.Victory();
     }
 }

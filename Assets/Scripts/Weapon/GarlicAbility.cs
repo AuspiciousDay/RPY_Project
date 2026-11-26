@@ -13,6 +13,7 @@ public class GarlicAbility : MonoBehaviour
 
     private CircleCollider2D rangeCollider;
     private float timer;
+    private PassiveAddDamage damagePassive;
 
     private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
     private readonly HashSet<Monster> hitMonsters = new HashSet<Monster>();
@@ -29,7 +30,17 @@ public class GarlicAbility : MonoBehaviour
 
     private void Awake()
     {
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
         Initialize();
+    }
+
+    public void MultiplyRange(float multiplier)
+    {
+        Initialize();
+
+        rangeCollider.radius *= multiplier;
+
+        UpdateVisualScale();
     }
 
     private void Initialize()
@@ -105,11 +116,12 @@ public class GarlicAbility : MonoBehaviour
 
     private void Attack()
     {
+        float effectiveDamage = Damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
         foreach (IDamageable target in hitTargets)
         {
             if (target is MonoBehaviour behaviour && behaviour != null)
             {
-                target.TakeDamage(Damage);
+                target.TakeDamage(effectiveDamage);
             }
         }
     }

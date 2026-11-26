@@ -88,6 +88,13 @@ public class Monster : MonoBehaviour, IDamageable
 
     protected bool isDead = false;
 
+    public void AddBaseHealthFraction(float fraction)
+    {
+        if (isDead || monsterData == null) return;
+
+        health += monsterData.maxHp * fraction;
+    }
+
     public void TakeDamage(float damage)
     {
         if (isDead) return;
@@ -112,7 +119,7 @@ public class Monster : MonoBehaviour, IDamageable
     }
 
 
-    public void Die()
+    public virtual void Die()
     {
         moveSpeed = 0f;
         int percent = 100;
@@ -123,6 +130,7 @@ public class Monster : MonoBehaviour, IDamageable
         {
             Instantiate(expGem, transform.position, Quaternion.identity);
         }
+
         Destroy(gameObject, 0.5f);
     }
 

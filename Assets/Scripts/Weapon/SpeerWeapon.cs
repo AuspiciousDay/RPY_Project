@@ -19,6 +19,13 @@ public class SpearWeapon : MonoBehaviour
 
     private float timer;
 
+    private PassiveAddDamage damagePassive;
+
+    private void Awake()
+    {
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
+    }
+
     private void Update()
     {
         if (Time.timeScale == 0f) return;
@@ -38,6 +45,7 @@ public class SpearWeapon : MonoBehaviour
             ? evolvedCount + attackCount
             : attackCount;
 
+        float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
         float randomAngle = Random.Range(0f, 360f);
 
         for (int i = 0; i < count; i++)
@@ -58,7 +66,7 @@ public class SpearWeapon : MonoBehaviour
 
             spear.transform.localScale *= sizeMultiplier;
 
-            spear.Init(direction, damage, speed, lifeTime);
+            spear.Init(direction, effectiveDamage, speed, lifeTime);
         }
     }
 

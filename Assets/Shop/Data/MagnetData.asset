@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9697d1b14aa36bd46bf4cb16c66d2a89, type: 3}
+  m_Name: MagnetData
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUpData
+  type: 9
+  powerUpName: Magnet
+  description: Increases item pickup range by 25% per level (max +50%).
+  icon: {fileID: 21300000, guid: b94ec56e8ea6f5a4ebfad3a62f52e95c, type: 3}
+  maxLevel: 2
+  valuePerLevel: 0.25
+  basePrice: 200
+  priceMultiplier: 1.5

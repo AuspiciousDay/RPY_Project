@@ -6,6 +6,7 @@ public class PlayerAbility : MonoBehaviour
     public float damage = 30f;
     public int count = 0;
     public int maxCount = 1;
+    [SerializeField, Min(0.1f)] private float lifetime = 6f;
 
     private Vector2 Direction;
     private Rigidbody2D AbilityRigidbody;
@@ -14,6 +15,7 @@ public class PlayerAbility : MonoBehaviour
     private void Awake()
     {
         AbilityRigidbody = GetComponent<Rigidbody2D>();
+        Destroy(gameObject, lifetime);
     }
 
     public void SetDirection(Vector2 direction)
