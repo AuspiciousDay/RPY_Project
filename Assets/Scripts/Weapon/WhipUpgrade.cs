@@ -62,6 +62,6 @@ public class WhipUpgrade : WeaponController
 
     protected override void ApplyEvolution()
     {
-
+        whipWeapon.Evolve();
     }
 }

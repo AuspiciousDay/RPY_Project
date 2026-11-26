@@ -17,8 +17,10 @@ public class PlayerMovement : MonoBehaviour
         PlayerInput = GetComponent<PlayerInput>();
         PlayerRigidbody = GetComponent<Rigidbody2D>();
         PlayerSprite = GetComponent<SpriteRenderer>();
-    }
 
+        PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        PlayerRigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
+    }
     private void Update()
     {
         Vector2 direction = new Vector2(PlayerInput.Side, PlayerInput.Move);
@@ -39,16 +41,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 direction = new Vector2(PlayerInput.Side, PlayerInput.Move).normalized;
 
-        if(direction == Vector2.zero)
-        {
-            PlayerRigidbody.linearVelocity = Vector2.zero;
-            PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            return;
-        }
-        PlayerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-        Vector2 movement = direction * MoveSpeed * Time.fixedDeltaTime;
-
-        PlayerRigidbody.MovePosition(PlayerRigidbody.position + movement);
+        PlayerRigidbody.linearVelocity = direction * MoveSpeed;
     }
 
 }

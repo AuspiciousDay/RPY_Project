@@ -4,7 +4,7 @@ using UnityEngine;
 public class GarlicUpgrade : WeaponController
 {
     [SerializeField] private GameObject garlicObject;
-    [SerializeField] private Garlic garlic;
+    [SerializeField] private GarlicAbility garlic;
 
     private void Awake()
     {
@@ -28,11 +28,11 @@ public class GarlicUpgrade : WeaponController
                 break;
 
             case 4:
-                garlic.DamageInterval -= 0.1f;
+                garlic.Damage += 20;
                 break;
 
             case 5:
-                garlic.Damage += 20;
+                garlic.IncreaseRange(0.5f);
                 break;
         }
     }
@@ -51,13 +51,18 @@ public class GarlicUpgrade : WeaponController
                 return "Increases attack range.";
 
             case 4:
-                return "Increases attack speed.";
+                return "Increases damage by 20.";
 
             case 5:
-                return "Increases damage by 20.";
+                return "Increases attack range.";
 
             default:
                 return "Max Level";
         }
+    }
+
+    protected override void ApplyEvolution()
+    {
+        garlic.Evolve();
     }
 }

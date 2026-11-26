@@ -16,6 +16,13 @@ public class WhipWeapon : MonoBehaviour
     private float timer;
     private float lifeTime = 0.3f;
 
+    public bool IsEvolved { get; private set; }
+
+    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private float lifeSteal = 1f;
+
+    [SerializeField] private GameObject evolvedPrefab;
+
     private void Update()
     {
         if (Time.timeScale == 0f) return;
@@ -44,7 +51,6 @@ public class WhipWeapon : MonoBehaviour
     private void Swing(int direction)
     {
         Vector2 center = (Vector2)transform.position + Vector2.right * direction * attackWidth / 2f;
-
         Vector2 size = new Vector2(attackWidth, attackHeight);
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f);
@@ -55,10 +61,16 @@ public class WhipWeapon : MonoBehaviour
         {
             Monster monster = hit.GetComponentInParent<Monster>();
 
-            if (monster != null && hitMonsters.Add(monster))
-            {
+            if (monster == null || !hitMonsters.Add(monster))
+                continue;
 
-                monster.TakeDamage(damage);
+            float actualDamage = Mathf.Min(damage, Mathf.Max(0f, monster.health));
+
+            monster.TakeDamage(damage);
+
+            if (IsEvolved && playerHealth != null)
+            {
+                playerHealth.Heal(actualDamage * lifeSteal);
             }
         }
 
@@ -85,5 +97,17 @@ public class WhipWeapon : MonoBehaviour
 
         Gizmos.DrawWireCube(
             transform.position - Vector3.right * attackWidth / 2f, size);
+    }
+
+    public void Evolve()
+    {
+        if (IsEvolved) return;
+
+        IsEvolved = true;
+
+        if (evolvedPrefab != null)
+        {
+            whipPrefab = evolvedPrefab;
+        }
     }
 }

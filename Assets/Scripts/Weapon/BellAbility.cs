@@ -14,13 +14,7 @@ public class BellAbility : MonoBehaviour
 
     private Dictionary<Monster, float> hitTimes = new Dictionary<Monster, float>();
 
-    public void Init(
-        Transform target,
-        float angle,
-        float radius,
-        float rotateSpeed,
-        float damage,
-        float duration)
+    public void Init(Transform target, float angle, float radius, float rotateSpeed, float damage, float duration, bool isEvolved = false)
     {
         this.target = target;
         this.angle = angle;
@@ -30,7 +24,10 @@ public class BellAbility : MonoBehaviour
 
         UpdatePosition();
 
-        Destroy(gameObject, duration);
+        if (!isEvolved)
+        {
+            Destroy(gameObject, duration);
+        }
     }
 
     private void FixedUpdate()

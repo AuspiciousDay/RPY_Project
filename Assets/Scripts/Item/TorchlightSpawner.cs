@@ -7,7 +7,7 @@ public class TorchlightSpawner : MonoBehaviour
     public GameObject TorchlightPrefab;
 
     public float SpawnInterval = 10f;
-    public int SpawnCount = 5;
+    public int SpawnCount = 3;
 
     public Vector2 SpawnArea = new Vector2(20f, 20f);
 

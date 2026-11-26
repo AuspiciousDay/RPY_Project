@@ -62,6 +62,6 @@ public class LightningUpgrade : WeaponController
 
     protected override void ApplyEvolution()
     {
-
+        lightningWeapon.Evolve();
     }
 }

@@ -35,4 +35,9 @@ public class CoinUpgrade : WeaponController
                 return "Max Level";
         }
     }
+
+    protected override void ApplyEvolution()
+    {
+
+    }
 }

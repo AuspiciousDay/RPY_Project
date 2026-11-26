@@ -62,6 +62,6 @@ public class BellUpgrade : WeaponController
 
     protected override void ApplyEvolution()
     {
-
+        bellWeapon.Evolve();
     }
 }

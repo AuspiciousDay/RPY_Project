@@ -11,19 +11,14 @@ public class SpearAbility : MonoBehaviour
     private float damage;
     private float speed;
 
-    private HashSet<Monster> hitMonsters
-        = new HashSet<Monster>();
+    private HashSet<Monster> hitMonsters = new HashSet<Monster>();
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(
-        Vector2 direction,
-        float damage,
-        float speed,
-        float lifeTime)
+    public void Init(Vector2 direction, float damage, float speed, float lifeTime)
     {
         this.direction = direction.normalized;
         this.damage = damage;
@@ -34,10 +29,7 @@ public class SpearAbility : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(
-            rb.position +
-            direction * speed * Time.fixedDeltaTime
-        );
+        rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

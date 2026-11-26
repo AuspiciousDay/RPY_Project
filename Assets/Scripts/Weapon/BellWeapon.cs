@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BellWeapon : MonoBehaviour
@@ -10,12 +11,17 @@ public class BellWeapon : MonoBehaviour
     public int attackCount = 1;
 
     [SerializeField] private BellAbility bellPrefab;
+    [SerializeField] private BellAbility evolvedPrefab;
 
     private float timer;
 
+    public bool IsEvolved { get; private set; }
+
+    private readonly List<BellAbility> activeBells = new List<BellAbility>();
+
     private void Update()
     {
-        if (Time.timeScale == 0f) return;
+        if (Time.timeScale == 0f || IsEvolved) return;
 
         timer += Time.deltaTime;
 
@@ -28,13 +34,41 @@ public class BellWeapon : MonoBehaviour
 
     private void Attack()
     {
+        activeBells.RemoveAll(bell => bell == null);
+
         for (int i = 0; i < attackCount; i++)
         {
             float angle = 360f / attackCount * i;
 
             BellAbility bell = Instantiate(bellPrefab, transform.position, Quaternion.identity);
 
-            bell.Init(transform, angle, radius, rotateSpeed, damage, duration);
+            bell.Init(transform, angle, radius, rotateSpeed, damage, duration, IsEvolved);
+
+            activeBells.Add(bell);
         }
+    }
+
+    public void Evolve()
+    {
+        if (IsEvolved) return;
+
+        IsEvolved = true;
+
+        if (evolvedPrefab != null)
+        {
+            bellPrefab = evolvedPrefab;
+        }
+
+        foreach (BellAbility bell in activeBells)
+        {
+            if (bell != null)
+            {
+                Destroy(bell.gameObject);
+            }
+        }
+
+        activeBells.Clear();
+
+        Attack();
     }
 }

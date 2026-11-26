@@ -63,6 +63,6 @@ public class SpearUpgrade : WeaponController
 
     protected override void ApplyEvolution()
     {
-
+        spearWeapon.Evolve();
     }
 }

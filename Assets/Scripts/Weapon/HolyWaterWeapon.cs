@@ -15,6 +15,9 @@ public class HolyWaterWeapon : MonoBehaviour
 
     private float timer;
 
+    [SerializeField] private HolyWaterProjectile evolvedWaterPrefab;
+    [SerializeField] private HolyWaterAbility evolvedAreaPrefab;
+
     private void Update()
     {
         if (Time.timeScale == 0f) return;
@@ -51,7 +54,7 @@ public class HolyWaterWeapon : MonoBehaviour
 
             HolyWaterProjectile water = Instantiate(waterPrefab, transform.position, Quaternion.identity);
 
-            water.Init(targetPosition, areaPrefab, damage, radius, duration);
+            water.Init(targetPosition, areaPrefab, damage, radius, duration, IsEvolved);
         }
     }
     private List<Monster> FindTargets()
@@ -71,5 +74,12 @@ public class HolyWaterWeapon : MonoBehaviour
         }
 
         return targets;
+    }
+
+    public bool IsEvolved { get; private set; }
+
+    public void Evolve()
+    {
+        IsEvolved = true;
     }
 }

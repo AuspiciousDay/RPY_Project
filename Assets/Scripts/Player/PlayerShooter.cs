@@ -11,9 +11,15 @@ public class PlayerShooter : MonoBehaviour
     public float AttackInterval = 1f;
     public int AttackCount = 1;
     private float AttackTimer = 0f;
-    
+
     private Transform Target; // 수정
     private float Distance;
+
+    public bool IsEvolved { get; private set; }
+
+    [SerializeField] private float evolvedInterval = 0.05f;
+
+    [SerializeField] private GameObject evolvedPrefab;
 
     private void Update()
     {
@@ -28,6 +34,13 @@ public class PlayerShooter : MonoBehaviour
                 Shoot(Target);
                 AttackTimer = 0f;
             }
+        }
+        if (Time.timeScale == 0f) return;
+
+        if (IsEvolved)
+        {
+            EvolvedAttack();
+            return;
         }
     }
 
@@ -101,5 +114,56 @@ public class PlayerShooter : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    public void Evolve()
+    {
+        if (IsEvolved) return;
+
+        IsEvolved = true;
+
+        if (evolvedPrefab != null)
+        {
+            AbilityPrefab = evolvedPrefab;
+        }
+
+        StopAllCoroutines();
+        AttackTimer = 0f;
+    }
+
+    private void EvolvedAttack()
+    {
+        AttackTimer += Time.deltaTime;
+
+        if (AttackTimer < evolvedInterval)
+            return;
+
+        if (Target == null)
+        {
+            Target = FindNearestTarget();
+        }
+
+        if (Target == null)
+            return;
+
+        Vector2 direction =
+            (Target.transform.position -
+            transform.position).normalized;
+
+        GameObject bullet = Instantiate(
+            AbilityPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        PlayerAbility ability =
+            bullet.GetComponent<PlayerAbility>();
+
+        ability.damage = AttackDamage;
+        ability.maxCount = PenetrateCount;
+
+        ability.SetDirection(direction);
+
+        AttackTimer = 0f;
     }
 }

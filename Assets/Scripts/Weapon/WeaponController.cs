@@ -4,7 +4,6 @@ public abstract class WeaponController : UpgradeBase
 {
     [Header("Evolution")]
     [SerializeField] private PassiveController requiredPassive;
-
     [SerializeField] private string evolvedName;
     [SerializeField] private Sprite evolvedIcon;
 
@@ -14,13 +13,11 @@ public abstract class WeaponController : UpgradeBase
 
     public bool Evolve()
     {
-        if (!CanEvolve)
-            return false;
-
-        IsEvolved = true;
+        if (!CanEvolve) return false;
 
         ApplyEvolution();
 
+        IsEvolved = true;
         upgradeName = evolvedName;
         icon = evolvedIcon;
 
@@ -28,4 +25,26 @@ public abstract class WeaponController : UpgradeBase
     }
 
     protected abstract void ApplyEvolution();
+
+#if UNITY_EDITOR
+    public void DebugEvolve()
+    {
+        if (IsEvolved) return;
+
+        while (!IsMaxLevel)
+        {
+            Upgrade();
+        }
+
+        if (requiredPassive != null)
+        {
+            while (!requiredPassive.IsMaxLevel)
+            {
+                requiredPassive.Upgrade();
+            }
+        }
+
+        Evolve();
+    }
+#endif
 }

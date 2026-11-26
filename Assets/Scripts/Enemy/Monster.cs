@@ -21,6 +21,10 @@ public class Monster : MonoBehaviour
 
     private HitFlash hitFlash;
 
+    private float slowMultiplier = 1f;
+
+    public float CurrentMoveSpeed => moveSpeed * slowMultiplier;
+
 
     protected virtual void Awake()
     {
@@ -119,5 +123,15 @@ public class Monster : MonoBehaviour
         {
             playerHealth.Damage(damage);
         }
+    }
+
+    public void ApplySlow(float multiplier)
+    {
+        slowMultiplier = Mathf.Clamp01(multiplier);
+    }
+
+    public void RemoveSlow()
+    {
+        slowMultiplier = 1f;
     }
 }

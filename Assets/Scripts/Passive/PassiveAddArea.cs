@@ -6,6 +6,7 @@ public class PassiveAddArea : PassiveController
     [SerializeField] private HolyWaterWeapon holyWaterWeapon;
     [SerializeField] private WhipWeapon whipWeapon;
     [SerializeField] private BellWeapon bellWeapon;
+    [SerializeField] private GarlicAbility garlic;
 
     [SerializeField] private float areaMultiplier = 1.1f;
 
@@ -25,5 +26,9 @@ public class PassiveAddArea : PassiveController
 
         if (bellWeapon != null)
             bellWeapon.radius *= areaMultiplier;
+        if (garlic != null)
+        {
+            garlic.IncreaseRange(0.2f);
+        }
     }
 }

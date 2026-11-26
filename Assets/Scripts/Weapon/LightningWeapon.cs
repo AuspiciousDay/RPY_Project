@@ -14,6 +14,15 @@ public class LightningWeapon : MonoBehaviour
     private Camera mainCam;
     private float timer;
 
+    public bool IsEvolved { get; private set; }
+
+    [SerializeField] private LightningArea lightningAreaPrefab;
+    [SerializeField] private float areaRadius = 2f;
+    [SerializeField] private float areaDuration = 3f;
+    [SerializeField] private float areaDamageMultiplier = 0.3f;
+
+    [SerializeField] private GameObject evolvedPrefab;
+
     private void Awake()
     {
         mainCam = Camera.main;
@@ -51,7 +60,7 @@ public class LightningWeapon : MonoBehaviour
         return targets;
     }
 
-    public void Attack()
+    private void Attack()
     {
         List<Monster> targets = FindTargets();
 
@@ -67,11 +76,32 @@ public class LightningWeapon : MonoBehaviour
 
             if (target == null) continue;
 
-            GameObject lightning = Instantiate(lightningPrefab, target.transform.position, Quaternion.identity);
+            Vector3 targetPosition = target.transform.position;
+
+            GameObject lightning = Instantiate(lightningPrefab, targetPosition, Quaternion.identity);
 
             target.TakeDamage(damage);
 
             Destroy(lightning, lifeTime);
+
+            if (IsEvolved)
+            {
+                LightningArea area = Instantiate(lightningAreaPrefab, targetPosition, Quaternion.identity);
+
+                area.Init(damage * areaDamageMultiplier, areaRadius, areaDuration);
+            }
+        }
+    }
+
+    public void Evolve()
+    {
+        if (IsEvolved) return;
+
+        IsEvolved = true;
+
+        if (evolvedPrefab != null)
+        {
+            lightningPrefab = evolvedPrefab;
         }
     }
 }

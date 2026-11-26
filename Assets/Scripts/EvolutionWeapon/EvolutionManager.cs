@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EvolutionManager : MonoBehaviour
 {
@@ -7,8 +7,7 @@ public class EvolutionManager : MonoBehaviour
 
     public List<WeaponController> GetEvolvableWeapons()
     {
-        List<WeaponController> candidates =
-            new List<WeaponController>();
+        List<WeaponController> candidates = new List<WeaponController>();
 
         foreach (WeaponController weapon in weapons)
         {
@@ -23,16 +22,14 @@ public class EvolutionManager : MonoBehaviour
 
     public bool TryEvolve()
     {
-        List<WeaponController> candidates =
-            GetEvolvableWeapons();
+        List<WeaponController> candidates = GetEvolvableWeapons();
 
-        if (candidates.Count == 0)
-            return false;
+        if (candidates.Count == 0) return false;
 
         int index = Random.Range(0, candidates.Count);
 
-        WeaponController selected = candidates[index];
+        WeaponController weapon = candidates[index];
 
-        return selected.Evolve();
+        return weapon.Evolve();
     }
 }

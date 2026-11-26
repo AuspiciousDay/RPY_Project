@@ -63,6 +63,6 @@ public class HolyWaterUpgrade : WeaponController
 
     protected override void ApplyEvolution()
     {
-
+        holyWaterWeapon.Evolve();
     }
 }
