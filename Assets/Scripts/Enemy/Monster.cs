@@ -69,7 +69,7 @@ public class Monster : MonoBehaviour
         attackTime = data.attackTime;
     }
 
-    private bool isDead = false;
+    protected bool isDead = false;
 
     public void TakeDamage(float damage)
     {
