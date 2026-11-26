@@ -12,6 +12,9 @@ public class PassiveAddArea : PassiveController
 
     protected override void Apply()
     {
+        if (TryGetComponent(out LightningWeapon lightningWeapon))
+            lightningWeapon.MultiplyAreaRadius(areaMultiplier);
+
         if (spearWeapon != null)
             spearWeapon.sizeMultiplier *= areaMultiplier;
 

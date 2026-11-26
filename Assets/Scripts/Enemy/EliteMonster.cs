@@ -7,6 +7,9 @@ public class EliteMonster : Monster
     [Header("검기 잔상 설정")]
     [SerializeField] private GameObject slashVfxPrefab;
 
+    [Header("상자 드랍")]
+    [SerializeField] private GameObject treasurePrefab;
+
     private float attackRange = 2f;
     private bool isAttack = false;
     private bool hasHitInCurrentAttack = false;
@@ -124,5 +127,15 @@ public class EliteMonster : Monster
             hasHitInCurrentAttack = true;
             playerHealth.Damage(damage);
         }
+    }
+
+    public override void Die()
+    {
+        if (treasurePrefab != null)
+        {
+            Instantiate(treasurePrefab, transform.position, Quaternion.identity);
+        }
+
+        base.Die();
     }
 }

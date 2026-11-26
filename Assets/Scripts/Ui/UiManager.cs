@@ -16,12 +16,14 @@ public class UiManager : MonoBehaviour
     public TMP_Text timerText;
     public TMP_Text killCountText;
     public TMP_Text coinText;
+    [SerializeField] private bool showRunGoldUnderKills;
 
     [Header("패널 UI")]
     public GameObject gameOverPanel;
     public GameObject optionPanel;
     public GameObject startPanel;
     public GameObject treasurePanel;
+    [SerializeField] private ShopManager shopManager;
 
     [Header("GameOver 결과창 텍스트")]
     public TMP_Text gameOverTitleText;
@@ -40,6 +42,12 @@ public class UiManager : MonoBehaviour
     [Header("시작 화면 버튼")]
     public Button startButton;
     public Button exitButton;
+
+    [Header("입력 제한 UI")]
+    [SerializeField] private GameObject passiveUpgradePanel;
+
+    public bool IsRewardUIOpen => (treasurePanel != null && treasurePanel.activeInHierarchy) || (passiveUpgradePanel != null && passiveUpgradePanel.activeInHierarchy);
+    public bool IsRunOver => isGameOver;
 
     [System.Serializable]
     public struct SlotEntry
@@ -90,8 +98,8 @@ public class UiManager : MonoBehaviour
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (optionPanel != null) optionPanel.SetActive(false);
         if (expBar != null) expBar.fillAmount = 0f;
-        gameOverTitleText.gameObject.SetActive(false);
-        victoryTitleText.gameObject.SetActive(false);
+        if (gameOverTitleText != null) gameOverTitleText.gameObject.SetActive(false);
+        if (victoryTitleText != null) victoryTitleText.gameObject.SetActive(false);
         currentKillCount = 0;
         currentCoinCount = 0;
         UpdateCoinCount(0);
@@ -111,6 +119,14 @@ public class UiManager : MonoBehaviour
         if (expBar != null)
         {
             expBar.fillAmount = Mathf.Lerp(expBar.fillAmount, targetExpRatio, Time.deltaTime * 10f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (shopManager != null && shopManager.IsOpen)
+                shopManager.CloseShop();
+            else
+                ToggleOptionUI();
         }
 
 #if UNITY_EDITOR
@@ -147,20 +163,20 @@ public class UiManager : MonoBehaviour
 
         if (skillMap.TryGetValue(key, out GameObject obj) && obj != null && !obj.activeSelf)
         {
-            if (!obj.activeSelf)
-            {
-                obj.transform.SetAsLastSibling();
-                obj.SetActive(true);
-            }
+            obj.transform.SetAsLastSibling();
+            obj.SetActive(true);
         }
     }
 
-    public void ShowPassiveIcon(string key)
+    public void ShowPassiveIcon(string key, Sprite sprite)
     {
         if (string.IsNullOrEmpty(key)) return;
 
-        if (passiveMap.TryGetValue(key, out GameObject obj) && obj != null && !obj.activeSelf)
+        if (passiveMap.TryGetValue(key, out GameObject obj) && obj != null)
         {
+            if (sprite != null && obj.TryGetComponent(out Image image))
+                image.sprite = sprite;
+
             if (!obj.activeSelf)
             {
                 obj.transform.SetAsLastSibling();
@@ -198,10 +214,8 @@ public class UiManager : MonoBehaviour
 
     public void UpdateHp(float currentHp, float maxHp)
     {
-        if (playerHp == null) return;
-
-        float ratio = Mathf.Clamp01(currentHp / maxHp);
-        playerHp.fillAmount = ratio;
+        if (playerHp != null && maxHp > 0f)
+            playerHp.fillAmount = Mathf.Clamp01(currentHp / maxHp);
 
         if (currentHp <= 0f && !isGameOver)
         {
@@ -227,14 +241,22 @@ public class UiManager : MonoBehaviour
     public void UpdateKillCount(int killCount)
     {
         currentKillCount += killCount;
+        RefreshKillCount();
+    }
+
+    private void RefreshKillCount()
+    {
 
         if (killCountText != null)
-            killCountText.text = $"X: {currentKillCount}";
+            killCountText.text = showRunGoldUnderKills
+                ? $"X: {currentKillCount}\nGold: {currentCoinCount:N0}"
+                : $"X: {currentKillCount}";
     }
 
     public void UpdateCoinCount(int coinCount)
     {
         currentCoinCount += coinCount;
+        if (showRunGoldUnderKills) RefreshKillCount();
 
         if (coinText != null)
         {
@@ -249,7 +271,7 @@ public class UiManager : MonoBehaviour
             playerAnimator.SetTrigger("Die");
         }
 
-        yield return new WaitForSeconds(gameOverDelay);
+        yield return new WaitForSecondsRealtime(gameOverDelay);
         if (gameOverTitleText != null)
         {
             gameOverTitleText.gameObject.SetActive(true);
@@ -272,7 +294,7 @@ public class UiManager : MonoBehaviour
     }
     private IEnumerator VictorySequenceRoutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
         if (victoryTitleText != null)
         {
             victoryTitleText.gameObject.SetActive(true);
@@ -296,6 +318,8 @@ public class UiManager : MonoBehaviour
 
     public void ToggleOptionUI()
     {
+        if (shopManager != null && shopManager.IsOpen) return;
+        if (IsRewardUIOpen) return;
         if (isGameOver) return;
         if (startPanel != null && startPanel.activeSelf) return;
         if (optionPanel == null) return;
@@ -310,17 +334,18 @@ public class UiManager : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         if (timerText != null)
+        {
             timerText.text = FormatTime(elapsedTime);
+        }
+    }
 
-        if (treasurePanel != null && treasurePanel.activeSelf)
-        {
-            return;
-        }
-        if (elapsedTime >= 300f && !isGameOver)
-        {
-            isGameOver = true;
-            StartCoroutine(VictorySequenceRoutine());
-        }
+    public void Victory()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+
+        StartCoroutine(VictorySequenceRoutine());
     }
 
     private string FormatTime(float timeInSeconds)
@@ -328,6 +353,23 @@ public class UiManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(timeInSeconds / 60f);
         int seconds = Mathf.FloorToInt(timeInSeconds % 60f);
         return $"{minutes:00} : {seconds:00}";
+    }
+
+    public void ChangeSkillIcon(string key, Sprite sprite)
+    {
+        if (string.IsNullOrEmpty(key) || sprite == null) return;
+
+        if (skillMap.TryGetValue(key, out GameObject obj) && obj != null)
+        {
+            if (obj.transform.childCount == 0) return;
+
+            Image image = obj.transform.GetChild(0).GetComponent<Image>();
+
+            if (image != null)
+            {
+                image.sprite = sprite;
+            }
+        }
     }
 
 #if UNITY_EDITOR
@@ -369,10 +411,7 @@ public class UiManager : MonoBehaviour
             UpdateExp(testExp, testMaxExp, testLevel);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ToggleOptionUI();
-        }
+
     }
 #endif
 }

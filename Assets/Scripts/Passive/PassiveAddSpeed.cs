@@ -7,7 +7,6 @@ public class PassiveAddSpeed : PassiveController
 
     protected override void Apply()
     {
-        UiManager.Instance?.ShowPassiveIcon("Speed");
         playerMovement.MoveSpeed += addSpeed;
     }
 }

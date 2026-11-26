@@ -23,6 +23,13 @@ public class WhipWeapon : MonoBehaviour
 
     [SerializeField] private GameObject evolvedPrefab;
 
+    private PassiveAddDamage damagePassive;
+
+    private void Awake()
+    {
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
+    }
+
     private void Update()
     {
         if (Time.timeScale == 0f) return;
@@ -38,17 +45,18 @@ public class WhipWeapon : MonoBehaviour
 
     private void Attack()
     {
+        float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
         int direction = playerSprite.flipX ? -1 : 1;
 
         for (int i = 0; i < attackCount; i++)
         {
             int attackDirection = i % 2 == 0 ? direction : -direction;
 
-            Swing(attackDirection);
+            Swing(attackDirection, effectiveDamage);
         }
     }
 
-    private void Swing(int direction)
+    private void Swing(int direction, float effectiveDamage)
     {
         Vector2 center = (Vector2)transform.position + Vector2.right * direction * attackWidth / 2f;
         Vector2 size = new Vector2(attackWidth, attackHeight);
@@ -68,15 +76,15 @@ public class WhipWeapon : MonoBehaviour
 
             if (IsEvolved && target is Monster monster)
             {
-                float actualDamage = Mathf.Min(damage, Mathf.Max(0f, monster.health));
+                float actualDamage = Mathf.Min(effectiveDamage, Mathf.Max(0f, monster.health));
 
-                monster.TakeDamage(damage);
+                monster.TakeDamage(effectiveDamage);
 
                 playerHealth.Heal(actualDamage * lifeSteal);
             }
             else
             {
-                target.TakeDamage(damage);
+                target.TakeDamage(effectiveDamage);
             }
         }
 

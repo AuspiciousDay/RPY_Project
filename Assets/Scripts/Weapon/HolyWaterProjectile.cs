@@ -29,6 +29,10 @@ public class HolyWaterProjectile : MonoBehaviour
         this.duration = duration;
         this.isEvolved = isEvolved;
     }
+    public void ApplyVelocity(float multiplier)
+    {
+        flightTime /= Mathf.Max(0.01f, multiplier);
+    }
 
     private void Update()
     {

@@ -4,7 +4,7 @@ public class GunUpgrade : WeaponController
 {
     [SerializeField] private PlayerShooter playerShooter;
 
-    private void Awake()
+    private void Start()
     {
         Upgrade();
     }
@@ -15,7 +15,6 @@ public class GunUpgrade : WeaponController
         {
             case 1:
                 playerShooter.enabled = true;
-                UiManager.Instance?.ShowSkillIcon("Gun");
                 break;
 
             case 2:

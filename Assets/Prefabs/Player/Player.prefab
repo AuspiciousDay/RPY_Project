@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 5228748696577296088}
   - component: {fileID: 6550025037382877164}
   - component: {fileID: 5143539985694611421}
+  - component: {fileID: 6927545651182471382}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -771,13 +772,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PassiveAddDamage
   upgradeName: Damage
-  description: Increases all weapon damage by 5
+  description: Increases weapon damage by 30% of base damage per level.
   icon: {fileID: 652014910188745132, guid: 9eb4af7f4d3021f4da7c311769ab80c5, type: 3}
   maxLevel: 5
-  playerShooter: {fileID: 6373021666512726674}
-  lightningWeapon: {fileID: 576335577422710730}
-  garlic: {fileID: 2061312984340274368}
-  addDamage: 5
+  bonusPerLevel: 0.3
 --- !u!114 &2483207977683154519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,6 +1068,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSorting
   offsetY: 0
+--- !u!114 &6927545651182471382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534513451284742156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bfed4a21efff8140b0b948527985dac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PermanentPowerUp
+  playerMovement: {fileID: 484255165117261000}
+  playerHealth: {fileID: 3444407264250234805}
 --- !u!1001 &555735198867917409
 PrefabInstance:
   m_ObjectHideFlags: 0

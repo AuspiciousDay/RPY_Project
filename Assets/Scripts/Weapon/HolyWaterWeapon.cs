@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class HolyWaterWeapon : MonoBehaviour
 {
+    public float ProjectileSpeedMultiplier = 1f;
+
     public float damage = 10f;
     public float attackInterval = 4f;
     public float duration = 3f;
@@ -17,6 +19,15 @@ public class HolyWaterWeapon : MonoBehaviour
 
     [SerializeField] private HolyWaterProjectile evolvedWaterPrefab;
     [SerializeField] private HolyWaterAbility evolvedAreaPrefab;
+
+    public bool IsEvolved { get; private set; }
+
+    private PassiveAddDamage damagePassive;
+
+    private void Awake()
+    {
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
+    }
 
     private void Update()
     {
@@ -33,6 +44,7 @@ public class HolyWaterWeapon : MonoBehaviour
 
     private void Attack()
     {
+        float effectiveDamage = damage * (damagePassive != null ? damagePassive.Multiplier : 1f);
         List<Monster> targets = FindTargets();
 
         for (int i = 0; i < attackCount; i++)
@@ -54,9 +66,12 @@ public class HolyWaterWeapon : MonoBehaviour
 
             HolyWaterProjectile water = Instantiate(waterPrefab, transform.position, Quaternion.identity);
 
-            water.Init(targetPosition, areaPrefab, damage, radius, duration, IsEvolved);
+            water.ApplyVelocity(ProjectileSpeedMultiplier);
+
+            water.Init(targetPosition, areaPrefab, effectiveDamage, radius, duration, IsEvolved);
         }
     }
+
     private List<Monster> FindTargets()
     {
         List<Monster> targets = new List<Monster>();
@@ -65,6 +80,8 @@ public class HolyWaterWeapon : MonoBehaviour
 
         foreach (Monster monster in monsters)
         {
+            if (monster.health <= 0) continue;
+
             float distance = Vector2.Distance(transform.position, monster.transform.position);
 
             if (distance <= throwRange)
@@ -75,8 +92,6 @@ public class HolyWaterWeapon : MonoBehaviour
 
         return targets;
     }
-
-    public bool IsEvolved { get; private set; }
 
     public void Evolve()
     {

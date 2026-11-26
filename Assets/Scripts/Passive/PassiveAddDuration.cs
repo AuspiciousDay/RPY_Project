@@ -9,6 +9,9 @@ public class PassiveAddDuration : PassiveController
 
     protected override void Apply()
     {
+        if (TryGetComponent(out LightningWeapon lightningWeapon))
+            lightningWeapon.MultiplyAreaDuration(durationMultiplier);
+
         if (holyWaterWeapon != null)
             holyWaterWeapon.duration *= durationMultiplier;
 

@@ -5,6 +5,17 @@ public class PassiveUpgradeUI : MonoBehaviour
 {
     [SerializeField] private UpgradeBase[] upgrades;
     [SerializeField] private UpgradeSlot[] slots;
+    [SerializeField] private bool favorOwnedWeaponUpgrades;
+    private bool openedForLevelUp;
+
+    public void Open()
+    {
+        if (gameObject.activeInHierarchy) return;
+
+        openedForLevelUp = true;
+        GameManager.PauseGame(0f);
+        gameObject.SetActive(true);
+    }
 
     private void OnEnable()
     {
@@ -12,20 +23,12 @@ public class PassiveUpgradeUI : MonoBehaviour
     }
     private void Start()
     {
-        gameObject.SetActive(false);
+        if (!openedForLevelUp) gameObject.SetActive(false);
     }
 
     private void ShowOptions()
     {
-        List<UpgradeBase> candidates = new List<UpgradeBase>();
-
-        foreach (UpgradeBase upgrade in upgrades)
-        {
-            if (upgrade != null && !upgrade.IsMaxLevel)
-            {
-                candidates.Add(upgrade);
-            }
-        }
+        List<UpgradeBase> candidates = UpgradeBase.GetRunUpgradeCandidates(upgrades);
 
         if (candidates.Count == 0)
         {
@@ -33,19 +36,47 @@ public class PassiveUpgradeUI : MonoBehaviour
             return;
         }
 
-        foreach (UpgradeSlot slot in slots)
+        var ownedWeapons = new List<UpgradeBase>();
+        var newWeapons = new List<UpgradeBase>();
+        var evolutionPassives = new List<UpgradeBase>();
+        int ownedWeaponCount = 0;
+        if (favorOwnedWeaponUpgrades)
         {
+            foreach (UpgradeBase upgrade in upgrades)
+            {
+                if (upgrade is not WeaponController weapon) continue;
+                if (weapon.Level == 0)
+                {
+                    if (candidates.Contains(weapon)) newWeapons.Add(weapon);
+                    continue;
+                }
+
+                ownedWeaponCount++;
+                if (candidates.Contains(weapon)) ownedWeapons.Add(weapon);
+                if (weapon.NeedsEvolutionPassive && candidates.Contains(weapon.RequiredPassive)
+                    && !evolutionPassives.Contains(weapon.RequiredPassive))
+                    evolutionPassives.Add(weapon.RequiredPassive);
+            }
+        }
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            UpgradeSlot slot = slots[i];
             if (candidates.Count == 0)
             {
                 slot.gameObject.SetActive(false);
                 continue;
             }
 
-            int index = Random.Range(0, candidates.Count);
+            List<UpgradeBase> pool = candidates;
+            if (i == 0 && ownedWeapons.Count > 0) pool = ownedWeapons;
+            if (i == 1 && evolutionPassives.Count > 0) pool = evolutionPassives;
+            if (i == 2 && ownedWeaponCount < 2 && newWeapons.Count > 0) pool = newWeapons;
 
-            UpgradeBase selected = candidates[index];
-
-            candidates.RemoveAt(index);
+            UpgradeBase selected = pool[Random.Range(0, pool.Count)];
+            candidates.Remove(selected);
+            newWeapons.Remove(selected);
+            evolutionPassives.Remove(selected);
 
             slot.gameObject.SetActive(true);
             slot.Setup(selected, this);
@@ -55,6 +86,7 @@ public class PassiveUpgradeUI : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-        GameManager.PauseGame(1f);
+        if (UiManager.Instance == null || !UiManager.Instance.IsRunOver)
+            GameManager.PauseGame(1f);
     }
 }

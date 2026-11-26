@@ -2,31 +2,21 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public int CoinAmount = 1;
+    [SerializeField] private int goldAmount = 10;
 
-    public static int BonusCoin = 0;
-
-    private UiManager uiManager;
-
-    private void Awake()
-    {
-        uiManager = FindFirstObjectByType<UiManager>();
-    }
+    private bool isCollected = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            int amount = CoinAmount + BonusCoin;
-            
-            if (uiManager != null)
-            {
-                uiManager.UpdateCoinCount(amount);
-            }
+        if (isCollected) return;
+        if (!collision.CompareTag("Player")) return;
+        if (GoldManager.Instance == null) return;
 
-            Debug.Log("코인 획득 : " + amount);
+        isCollected = true;
 
-            Destroy(gameObject);
-        }
+        GoldManager.Instance.AddGold(goldAmount);
+        UiManager.Instance?.UpdateCoinCount(goldAmount);
+
+        Destroy(gameObject);
     }
 }

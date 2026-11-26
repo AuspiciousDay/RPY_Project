@@ -7,7 +7,6 @@ public class PassiveAddMagnet : PassiveController
 
     protected override void Apply()
     {
-        UiManager.Instance?.ShowPassiveIcon("Magnet");
         gemMagnet.radius += addRadius;
     }
 }

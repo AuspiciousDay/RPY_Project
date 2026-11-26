@@ -1,9 +1,9 @@
-
 using System.Collections;
 using UnityEngine;
 
 public class PlayerShooter : MonoBehaviour
 {
+    public float ProjectileSpeedMultiplier = 1f;
     public int PenetrateCount = 1;
     public float AttackDamage = 25;
     public GameObject AbilityPrefab;
@@ -12,29 +12,23 @@ public class PlayerShooter : MonoBehaviour
     public int AttackCount = 1;
     private float AttackTimer = 0f;
 
-    private Transform Target; // 수정
+    private Transform Target;
     private float Distance;
 
     public bool IsEvolved { get; private set; }
 
     [SerializeField] private float evolvedInterval = 0.05f;
-
     [SerializeField] private GameObject evolvedPrefab;
+
+    private PassiveAddDamage damagePassive;
+
+    private void Awake()
+    {
+        damagePassive = GetComponentInParent<PassiveAddDamage>();
+    }
 
     private void Update()
     {
-        AttackTimer += Time.deltaTime;
-
-        if (AttackTimer >= AttackInterval)
-        {
-            Target = FindNearestTarget(); // 수정
-
-            if (Target != null)
-            {
-                Shoot(Target);
-                AttackTimer = 0f;
-            }
-        }
         if (Time.timeScale == 0f) return;
 
         if (IsEvolved)
@@ -42,9 +36,21 @@ public class PlayerShooter : MonoBehaviour
             EvolvedAttack();
             return;
         }
+
+        AttackTimer += Time.deltaTime;
+
+        if (AttackTimer >= AttackInterval)
+        {
+            Target = FindNearestTarget();
+
+            if (Target != null)
+            {
+                Shoot(Target);
+                AttackTimer = 0f;
+            }
+        }
     }
 
-    // 수정 : 몬스터와 화로 탐색
     private Transform FindNearestTarget()
     {
         Monster[] Monsters = FindObjectsByType<Monster>(FindObjectsSortMode.None);
@@ -54,6 +60,8 @@ public class PlayerShooter : MonoBehaviour
 
         foreach (Monster Monster in Monsters)
         {
+            if (Monster.health <= 0) continue;
+
             Distance = Vector2.Distance(transform.position, Monster.transform.position);
 
             if (Distance < NearestDistance)
@@ -63,7 +71,6 @@ public class PlayerShooter : MonoBehaviour
             }
         }
 
-        // 추가 : 화로 탐색
         Torchlight[] Torchlights = FindObjectsByType<Torchlight>(FindObjectsSortMode.None);
 
         foreach (Torchlight Torchlight in Torchlights)
@@ -82,38 +89,41 @@ public class PlayerShooter : MonoBehaviour
         return NearestTarget;
     }
 
-    private void Shoot(Transform Target) // 수정
+    private void Shoot(Transform Target)
     {
         StartCoroutine(ShootCoroutine(Target));
     }
 
-    private IEnumerator ShootCoroutine(Transform Target) // 수정
+    private IEnumerator ShootCoroutine(Transform Target)
     {
         for (int i = 0; i < AttackCount; i++)
         {
             if (Target == null)
             {
-                Target = FindNearestTarget(); // 수정
+                Target = FindNearestTarget();
             }
 
-            if (Target == null)
-            {
-                yield break;
-            }
+            if (Target == null) yield break;
 
-            Vector2 direction = (Target.position - transform.position).normalized;
-
-            GameObject bullet = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
-
-            PlayerAbility ability = bullet.GetComponent<PlayerAbility>();
-
-            ability.maxCount = PenetrateCount;
-            ability.damage = AttackDamage;
-
-            ability.SetDirection(direction);
+            CreateProjectile(Target);
 
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private void CreateProjectile(Transform target)
+    {
+        Vector2 direction = (target.position - transform.position).normalized;
+
+        GameObject bullet = Instantiate(AbilityPrefab, transform.position, Quaternion.identity);
+
+        PlayerAbility ability = bullet.GetComponent<PlayerAbility>();
+
+        ability.maxCount = PenetrateCount;
+        ability.damage = AttackDamage * (damagePassive != null ? damagePassive.Multiplier : 1f);
+        ability.speed *= ProjectileSpeedMultiplier;
+
+        ability.SetDirection(direction);
     }
 
     public void Evolve()
@@ -135,35 +145,23 @@ public class PlayerShooter : MonoBehaviour
     {
         AttackTimer += Time.deltaTime;
 
-        if (AttackTimer < evolvedInterval)
-            return;
+        if (AttackTimer < evolvedInterval) return;
 
-        if (Target == null)
+        Target = FindNearestTarget();
+
+        if (Target == null) return;
+
+        for (int i = 0; i < AttackCount; i++)
         {
-            Target = FindNearestTarget();
+            CreateProjectile(Target);
         }
 
-        if (Target == null)
-            return;
-
-        Vector2 direction =
-            (Target.transform.position -
-            transform.position).normalized;
-
-        GameObject bullet = Instantiate(
-            AbilityPrefab,
-            transform.position,
-            Quaternion.identity
-        );
-
-        PlayerAbility ability =
-            bullet.GetComponent<PlayerAbility>();
-
-        ability.damage = AttackDamage;
-        ability.maxCount = PenetrateCount;
-
-        ability.SetDirection(direction);
-
         AttackTimer = 0f;
+    }
+
+    public void MultiplyCooldown(float multiplier)
+    {
+        AttackInterval = Mathf.Max(0.01f, AttackInterval * multiplier);
+        evolvedInterval = Mathf.Max(0.01f, evolvedInterval * multiplier);
     }
 }

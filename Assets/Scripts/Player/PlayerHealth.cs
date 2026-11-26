@@ -4,6 +4,7 @@ using System;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public float Armor = 0f;
     public float Health = 100f;
     public float HealthMax = 100f;
     private bool IsDead = false;
@@ -29,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (IsDead) return;
 
-        Health -= Damage;
+        Health -= Mathf.Max(1f, Damage - Armor);
 
         uiManager.UpdateHp(Health, HealthMax);
 

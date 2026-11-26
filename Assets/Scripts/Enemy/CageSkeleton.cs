@@ -9,9 +9,10 @@ public class CageSkeleton : Monster
     private Vector2 centerPos;
     private bool isInitialized = false;
 
-    public void Initialize(Vector2 cageCenter, float duration)
+    public void Initialize(Vector2 cageCenter, float duration, float shrinkSpeedOverride)
     {
         centerPos = cageCenter;
+        if (shrinkSpeedOverride > 0f) shrinkSpeed = shrinkSpeedOverride;
         isInitialized = true;
         Destroy(gameObject, duration);
     }
@@ -33,7 +34,7 @@ public class CageSkeleton : Monster
         // 필요하면 수축 방향에 맞춰 좌우 반전 적용 가능
         if (spriteRenderer != null && Mathf.Abs(toCenter.x) > 0.01f)
         {
-            spriteRenderer.flipX = toCenter.x > 0f;
+            spriteRenderer.flipX = toCenter.x < 0f;
         }
     }
 }
