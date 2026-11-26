@@ -21,6 +21,7 @@ public class UiManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject optionPanel;
     public GameObject startPanel;
+    public GameObject treasurePanel;
 
     [Header("GameOver 결과창 텍스트")]
     public TMP_Text gameOverTitleText;
@@ -310,6 +311,11 @@ public class UiManager : MonoBehaviour
 
         if (timerText != null)
             timerText.text = FormatTime(elapsedTime);
+
+        if (treasurePanel != null && treasurePanel.activeSelf)
+        {
+            return;
+        }
         if (elapsedTime >= 300f && !isGameOver)
         {
             isGameOver = true;
