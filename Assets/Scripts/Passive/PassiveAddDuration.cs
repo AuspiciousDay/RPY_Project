@@ -9,6 +9,7 @@ public class PassiveAddDuration : PassiveController
 
     protected override void Apply()
     {
+        UiManager.Instance?.ShowPassiveIcon("Duration");
         if (holyWaterWeapon != null)
             holyWaterWeapon.duration *= durationMultiplier;
 

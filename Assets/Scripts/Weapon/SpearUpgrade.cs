@@ -15,6 +15,7 @@ public class SpearUpgrade : WeaponController
         {
             case 1:
                 spearWeapon.enabled = true;
+                UiManager.Instance?.ShowSkillIcon("Spear");
                 break;
 
             case 2:

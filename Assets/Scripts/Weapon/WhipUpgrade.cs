@@ -15,6 +15,7 @@ public class WhipUpgrade : WeaponController
         {
             case 1:
                 whipWeapon.enabled = true;
+                UiManager.Instance?.ShowSkillIcon("Whip");
                 break;
 
             case 2:

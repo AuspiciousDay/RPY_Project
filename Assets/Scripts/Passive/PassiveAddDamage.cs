@@ -10,6 +10,7 @@ public class PassiveAddDamage : PassiveController
 
     protected override void Apply()
     {
+        UiManager.Instance?.ShowPassiveIcon("Damage");
         if (playerShooter != null)
         {
             playerShooter.AttackDamage += addDamage;
