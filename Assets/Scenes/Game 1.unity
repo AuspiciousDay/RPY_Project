@@ -2673,6 +2673,10 @@ PrefabInstance:
       value: Garlic
       objectReference: {fileID: 0}
     - target: {fileID: 5496033278900852303, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: -6762138327263057153, guid: dbc59c1633ecc144c8269c0961fd0d1d, type: 3}
+    - target: {fileID: 5496033278900852303, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
       propertyPath: skillKey
       value: Spear
       objectReference: {fileID: 0}
@@ -2736,6 +2740,10 @@ PrefabInstance:
       propertyPath: passiveKey
       value: Damage
       objectReference: {fileID: 0}
+    - target: {fileID: 7486103099497389225, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 287a1c5bd499ba144919bd1978f8c8cb, type: 3}
     - target: {fileID: 7486103099497389225, guid: fc98cc4766a8a78458951a1503aaa171, type: 3}
       propertyPath: skillKey
       value: Lightning
